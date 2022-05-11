@@ -9,6 +9,8 @@
     "cypress": "cypress open -P ."
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "node-sass": "^7.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0"
