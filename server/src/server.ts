@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import expressSession from 'express-session'
+import MongoStore from 'connect-mongo'
 import morgan from 'morgan';
 import bodyParser from 'body-parser'
 import QRcode from 'qrcode'
