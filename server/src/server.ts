@@ -8,9 +8,9 @@ const app = express();
 
 const PORT = 3000;
 
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(cors());
-// app.use(bodyParser.json())
+app.use(bodyParser.json())
 
 app.get('/', (req: Request, res: Response) => {
   res.send('test');
