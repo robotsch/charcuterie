@@ -1,12 +1,17 @@
 import { useState } from 'react'
 import './App.css'
 
+import Menu from "./components/Menu";
+import MenuItem from "./components/MenuItem";
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <header className="App-header">
+      <Menu></Menu>
+      <MenuItem></MenuItem>
+      {/* <header className="App-header">
         <p>Hello Vite + React!</p>
         <p>
           <button type="button" onClick={() => setCount((count) => count + 1)}>
@@ -35,7 +40,7 @@ function App() {
             Vite Docs
           </a>
         </p>
-      </header>
+      </header> */}
     </div>
   )
 }
