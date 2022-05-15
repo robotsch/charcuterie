@@ -1,14 +1,23 @@
-export default function MenuItem() {
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
+import { Item } from "../../ts/menuItem_interface";
+
+export default function MenuItem(props: Item) {
+  const { name, price, url, description } = props;
+
   return (
     <section className="menu-item">
-      <img alt="FOOD"></img>
-      <h1>Seaweed and tofu salad</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-      <div>
-        $1.50
-      </div>
+      <Card sx={{ maxWidth: 900 }}>
+        <CardContent>
+          <img src={url} alt="FOOD"></img>
+          <h1>{name}</h1>
+          <p>
+            {description}
+          </p>
+          <div>${(price / 100).toFixed(2)}</div>
+        </CardContent>
+      </Card>
     </section>
-  )
+  );
 }
