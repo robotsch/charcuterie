@@ -1,0 +1,69 @@
+## Filters
+- condition
+  - new
+  - used
+- km/miles
+  - 0 - 200 000+ km
+- make
+- model
+- year
+- colour of interior
+- colour of exterior
+- body style
+  - sedan
+  - suv
+  - coupe
+  - covertible
+  - station wagon
+- price
+- manufacturing location
+  - USA
+  - Japan
+  - Korea
+  - Germany
+  - England
+  - etc.
+- engine
+  - prefix => position of cylinders
+    - i => inline
+    - v => v-shaped
+  - 3, 4, 5, 7, 8, 10, 12
+  - 3, 5, 5 => inline
+  - 6, 8, 10, 12 => v-shaped
+- number of previous owners
+  - 0 - 4+
+- transmission
+  - automatic
+  - manual
+- car condition rating
+  - fair
+    - possibly been in an accident
+    - needs mechanical work done
+  - good
+    - minor damages
+    - no mechnical problems
+  - excellent
+    - is or almost is in stock condition
+- horsepower
+  - <100 - 700+
+- dealer distance range
+  - use range + postal code
+- safety rating
+  - out of 5 (NHTSA)
+- number of passengers
+  - 1 - 7+ people
+- extra features
+  - bluetooth
+  - sunroof
+  - backup camera
+
+## Quick filter questions
+- condition
+- body style
+- make
+- transmission
+- dealer distance
+
+## Notes
+- Vintage =/= Luxury
+- Only dealers can be sellers because people who buy luxury want it to be easy. Buying from a person is a pain in the ass
