@@ -11,7 +11,8 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
-import ListAltIcon from '@mui/icons-material/ListAlt';
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import { Typography } from "@mui/material";
 
 type Anchor = "top";
 
@@ -38,9 +39,7 @@ export default function TemporaryDrawer() {
         ].map((pair) => (
           <ListItem key={pair.text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {pair.icon}
-              </ListItemIcon>
+              <ListItemIcon>{pair.icon}</ListItemIcon>
               <ListItemText primary={pair.text} />
             </ListItemButton>
           </ListItem>
@@ -58,12 +57,12 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div>
+    <div id="drawer">
       <React.Fragment key="top">
         <Button onClick={toggleDrawer("top", true)}>
           <MenuIcon />
         </Button>
-        <h2 className="mont">The Red Blossom</h2>
+        <span id="restaurant-name"><span>Red</span> <span>Blossom</span></span>
         <Drawer
           anchor={"top"}
           open={state["top"]}
