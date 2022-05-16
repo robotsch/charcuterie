@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import QRcode from 'qrcode';
 
+
 const app = express();
 
 const PORT = 3000;
@@ -18,13 +19,16 @@ app.use(bodyParser.json());
 declare module 'express-session' {
   export interface SessionData {
     restaurant_id: string,
-    table_id: string,
-    name: string | undefined
+    table_id: string | undefined,
+    name: string | undefined,
   }
 }
 
+const clientPromise = require('./db/db')
+
 app.use(
   expressSession({
+    store: MongoStore.create({ clientPromise }),
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
