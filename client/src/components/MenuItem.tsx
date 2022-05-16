@@ -17,7 +17,7 @@ export default function MenuItem(props: FoodItem) {
             <img src={url} alt="FOOD"></img>
           </div>
           <div>
-            <span>{name}</span>
+            <h5 className="mont">{name}</h5>
             <Typography>{description}</Typography>
             <div>${(price / 100).toFixed(2)}</div>
           </div>
