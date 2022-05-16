@@ -12,14 +12,21 @@ export interface FoodItem {
   // customize: optionSection[];
 }
 
-export interface FoodItems {
-  menuItems: FoodItem[];
-}
-
 export interface Category {
   id: number;
   name: string;
   menuItems: FoodItem[];
+}
+
+export interface OrderFoodItem extends FoodItem {
+  quantity: number;
+}
+
+export interface Order {
+  group: number;
+  table: string;
+  timePlaced: string;
+  orderFoodItems: OrderFoodItem[];
 }
 
 // interface optionSection {

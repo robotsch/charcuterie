@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import MenuItem from "./MenuItem";
 
-import { FoodItem, FoodItems, Category } from "../../ts/foodItem_interface";
+import { FoodItem, Category } from "../../ts/foodItem_interface";
 
 export default function MenuItemList(props: Category) {
   const { name, menuItems } = props;
@@ -22,19 +22,17 @@ export default function MenuItemList(props: Category) {
   });
 
   return (
-    <div>
-      <Accordion disableGutters defaultExpanded>
-        <AccordionSummary>
-          <h3 className="mont">{name}</h3>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            padding: 0,
-          }}
-        >
-          {menuItemList}
-        </AccordionDetails>
-      </Accordion>
-    </div>
+    <Accordion disableGutters defaultExpanded>
+      <AccordionSummary>
+        <h3 className="mont">{name}</h3>
+      </AccordionSummary>
+      <AccordionDetails
+        sx={{
+          padding: 0,
+        }}
+      >
+        {menuItemList}
+      </AccordionDetails>
+    </Accordion>
   );
 }
