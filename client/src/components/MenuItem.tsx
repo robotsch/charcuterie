@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
@@ -10,14 +11,14 @@ export default function MenuItem(props: FoodItem) {
 
   return (
     <Card sx={{ maxWidth: 900 }}>
-      <CardContent>
+      <CardContent sx={{ padding: 0 }}>
         <div className="menuItem">
           <div className="menuItem-img-container">
             <img src={url} alt="FOOD"></img>
           </div>
           <div>
-            <h1>{name}</h1>
-            <p>{description}</p>
+            <span>{name}</span>
+            <Typography>{description}</Typography>
             <div>${(price / 100).toFixed(2)}</div>
           </div>
         </div>

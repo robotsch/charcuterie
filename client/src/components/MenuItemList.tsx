@@ -23,11 +23,17 @@ export default function MenuItemList(props: Category) {
 
   return (
     <div>
-      <Accordion>
+      <Accordion disableGutters defaultExpanded>
         <AccordionSummary>
-          <h1>{name}</h1>
+          <h3 className="mont">{name}</h3>
         </AccordionSummary>
-        <AccordionDetails>{menuItemList}</AccordionDetails>
+        <AccordionDetails
+          sx={{
+            padding: 0,
+          }}
+        >
+          {menuItemList}
+        </AccordionDetails>
       </Accordion>
     </div>
   );
