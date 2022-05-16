@@ -1,0 +1,24 @@
+.menuItem-img-container {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  overflow: hidden;
+  margin-left: 5px;
+  border-radius: 10px;
+}
+
+.menuItem-img-container > img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  transition: transform 0.3s;
+}
+
+.menuItem {
+  display: flex;
+}
+
+// .menuItem > div:last-child {
+
+// }

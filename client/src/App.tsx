@@ -1,10 +1,9 @@
 import { useState } from "react";
 import "./App.scss";
 
-// import MenuItem from "./components/MenuItem";
 import MenuItemList from "./components/MenuItemList";
 
-import { FoodItem, Category } from "../ts/foodItem_interface";
+import { Category } from "../ts/foodItem_interface";
 
 export default function App() {
   const salads: Category = {
@@ -63,7 +62,6 @@ export default function App() {
 
   return (
     <div className="App">
-      {/* <MenuItemList menu={menuItems}></MenuItemList> */}
       {categoryMenu}
     </div>
   );

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import MenuItem from "./MenuItem";
 
@@ -22,9 +22,13 @@ export default function MenuItemList(props: Category) {
   });
 
   return (
-    <section>
-      <h1>{name}</h1>
-      {menuItemList}
-    </section>
+    <div>
+      <Accordion>
+        <AccordionSummary>
+          <h1>{name}</h1>
+        </AccordionSummary>
+        <AccordionDetails>{menuItemList}</AccordionDetails>
+      </Accordion>
+    </div>
   );
 }
