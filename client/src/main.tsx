@@ -5,8 +5,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import CurrentOrder from "./components/CurrentOrder";
 import Menu from "./components/Menu";
+import TemporaryDrawer from "./components/Drawer";
 
-import { categoryMenu, order } from "./mockdata";
+import { order } from "./mockdata";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -16,15 +17,26 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route
           path="/current-order"
           element={
-            <CurrentOrder
-              group={order.group}
-              table={order.table}
-              timePlaced={order.timePlaced}
-              orderFoodItems={order.orderFoodItems}
-            />
+            <>
+              <TemporaryDrawer />
+              <CurrentOrder
+                group={order.group}
+                table={order.table}
+                timePlaced={order.timePlaced}
+                orderFoodItems={order.orderFoodItems}
+              />
+            </>
           }
         />
-        <Route path="/menu" element={<Menu />} />
+        <Route
+          path="/menu"
+          element={
+            <>
+              <TemporaryDrawer />
+              <Menu />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
