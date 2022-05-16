@@ -4,7 +4,7 @@ import "./App.scss";
 import MenuItemList from "./components/MenuItemList";
 
 import { Category } from "../ts/foodItem_interface";
-import TemporaryDrawer from "./components/SidebarDrawer";
+import TemporaryDrawer from "./components/Drawer";
 
 export default function App() {
   const salads: Category = {
