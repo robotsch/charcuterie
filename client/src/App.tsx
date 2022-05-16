@@ -4,6 +4,7 @@ import "./App.scss";
 import MenuItemList from "./components/MenuItemList";
 
 import { Category } from "../ts/foodItem_interface";
+import TemporaryDrawer from "./components/SidebarDrawer";
 
 export default function App() {
   const salads: Category = {
@@ -60,8 +61,11 @@ export default function App() {
     );
   });
 
+  const [state, setState] = useState({ left: false });
+
   return (
     <div className="App">
+      <TemporaryDrawer />
       {categoryMenu}
     </div>
   );
