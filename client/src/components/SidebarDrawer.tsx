@@ -8,48 +8,43 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
-type Anchor = "top" | "left" | "bottom" | "right";
+type Anchor = "top";
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     top: false,
-    left: false,
-    bottom: false,
-    right: false,
   });
 
-  const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
-
-      setState({ ...state, [anchor]: open });
-    };
+  const toggleDrawer = (anchor: Anchor, open: boolean) => () => {
+    setState({ ...state, [anchor]: open });
+  };
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: "auto" }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["View Current Order", "view Table", "View Bill / Pay Now"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+        {[
+          { text: "View Current Order", icon: <ListAltIcon /> },
+          { text: "view Table", icon: <TableRestaurantIcon /> },
+          { text: "View Bill / Pay Now", icon: <AttachMoneyIcon /> },
+        ].map((pair) => (
+          <ListItem key={pair.text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {pair.icon}
+              </ListItemIcon>
+              <ListItemText primary={pair.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
       <Divider />
       <List>
@@ -64,14 +59,17 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      <React.Fragment key="left">
-        <Button onClick={toggleDrawer("left", true)}>left</Button>
+      <React.Fragment key="top">
+        <Button onClick={toggleDrawer("top", true)}>
+          <MenuIcon />
+        </Button>
+        <h2 className="mont">The Red Blossom</h2>
         <Drawer
-          anchor={"left"}
-          open={state["left"]}
-          onClose={toggleDrawer("left", false)}
+          anchor={"top"}
+          open={state["top"]}
+          onClose={toggleDrawer("top", false)}
         >
-          {list("left")}
+          {list("top")}
         </Drawer>
       </React.Fragment>
     </div>
