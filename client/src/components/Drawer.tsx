@@ -13,6 +13,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import Link from "@mui/material/Link";
 
 type Anchor = "top";
 
@@ -33,12 +34,20 @@ export default function TemporaryDrawer() {
     >
       <List>
         {[
-          { text: "Menu", icon: <MenuBookIcon /> },
-          { text: "Current Order", icon: <ListAltIcon /> },
-          { text: "Table", icon: <TableRestaurantIcon /> },
-          { text: "Bill / Pay Now", icon: <AttachMoneyIcon /> },
+          { text: "Menu", icon: <MenuBookIcon />, link: "/menu" },
+          {
+            text: "Current Order",
+            icon: <ListAltIcon />,
+            link: "/current-order",
+          },
+          { text: "Table", icon: <TableRestaurantIcon />, link: "/table" },
+          { text: "Bill / Pay Now", icon: <AttachMoneyIcon />, link: "/bill" },
         ].map((pair) => (
-          <ListItem key={pair.text} disablePadding>
+          <ListItem
+            key={pair.text}
+            component={Link}
+            href={pair.link}
+          >
             <ListItemButton>
               <ListItemIcon>{pair.icon}</ListItemIcon>
               <ListItemText primary={pair.text} />
