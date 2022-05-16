@@ -7,7 +7,7 @@ router.get("/", (req: Request, res: Response) => {
   const regex = /^[0-9a-zA-Z]{1,16}$/
 
   const id1 = req.query.id1 as string
-  const id2 = req.query.id as string
+  const id2 = req.query.id2 as string
   
   if(id1.match(regex) && id2.match(regex)){
     req.session.restaurant_id = id1
@@ -15,7 +15,6 @@ router.get("/", (req: Request, res: Response) => {
   } else {
     res.send('Invalid parameters')
   }
-
 })
 
 module.exports = router
