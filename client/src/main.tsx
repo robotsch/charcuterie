@@ -37,6 +37,22 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </>
           }
         />
+         <Route
+          path="/table"
+          element={
+            <>
+              <TemporaryDrawer />
+            </>
+          }
+        />
+         <Route
+          path="/bill"
+          element={
+            <>
+              <TemporaryDrawer />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
