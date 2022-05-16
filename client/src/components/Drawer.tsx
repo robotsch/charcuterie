@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import { Typography } from "@mui/material";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 type Anchor = "top";
 
@@ -33,9 +33,10 @@ export default function TemporaryDrawer() {
     >
       <List>
         {[
-          { text: "View Current Order", icon: <ListAltIcon /> },
-          { text: "view Table", icon: <TableRestaurantIcon /> },
-          { text: "View Bill / Pay Now", icon: <AttachMoneyIcon /> },
+          { text: "Menu", icon: <MenuBookIcon /> },
+          { text: "Current Order", icon: <ListAltIcon /> },
+          { text: "Table", icon: <TableRestaurantIcon /> },
+          { text: "Bill / Pay Now", icon: <AttachMoneyIcon /> },
         ].map((pair) => (
           <ListItem key={pair.text} disablePadding>
             <ListItemButton>
@@ -62,7 +63,9 @@ export default function TemporaryDrawer() {
         <Button onClick={toggleDrawer("top", true)}>
           <MenuIcon />
         </Button>
-        <span id="restaurant-name"><span>Red</span> <span>Blossom</span></span>
+        <span id="restaurant-name">
+          <span>Red</span> <span>Blossom</span>
+        </span>
         <Drawer
           anchor={"top"}
           open={state["top"]}
