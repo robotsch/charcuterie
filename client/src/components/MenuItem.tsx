@@ -1,9 +1,9 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
-import { Item } from "../../ts/menuItem_interface";
+import { FoodItem } from "../../ts/foodItem_interface";
 
-export default function MenuItem(props: Item) {
+export default function MenuItem(props: FoodItem) {
   const { name, price, url, description } = props;
 
   return (
