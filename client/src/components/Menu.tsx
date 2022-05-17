@@ -50,14 +50,12 @@ export default function Menu() {
 
   return (
     <ToggleDrawerProvider>
-      {/* <MenuItemPage>{categoryMenu}</MenuItemPage> */}
       <MenuItemPage
         menuItem={menuItem}
         isOpen={isOpen}
         toggleDrawer={toggleDrawer}
       />
       {categoryMenu}
-      {/* {categoryMenu} <MenuItemPage /> */}
     </ToggleDrawerProvider>
   );
 }

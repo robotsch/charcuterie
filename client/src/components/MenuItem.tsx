@@ -12,25 +12,13 @@ import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 import "./MenuItem.scss";
 
 export default function MenuItem(props: any) {
-  const { id, name, price, url, description, setMenuItem, toggleDrawer } =
-    props;
+  const { id, name, price, url, description, setMenuItem } = props;
 
-  // const { toggleDrawer } = useContext(toggleDrawerContext);
-
-  // const setMenuOpenDrawer = () => {
-  //   setMenuItem({ id, name, price, url, description })
-  //   toggleDrawer(true);
-  // }
+  const { toggleDrawer } = useContext(toggleDrawerContext);
 
   return (
     <Card sx={{ maxWidth: 900, height: 120 }}>
-      <CardActionArea
-        // onClick={() => {
-        //   toggleDrawer(true);
-        //   setMenuItem({ id, name, price, url, description });
-        // }}
-        onClick={toggleDrawer(true)}
-      >
+      <CardActionArea onClick={toggleDrawer(true)}>
         <CardContent
           sx={{ padding: 0 }}
           onClick={() => setMenuItem({ id, name, price, url, description })}
