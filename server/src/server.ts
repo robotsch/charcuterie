@@ -1,33 +1,33 @@
 require('dotenv').config({ silent: true });
 import express, { Request, Response } from 'express';
-import { createServer } from 'http'
+import { createServer } from 'http';
 import cors from 'cors';
 import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import QRcode from 'qrcode';
-import { Server } from 'socket.io'
-import cookie from 'cookie'
+import { Server, Socket } from 'socket.io';
+import cookie from 'cookie';
 
-const clientPromise = require('./db/db')
+const clientPromise = require('./db/db');
 
 const app = express();
 app.use(morgan('dev'));
-app.use(cors({origin: ['http://localhost:3000'], credentials: true}));
+app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
 app.use(bodyParser.json());
 
 /**
- * ============================================================ 
+ * ============================================================
  * Session setup
  * ============================================================
  */
 
 declare module 'express-session' {
   export interface SessionData {
-    restaurant_id: string,
-    table_id: string | undefined,
-    name: string | undefined,
+    restaurant_id: string;
+    table_id: string | undefined;
+    name: string | undefined;
   }
 }
 
@@ -44,32 +44,30 @@ app.use(
 );
 
 /**
- * ============================================================ 
+ * ============================================================
  * Socket setup
  * ============================================================
  */
 
-const server = createServer(app)
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000"
-  }
-})
+    origin: 'http://localhost:3000',
+  },
+});
 //======================================
-const getApiAndEmit = (socket: any) => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
-}
-let interval: any
-io.on("connection", (socket) => {
+
+let interval: any;
+io.on('connection', (socket) => {
   console.log(`New client connected`);
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
+  socket.on('join', (data) => {
+    io.in(socket.id).socketsJoin(`rst${data.restaurant}.tbl${data.table}`)
+  });
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
   });
 });
+
 //======================================
 
 // Router imports
@@ -81,7 +79,7 @@ app.use('/api/landing', sessionRoute);
 app.use('/api/name-input', customerNameRoute);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send({response: 'test'}).status(200);
+  res.send({ response: 'test' }).status(200);
 });
 
 server.listen(3001, () => console.log(`Server running on ${3001}`));
