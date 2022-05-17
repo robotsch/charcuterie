@@ -31,8 +31,6 @@ export interface Order {
 }
 
 export interface OrderList {
-  group: number;
-  table: string;
   orders: Order[];
 }
 // interface optionSection {

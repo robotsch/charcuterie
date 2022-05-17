@@ -11,12 +11,7 @@ export default function MenuItemList(props: Category) {
     return (
       <MenuItem
         key={menuItem.id}
-        id={menuItem.id}
-        category={menuItem.category}
-        name={menuItem.name}
-        price={menuItem.price}
-        url={menuItem.url}
-        description={menuItem.description}
+        {...menuItem}
       ></MenuItem>
     );
   });

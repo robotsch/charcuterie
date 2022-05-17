@@ -1,3 +1,10 @@
-export default function TablePastOrderItem() {
-  return <h1>a432432</h1>;
+import { OrderFoodItem } from "../../ts/foodItem_interface";
+
+export default function TablePastOrderItem(props: OrderFoodItem) {
+  const { name, price, url, description, quantity } = props;
+  return (
+    <div>
+      {quantity} x {name}
+    </div>
+  );
 }
