@@ -7,13 +7,15 @@ import { FoodItem } from "../../ts/foodItem_interface";
 
 import "./MenuItem.scss";
 
-export default function MenuItem(props: FoodItem) {
-  const { name, price, url, description } = props;
+export default function MenuItem(props: any) {
+  const { id, name, price, url, description, setMenuItem } = props;
 
   return (
     <Card sx={{ maxWidth: 900, height: 120 }}>
-      <CardActionArea>
-        <CardContent sx={{ padding: 0}}>
+      <CardActionArea
+        onClick={() => setMenuItem({ id, name, price, url, description })}
+      >
+        <CardContent sx={{ padding: 0 }}>
           <div className="menuItem">
             <div className="menuItem-img-container">
               <img src={url} alt="FOOD"></img>

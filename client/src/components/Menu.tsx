@@ -1,18 +1,41 @@
+import { useState } from "react";
+
 import MenuItemList from "./MenuItemList";
 import MenuItemPage from "./MenuItemPage";
 
 import { salads, soups } from "../mockdata";
 
 export default function Menu() {
+  const [menuItem, setMenuItem] = useState({
+    id: 1,
+    name: "Seaweed & Tofu Salad",
+    category: 1,
+    price: 1600,
+    url: "/assets/img/seaweed-tofu-salad.jpeg",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  });
+
+  // console.log(menuItem);
+
   const categories = [salads, soups];
 
   const categoryMenu = categories.map((category) => {
-    return <MenuItemList key={category.id} {...category}></MenuItemList>;
+    return (
+      <MenuItemList
+        setMenuItem={setMenuItem}
+        key={category.id}
+        {...category}
+      ></MenuItemList>
+    );
   });
 
   return (
     <>
-      <MenuItemPage>{categoryMenu}</ MenuItemPage>
+      {/* <MenuItemPage>{categoryMenu}</MenuItemPage> */}
+      <MenuItemPage menuItem={menuItem} />
+      {categoryMenu}
+      {/* {categoryMenu} <MenuItemPage /> */}
     </>
   );
 }
