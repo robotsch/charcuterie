@@ -1,6 +1,4 @@
-import { Category, Order } from "../ts/foodItem_interface";
-
-import MenuItemList from "./components/MenuItemList";
+import { Category, Order, OrderList } from "../ts/foodItem_interface";
 
 export const salads: Category = {
   id: 1,
@@ -43,8 +41,8 @@ export const soups: Category = {
   ],
 };
 
-
 export const order: Order = {
+  id: 1,
   group: 1,
   table: "2",
   timePlaced: "placeholder time",
@@ -72,3 +70,8 @@ export const order: Order = {
   ],
 };
 
+export const orderList: OrderList = {
+  group: 1,
+  table: "2",
+  orders: [order],
+};

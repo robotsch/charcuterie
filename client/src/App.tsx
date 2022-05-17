@@ -33,6 +33,7 @@ export default function App() {
       <TemporaryDrawer />
       {categoryMenu}
       <CurrentOrder
+        id={order.id}
         group={order.group}
         table={order.table}
         timePlaced={order.timePlaced}

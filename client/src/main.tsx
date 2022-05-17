@@ -6,6 +6,7 @@ import App from "./App";
 import CurrentOrder from "./components/CurrentOrder";
 import Menu from "./components/Menu";
 import TemporaryDrawer from "./components/Drawer";
+import Table from "./components/Table";
 
 import { order } from "./mockdata";
 
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <>
               <TemporaryDrawer />
               <CurrentOrder
+                id={order.id}
                 group={order.group}
                 table={order.table}
                 timePlaced={order.timePlaced}
@@ -42,6 +44,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={
             <>
               <TemporaryDrawer />
+              <Table />
             </>
           }
         />
