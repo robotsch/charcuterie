@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import { CardMedia, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -5,17 +7,34 @@ import { CardActionArea } from "@mui/material";
 
 import { FoodItem } from "../../ts/foodItem_interface";
 
+import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
+
 import "./MenuItem.scss";
 
 export default function MenuItem(props: any) {
-  const { id, name, price, url, description, setMenuItem } = props;
+  const { id, name, price, url, description, setMenuItem, toggleDrawer } =
+    props;
+
+  // const { toggleDrawer } = useContext(toggleDrawerContext);
+
+  // const setMenuOpenDrawer = () => {
+  //   setMenuItem({ id, name, price, url, description })
+  //   toggleDrawer(true);
+  // }
 
   return (
     <Card sx={{ maxWidth: 900, height: 120 }}>
       <CardActionArea
-        onClick={() => setMenuItem({ id, name, price, url, description })}
+        // onClick={() => {
+        //   toggleDrawer(true);
+        //   setMenuItem({ id, name, price, url, description });
+        // }}
+        onClick={toggleDrawer(true)}
       >
-        <CardContent sx={{ padding: 0 }}>
+        <CardContent
+          sx={{ padding: 0 }}
+          onClick={() => setMenuItem({ id, name, price, url, description })}
+        >
           <div className="menuItem">
             <div className="menuItem-img-container">
               <img src={url} alt="FOOD"></img>

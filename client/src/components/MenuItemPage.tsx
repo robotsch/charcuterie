@@ -1,4 +1,12 @@
-import { useState, KeyboardEvent, MouseEvent } from "react";
+import {
+  useState,
+  KeyboardEvent,
+  MouseEvent,
+  useContext,
+  cloneElement,
+} from "react";
+
+// import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -7,20 +15,28 @@ import Button from "@mui/material/Button";
 export default function MenuItemPage(props: any) {
   const { name, price, url, description } = props.menuItem;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, toggleDrawer } = props;
 
-  const toggleDrawer =
-    (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
-          (event as KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
+  // const { isOpen, toggleDrawer } = useContext(toggleDrawerContext);
+  // const isOpen = useContext(toggleDrawerContext);
 
-      setIsOpen(open);
-    };
+  // console.log("isOpen in MenuItemPage", isOpen);
+  // console.log("toggleDrawer in MenuItemPage", toggleDrawer);
+
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // const toggleDrawer =
+  //   (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
+  //     if (
+  //       event.type === "keydown" &&
+  //       ((event as KeyboardEvent).key === "Tab" ||
+  //         (event as KeyboardEvent).key === "Shift")
+  //     ) {
+  //       return;
+  //     }
+
+  //     setIsOpen(open);
+  //   };
 
   return (
     <>
