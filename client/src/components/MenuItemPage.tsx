@@ -1,10 +1,4 @@
-import {
-  useState,
-  KeyboardEvent,
-  MouseEvent,
-  useContext,
-  cloneElement,
-} from "react";
+import { useContext } from "react";
 
 import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 

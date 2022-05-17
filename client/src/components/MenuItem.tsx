@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { CardMedia, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { CardActionArea } from "@mui/material";
