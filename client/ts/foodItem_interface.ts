@@ -23,12 +23,16 @@ export interface OrderFoodItem extends FoodItem {
 }
 
 export interface Order {
+  id: number;
   group: number;
   table: string;
   timePlaced: string;
   orderFoodItems: OrderFoodItem[];
 }
 
+export interface OrderList {
+  orders: Order[];
+}
 // interface optionSection {
 //   title: string;
 //   options: option[];

@@ -14,11 +14,6 @@ export default function MenuItem(props: FoodItem) {
     <Card sx={{ maxWidth: 900, height: 120 }}>
       <CardActionArea>
         <CardContent sx={{ padding: 0}}>
-          {/* <CardMedia
-            component="img"
-            style={{ height: 100, width: 100 }}
-            image={url}
-          /> */}
           <div className="menuItem">
             <div className="menuItem-img-container">
               <img src={url} alt="FOOD"></img>

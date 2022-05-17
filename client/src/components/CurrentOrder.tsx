@@ -8,18 +8,7 @@ export default function CurrentOrder(props: Order) {
   const { group, table, timePlaced, orderFoodItems } = props;
 
   const foodItems = orderFoodItems.map((foodItem) => {
-    return (
-      <CurrentOrderItem
-        key={foodItem.id}
-        id={foodItem.id}
-        name={foodItem.name}
-        category={foodItem.category}
-        price={foodItem.price}
-        url={foodItem.url}
-        description={foodItem.description}
-        quantity={foodItem.quantity}
-      />
-    );
+    return <CurrentOrderItem key={foodItem.id} {...foodItem} />;
   });
 
   return (

@@ -12,7 +12,7 @@ import MenuItemList from "./components/MenuItemList";
 import TemporaryDrawer from "./components/Drawer";
 import CurrentOrder from "./components/CurrentOrder";
 
-import { salads, soups, order } from "./mockdata";
+import { salads, soups, order1 } from "./mockdata";
 
 export default function App() {
   const categories = [salads, soups];
@@ -33,10 +33,11 @@ export default function App() {
       <TemporaryDrawer />
       {categoryMenu}
       <CurrentOrder
-        group={order.group}
-        table={order.table}
-        timePlaced={order.timePlaced}
-        orderFoodItems={order.orderFoodItems}
+        id={order1.id}
+        group={order1.group}
+        table={order1.table}
+        timePlaced={order1.timePlaced}
+        orderFoodItems={order1.orderFoodItems}
       />
     </div>
   );
