@@ -10,10 +10,10 @@ import QRcode from 'qrcode';
 
 const app = express();
 
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({ origin: ['http://localhost:3000/'], credentials: true }));
 app.use(bodyParser.json());
 
 declare module 'express-session' {
