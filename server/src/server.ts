@@ -8,12 +8,13 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import QRcode from 'qrcode';
 import { Server } from 'socket.io'
+import cookie from 'cookie'
 
 const clientPromise = require('./db/db')
 
 const app = express();
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors({origin: ['http://localhost:3000'], credentials: true}));
 app.use(bodyParser.json());
 
 /**
@@ -49,12 +50,27 @@ app.use(
  */
 
 const server = createServer(app)
-const io = new Server(server, {})
-
-io.on('connection', (socket: any) => {
-  console.log('successful connection')
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000"
+  }
 })
-
+//======================================
+const getApiAndEmit = (socket: any) => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  socket.emit("FromAPI", response);
+}
+let interval: any
+io.on("connection", (socket) => {
+  console.log(`New client connected`);
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+    clearInterval(interval);
+  });
+});
+//======================================
 
 // Router imports
 const sessionRoute = require('./routes/table-session-router');
@@ -65,7 +81,7 @@ app.use('/api/landing', sessionRoute);
 app.use('/api/name-input', customerNameRoute);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('test');
+  res.send({response: 'test'}).status(200);
 });
 
 server.listen(3001, () => console.log(`Server running on ${3001}`));
