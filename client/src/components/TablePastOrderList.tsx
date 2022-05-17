@@ -1,6 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
-import CurrentOrderItem from "./CurrentOrderItem";
 import TablePastOrderItem from "./TablePastOrderItem";
 
 import { FoodItem, Category, OrderList } from "../../ts/foodItem_interface";
@@ -11,7 +10,7 @@ export default function TablePastOrderList(props: OrderList) {
   const orderSection = orders.map((order) => {
     const orderedFoodItems = order.orderFoodItems.map((foodItem) => {
       return (
-        <CurrentOrderItem
+        <TablePastOrderItem
           key={foodItem.id}
           {...foodItem}
         />

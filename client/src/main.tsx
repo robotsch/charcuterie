@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </>
           }
         />
-         <Route
+        <Route
           path="/table"
           element={
             <>
@@ -48,7 +48,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </>
           }
         />
-         <Route
+        <Route
           path="/bill"
           element={
             <>

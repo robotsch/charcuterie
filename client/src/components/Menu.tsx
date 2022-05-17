@@ -9,9 +9,7 @@ export default function Menu() {
     return (
       <MenuItemList
         key={category.id}
-        id={category.id}
-        name={category.name}
-        menuItems={category.menuItems}
+        {...category}
       ></MenuItemList>
     );
   });
