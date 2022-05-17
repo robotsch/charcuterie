@@ -1,21 +1,19 @@
-import express, { Request, Response, Router,} from 'express';
+import express, { Request, Response, Router } from 'express';
 
-const router: Router = express.Router()
+const router: Router = express.Router();
 
-router.post("/", (req: Request, res: Response) => {
-  
-  const regex = /^[0-9a-zA-Z]*$/
+router.post('/', (req: Request, res: Response) => {
+  const regex = /^[0-9a-zA-Z]/;
 
-  const customerName = req.body.name.trim()
+  const customerName = req.body.name.trim();
 
   if(req.body.name.match(regex)){
     req.session.name = customerName
     req.session.save((error) => console.log(error));
     res.send('Success')
   } else {
-    res.send('Invalid name')
+    res.send('Invalid name');
   }
-  
-})
+});
 
-module.exports = router
+module.exports = router;
