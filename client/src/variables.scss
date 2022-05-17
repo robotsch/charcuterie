@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+$pale-purple: #e7e9ff;
+$copper: #b76d68;
+$orange-red: #d23030;
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.mont {
+  font-family: "Montserrat";
+  margin: 0;
+}
+
+h3.mont {
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+h5.mont {
+  font-weight: 600;
+  letter-spacing: 0.07em;
+}

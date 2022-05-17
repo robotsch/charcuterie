@@ -1,43 +1,43 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.scss";
 
-function App() {
-  const [count, setCount] = useState(0)
+import {
+  Category,
+  FoodItem,
+  Order,
+  OrderFoodItem,
+} from "../ts/foodItem_interface";
+
+import MenuItemList from "./components/MenuItemList";
+import TemporaryDrawer from "./components/Drawer";
+import CurrentOrder from "./components/CurrentOrder";
+
+import { salads, soups, order } from "./mockdata";
+
+export default function App() {
+  const categories = [salads, soups];
+
+  const categoryMenu = categories.map((category) => {
+    return (
+      <MenuItemList
+        key={category.id}
+        id={category.id}
+        name={category.name}
+        menuItems={category.menuItems}
+      ></MenuItemList>
+    );
+  });
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <TemporaryDrawer />
+      {categoryMenu}
+      <CurrentOrder
+        group={order.group}
+        table={order.table}
+        timePlaced={order.timePlaced}
+        orderFoodItems={order.orderFoodItems}
+      />
     </div>
-  )
+  );
 }
-
-export default App

@@ -1,0 +1,22 @@
+@import "./variables.scss";
+
+#drawer {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  height: 47px;
+}
+
+#restaurant-name {
+  font-family: "Bebas Neue";
+  font-size: 28px;
+  letter-spacing: 0.15em;
+}
+
+#restaurant-name > span:first-child {
+  color: $orange-red;
+}
+
+#restaurant-name > span:last-child {
+  color: $copper;
+}

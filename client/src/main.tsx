@@ -1,10 +1,59 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+import App from "./App";
+import CurrentOrder from "./components/CurrentOrder";
+import Menu from "./components/Menu";
+import TemporaryDrawer from "./components/Drawer";
+
+import { order } from "./mockdata";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route
+          path="/current-order"
+          element={
+            <>
+              <TemporaryDrawer />
+              <CurrentOrder
+                group={order.group}
+                table={order.table}
+                timePlaced={order.timePlaced}
+                orderFoodItems={order.orderFoodItems}
+              />
+            </>
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            <>
+              <TemporaryDrawer />
+              <Menu />
+            </>
+          }
+        />
+         <Route
+          path="/table"
+          element={
+            <>
+              <TemporaryDrawer />
+            </>
+          }
+        />
+         <Route
+          path="/bill"
+          element={
+            <>
+              <TemporaryDrawer />
+            </>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
-)
+);
