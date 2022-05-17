@@ -12,6 +12,8 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
 export default function MenuItemPage(props: any) {
   const { name, price, url, description } = props.menuItem;
 
@@ -19,18 +21,28 @@ export default function MenuItemPage(props: any) {
 
   return (
     <>
-      <Button onClick={toggleDrawer(true)}>{"right"}</Button>
       <Drawer anchor={"right"} open={isOpen} onClose={toggleDrawer(false)}>
         <Box
           sx={{ width: "100vw" }}
           role="presentation"
-          onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
         >
-          {url}
-          {name}
-          {price}
+          <Button
+            size="small"
+            variant="contained"
+            sx={{ position: "absolute" }}
+            onClick={toggleDrawer(false)}
+          >
+            <ArrowBackIosNewIcon />
+          </Button>
+          <div className="menuItemPage-img-container">
+            <img src={url} alt="FOOD"></img>
+          </div>
+          <h3 className="mont">{name}</h3>
           {description}
+          <Box sx={{ backgroundColor: "#1B2432" }}>
+            <Button variant="contained">${(price / 100).toFixed(2)}</Button>
+          </Box>
         </Box>
       </Drawer>
     </>
