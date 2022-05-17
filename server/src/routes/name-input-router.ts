@@ -10,7 +10,8 @@ router.post("/", (req: Request, res: Response) => {
 
   if(req.body.name.match(regex)){
     req.session.name = customerName
-    res.send("okay")
+    req.session.save((error) => console.log(error));
+    res.send('Success')
   } else {
     res.send('Invalid name')
   }
