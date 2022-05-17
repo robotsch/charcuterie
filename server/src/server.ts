@@ -7,7 +7,7 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import QRcode from 'qrcode';
-import { Server } from 'socket.io'
+
 
 const clientPromise = require('./db/db')
 
@@ -48,14 +48,14 @@ app.use(
  * ============================================================
  */
 
-const server = createServer(app)
-const io = new Server(server, {
+// const server = createServer(app)
+// const io = new Server(server, {
 
-})
+// })
 
-io.on('connection', (socket) => {
-
-})
+// io.on('connection', (socket: any) => {
+//   console.log('successful connection')
+// })
 
 
 // Router imports
