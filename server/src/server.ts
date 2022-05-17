@@ -63,6 +63,9 @@ io.on('connection', (socket) => {
   socket.on('join', (data) => {
     io.in(socket.id).socketsJoin(`rst${data.restaurant}.tbl${data.table}`)
   });
+  socket.on('trigger', (data) => {
+    
+  });
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
