@@ -6,13 +6,13 @@ import MenuItemPage from "./MenuItemPage";
 import { salads, soups } from "../mockdata";
 
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
-import { socketContext } from "../providers/SocketProvider";
+// import { socketContext } from "../providers/SocketProvider";
 
 export default function Menu() {
 
-  const { socket } = useContext(socketContext);
+  // const { socket } = useContext(socketContext);
 
-  console.log(socket);
+  // console.log(socket);
 
   const [menuItem, setMenuItem] = useState({
     id: 1,

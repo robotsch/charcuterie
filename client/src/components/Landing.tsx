@@ -4,54 +4,55 @@ import { useRef, useEffect, useState, useContext } from "react";
 import { io } from "socket.io-client";
 import { useSearchParams } from "react-router-dom";
 
-import { socketContext } from "../providers/SocketProvider";
 import { restaurantContext } from "../providers/RestaurantProvider";
 import { tableContext } from "../providers/TableProvider";
+import { ConnectedTvTwoTone } from "@mui/icons-material";
 
-export default function Landing() {
+import UserList from "./UserList";
+
+export default function Landing(props: any) {
   axios.defaults.withCredentials = true;
-  // const ws = useRef<null | any>(null);
 
-  const { socket } = useContext(socketContext);
+  const { user, users, sendNewUser, setName } = props;
 
   const [searchParms, getSearchParams] = useSearchParams();
 
-  const { restaurant, setRestaurant } = useContext(restaurantContext);
-  setRestaurant(searchParms.get("id1"));
-
-  const { table, setTable } = useContext(tableContext);
-  setTable(searchParms.get("id2"));
-
   const [landingHeader, setLandingHeader] = useState(<h1>Placeholder</h1>);
 
-  useEffect(() => {
-    // axios
-    //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
-    //   .get("")
-    //   .then((res) => {
-    // DO SOMETHING TO RESPONSE HERE
-    //   landingHeader = (
-    //     <div>
-    //       <h1>WELCOME TO</h1>
-    //       <span>RED</span>
-    //       <span>BLOSSOM</span>
-    //       <h5>You are seated at table {table}</h5>
-    //     </div>
-    //   );
-    // });
-    setLandingHeader(
-      <div>
-        <h1>WELCOME TO</h1>
-        <span>RED</span>
-        <span> BLOSSOM</span>
-        <h5>You are seated at table {table}</h5>
-      </div>
-    );
+  const { restaurant, setRestaurant } = useContext(restaurantContext);
 
-    // ws.current = io("http://localhost:3001", {
-    //   query: { restaurant, table },
-    // });
-  }, []);
+  const { table, setTable } = useContext(tableContext);
+
+  // useEffect(() => {
+  //   // setRestaurant(searchParms.get("id1"));
+  //   // setTable(searchParms.get("id2"));
+  //   // axios
+  //   //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
+  //   //   .get("")
+  //   //   .then((res) => {
+  //   // DO SOMETHING TO RESPONSE HERE
+  //   //   landingHeader = (
+  //   //     <div>
+  //   //       <h1>WELCOME TO</h1>
+  //   //       <span>RED</span>
+  //   //       <span>BLOSSOM</span>
+  //   //       <h5>You are seated at table {table}</h5>
+  //   //     </div>
+  //   //   );
+  //   // });
+  //   setLandingHeader(
+  //     <div>
+  //       <h1>WELCOME TO</h1>
+  //       <span>RED</span>
+  //       <span> BLOSSOM</span>
+  //       <h5>You are seated at table {table}</h5>
+  //     </div>
+  //   );
+
+  //   // ws.current = io("http://localhost:3001", {
+  //   //   query: { restaurant, table },
+  //   // });
+  // }, []);
 
   // ws.current.on("updateOrder", () => {
   //   console.log("my brother in christ the order is updating");
@@ -61,30 +62,7 @@ export default function Landing() {
     event.preventDefault();
     const name = event.target[0].value;
     console.log("NAME", name);
-
-    // ws.current.emit("confirmName", { name });
-    socket.emit("joinRoom", { name });
-
-    // ws.current.emit("updateOrder", { id: 1, items: 2 });
-    socket.emit("updateOrder", { id: 1, items: 2 });
-
-    axios
-      .get("http://localhost:3001/api/landing?id1=1&id2=2")
-      .then((res) => {
-        console.log(res);
-
-        axios
-          .post("http://localhost:3001/api/name-input", { name })
-          .then((res) => {
-            console.log("socket");
-            console.log("socket", socket);
-            console.log(res);
-          })
-          .catch((error) => console.log("SESSION", error));
-      })
-      .catch((error) => console.log("RESTAURANT", error));
-
-    // .catch((res) => console.log("error", res));
+    setName(name);
   };
 
   const [body, setBody] = useState(
@@ -103,14 +81,13 @@ export default function Landing() {
     </div>
   );
 
-  // const onLoad = () => {
-  //   axios.get("http://localhost:3001/api/landing").then((res) => {console.log(RESTUARNT ID + SESSION)});
-  // };
+  console.log("users in landing", users);
 
   return (
     <div>
       {landingHeader}
       {body}
+      <UserList users={users} />
     </div>
   );
 }

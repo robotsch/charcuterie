@@ -57,30 +57,23 @@ const io = new Server(server, {
 });
 //======================================
 
+const getAllUsers = (sockets: any) => {
+  const users = [];
+  const connections = sockets.values();
+  for (const item of connections) {
+    users.push({ name: item.name, id: item.id, color: item.color });
+  }
+  return users;
+};
+
 let interval: any;
-io.on('connection', (socket) => {
-  let sockets: any;
-  socket.data = socket.handshake.query;
-  console.log(socket.handshake.query)
-  const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
-  
+io.on('connection', (socket: any) => {
   console.log(`New client connected`);
-
-  // GARBAGE
-  socket.on('joinRoom', (data) => {
-    socket.data.customerName = data.name;
-    io.in(socket.id).socketsJoin(room);
-    console.log(`${data.name} has joined room ${room}`);
-  });
-  ////////////
-
-  socket.on('updateOrder', (order) => {
-    console.log('data in server', order);
-    io.to(room).emit('updateOrder', socket.data.customerName, order);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
+   socket.on('SET_NAME', (msg: any) => {
+    const { name } = msg;
+    socket.data.name = name;
+    console.log("name", name)
+    io.emit('NEW_USER', { name });
   });
 });
 
