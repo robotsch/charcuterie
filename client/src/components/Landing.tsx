@@ -1,12 +1,16 @@
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import { io } from "socket.io-client";
 import { useSearchParams } from "react-router-dom";
 
+import { socketContext } from "../providers/SocketProvider";
+
 export default function Landing() {
   axios.defaults.withCredentials = true;
-  const ws = useRef<null | any>(null);
+  // const ws = useRef<null | any>(null);
+
+  const { socket } = useContext(socketContext);
 
   const [searchParms, getSearchParams] = useSearchParams();
   // console.log(searchParms.get("id1"));
@@ -41,9 +45,9 @@ export default function Landing() {
       </div>
     );
 
-    ws.current = io("http://localhost:3001", {
-      query: { restaurant, table },
-    });
+    // ws.current = io("http://localhost:3001", {
+    //   query: { restaurant, table },
+    // });
   }, []);
 
   // ws.current.on("updateOrder", () => {
@@ -55,9 +59,11 @@ export default function Landing() {
     const name = event.target[0].value;
     console.log("NAME", name);
 
-    ws.current.emit("confirmName", { name });
+    // ws.current.emit("confirmName", { name });
+    socket.emit("confirmName", { name });
 
-    ws.current.emit("updateOrder", { id: 1, items: 2 });
+    // ws.current.emit("updateOrder", { id: 1, items: 2 });
+    socket.emit("updateOrder", { id: 1, items: 2 });
 
     axios
       .get("http://localhost:3001/api/landing?id1=1&id2=2")
