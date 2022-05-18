@@ -5,6 +5,8 @@ import { io } from "socket.io-client";
 import { useSearchParams } from "react-router-dom";
 
 import { socketContext } from "../providers/SocketProvider";
+import { restaurantContext } from "../providers/RestaurantProvider";
+import { tableContext } from "../providers/TableProvider";
 
 export default function Landing() {
   axios.defaults.withCredentials = true;
@@ -13,11 +15,12 @@ export default function Landing() {
   const { socket } = useContext(socketContext);
 
   const [searchParms, getSearchParams] = useSearchParams();
-  // console.log(searchParms.get("id1"));
-  // console.log(searchParms.get("id2"));
 
-  const [restaurant, setRestaurant] = useState(searchParms.get("id1"));
-  const [table, setTable] = useState(searchParms.get("id2"));
+  const { restaurant, setRestaurant } = useContext(restaurantContext);
+  setRestaurant(searchParms.get("id1"));
+
+  const { table, setTable } = useContext(tableContext);
+  setTable(searchParms.get("id2"));
 
   const [landingHeader, setLandingHeader] = useState(<h1>Placeholder</h1>);
 
@@ -60,7 +63,7 @@ export default function Landing() {
     console.log("NAME", name);
 
     // ws.current.emit("confirmName", { name });
-    socket.emit("confirmName", { name });
+    socket.emit("joinRoom", { name });
 
     // ws.current.emit("updateOrder", { id: 1, items: 2 });
     socket.emit("updateOrder", { id: 1, items: 2 });
@@ -73,6 +76,8 @@ export default function Landing() {
         axios
           .post("http://localhost:3001/api/name-input", { name })
           .then((res) => {
+            console.log("socket");
+            console.log("socket", socket);
             console.log(res);
           })
           .catch((error) => console.log("SESSION", error));

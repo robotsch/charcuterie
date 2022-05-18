@@ -61,26 +61,26 @@ let interval: any;
 io.on('connection', (socket) => {
   let sockets: any;
   socket.data = socket.handshake.query;
+  console.log(socket.handshake.query)
   const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
-
+  
   console.log(`New client connected`);
 
-  socket.on('joinRoom', (name) => {
-    socket.data.customerName = name;
+  // GARBAGE
+  socket.on('joinRoom', (data) => {
+    socket.data.customerName = data.name;
     io.in(socket.id).socketsJoin(room);
-    console.log(`${name} has joined room ${room}`);
+    console.log(`${data.name} has joined room ${room}`);
   });
+  ////////////
 
   socket.on('updateOrder', (order) => {
+    console.log('data in server', order);
     io.to(room).emit('updateOrder', socket.data.customerName, order);
   });
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
-  });
-  socket.on('updateOrder', (data) => {
-    console.log("data in server", data);
-    socket.emit('new order', data);
   });
 });
 
