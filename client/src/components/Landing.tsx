@@ -1,14 +1,48 @@
 import { TextField, Button } from "@mui/material";
 import resolveProps from "@mui/utils/resolveProps";
 import axios from "axios";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import { useSearchParams } from "react-router-dom";
 
 export default function Landing() {
   axios.defaults.withCredentials = true;
   const ws = useRef<null | any>(null);
 
-  useEffect(() => {}, []);
+  const [searchParms, getSearchParams] = useSearchParams();
+  // console.log(searchParms.get("id1"));
+  // console.log(searchParms.get("id2"));
+
+  const [restaurant, setRestaurant] = useState(searchParms.get("id1"));
+  const [table, setTable] = useState(searchParms.get("id2"));
+
+  const [landingHeader, setLandingHeader] = useState(<h1>Placeholder</h1>);
+
+  useEffect(() => {
+    // axios
+    //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
+    //   .get("")
+    //   .then((res) => {
+    // DO SOMETHING TO RESPONSE HERE
+    //   landingHeader = (
+    //     <div>
+    //       <h1>WELCOME TO</h1>
+    //       <span>RED</span>
+    //       <span>BLOSSOM</span>
+    //       <h5>You are seated at table {table}</h5>
+    //     </div>
+    //   );
+    // });
+
+    setLandingHeader(
+      <div>
+        <h1>WELCOME TO</h1>
+        <span>RED</span>
+        <span> BLOSSOM</span>
+        <h5>You are seated at table {table}</h5>
+      </div>
+    );
+  }, []);
 
   const join = () => {
     ws.current = io("http://localhost:3001", { query: { data: "test" } });
@@ -46,6 +80,7 @@ export default function Landing() {
 
   return (
     <div>
+      {landingHeader}
       Please enter your name:
       <form onSubmit={submitName}>
         <TextField
