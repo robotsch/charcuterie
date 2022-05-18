@@ -40,16 +40,24 @@ export default function Landing() {
         <h5>You are seated at table {table}</h5>
       </div>
     );
+
+    ws.current = io("http://localhost:3001", {
+      query: { restaurant, table },
+    });
   }, []);
+
+  // ws.current.on("updateOrder", () => {
+  //   console.log("my brother in christ the order is updating");
+  // });
 
   const submitName = (event: any) => {
     event.preventDefault();
     const name = event.target[0].value;
     console.log("NAME", name);
 
-    ws.current = io("http://localhost:3001", {
-      query: { restaurant: restaurant, table: table, name: name },
-    });
+    ws.current.emit("confirmName", { name });
+
+    ws.current.emit("updateOrder", { id: 1, items: 2 });
 
     axios
       .get("http://localhost:3001/api/landing?id1=1&id2=2")
