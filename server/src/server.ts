@@ -59,18 +59,22 @@ const io = new Server(server, {
 
 let interval: any;
 io.on('connection', (socket) => {
+  let sockets: any;
+  socket.data = socket.handshake.query;
+  const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
+
   console.log(`New client connected`);
-  let sockets: any
-  socket.on('join', (data) => {
-    socket.data.name = data.name
-    io.in(socket.id).socketsJoin(`rst${data.restaurant}.tbl${data.table}`)
-    io.in("rst1.tbl1").fetchSockets()
-      .then((data) => sockets = data)
+
+  socket.on('joinRoom', (name) => {
+    socket.data.customerName = name;
+    io.in(socket.id).socketsJoin(room);
+    console.log(`${name} has joined room ${room}`);
   });
-  socket.on('trigger', () => {
-    console.log(io.of('/').adapter.rooms)
-    console.log(sockets[0].data)
-  })
+
+  socket.on('updateOrder', (order) => {
+    io.to(room).emit('updateOrder', socket.data.customerName, order);
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });
