@@ -1,8 +1,7 @@
 import { TextField, Button } from "@mui/material";
-import resolveProps from "@mui/utils/resolveProps";
 import axios from "axios";
 import { useRef, useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 import { useSearchParams } from "react-router-dom";
 
 export default function Landing() {
@@ -33,7 +32,6 @@ export default function Landing() {
     //     </div>
     //   );
     // });
-
     setLandingHeader(
       <div>
         <h1>WELCOME TO</h1>
@@ -44,18 +42,14 @@ export default function Landing() {
     );
   }, []);
 
-  const join = () => {
-    ws.current = io("http://localhost:3001", { query: { data: "test" } });
-    ws.current.emit("join", { restaurant: 1, table: 1, name: "test" });
-    return () => {
-      ws.current.disconnect();
-    };
-  };
-
   const submitName = (event: any) => {
     event.preventDefault();
     const name = event.target[0].value;
     console.log("NAME", name);
+
+    ws.current = io("http://localhost:3001", {
+      query: { restaurant: restaurant, table: table, name: name },
+    });
 
     axios
       .get("http://localhost:3001/api/landing?id1=1&id2=2")
@@ -69,18 +63,13 @@ export default function Landing() {
           })
           .catch((error) => console.log("SESSION", error));
       })
-      .catch((error) => console.log("RESTARUATN", error));
+      .catch((error) => console.log("RESTAURANT", error));
 
     // .catch((res) => console.log("error", res));
   };
 
-  // const onLoad = () => {
-  //   axios.get("http://localhost:3001/api/landing").then((res) => {console.log(RESTUARNT ID + SESSION)});
-  // };
-
-  return (
+  const [body, setBody] = useState(
     <div>
-      {landingHeader}
       Please enter your name:
       <form onSubmit={submitName}>
         <TextField
@@ -90,10 +79,19 @@ export default function Landing() {
           variant="standard"
           placeholder="(max 15 characters)"
         ></TextField>
-        <Button type="submit" onClick={join}>
-          Confirm
-        </Button>
+        <Button type="submit">Confirm</Button>
       </form>
+    </div>
+  );
+
+  // const onLoad = () => {
+  //   axios.get("http://localhost:3001/api/landing").then((res) => {console.log(RESTUARNT ID + SESSION)});
+  // };
+
+  return (
+    <div>
+      {landingHeader}
+      {body}
     </div>
   );
 }
