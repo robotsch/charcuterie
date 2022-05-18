@@ -65,11 +65,8 @@ io.on('connection', (socket) => {
 
   console.log(`New client connected`);
 
-  socket.on('joinRoom', (name) => {
-    socket.data.customerName = name;
-    io.in(socket.id).socketsJoin(room);
-    console.log(`${name} has joined room ${room}`);
-  });
+  io.in(socket.id).socketsJoin(room);
+  console.log(`${socket.data.name} has joined room ${room}`);
 
   socket.on('updateOrder', (order) => {
     io.to(room).emit('updateOrder', socket.data.customerName, order);
