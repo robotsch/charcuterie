@@ -56,15 +56,6 @@ const io = new Server(server, {
 });
 //======================================
 
-const getAllUsers = (sockets: any) => {
-  const users = [];
-  const connections = sockets.values();
-  for (const item of connections) {
-    users.push({ name: item.name, id: item.id, color: item.color });
-  }
-  return users;
-};
-
 let interval: any;
 io.on('connection', (socket) => {
   let sockets: any;
