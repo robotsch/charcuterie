@@ -2,14 +2,15 @@ import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 import MenuItem from "./MenuItem";
 
-import { FoodItem, Category } from "../../ts/foodItem_interface";
+import { FoodItem } from "../../ts/foodItem_interface";
 
 export default function MenuItemList(props: any) {
-  const { name, menuItems, setMenuItem } = props;
+  const { name, menuItems, setMenuItem, toggleDrawer } = props;
 
   const menuItemList = menuItems.map((menuItem: FoodItem) => {
     return (
       <MenuItem
+        toggleDrawer={toggleDrawer}
         setMenuItem={setMenuItem}
         key={menuItem.id}
         {...menuItem}

@@ -5,6 +5,8 @@ import MenuItemPage from "./MenuItemPage";
 
 import { salads, soups } from "../mockdata";
 
+import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
+
 export default function Menu() {
   const [menuItem, setMenuItem] = useState({
     id: 1,
@@ -16,13 +18,29 @@ export default function Menu() {
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   });
 
-  // console.log(menuItem);
+  console.log("menuItem in Menu", menuItem);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDrawer =
+    (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as KeyboardEvent).key === "Tab" ||
+          (event as KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setIsOpen(open);
+    };
 
   const categories = [salads, soups];
 
   const categoryMenu = categories.map((category) => {
     return (
       <MenuItemList
+        toggleDrawer={toggleDrawer}
         setMenuItem={setMenuItem}
         key={category.id}
         {...category}
@@ -31,11 +49,13 @@ export default function Menu() {
   });
 
   return (
-    <>
-      {/* <MenuItemPage>{categoryMenu}</MenuItemPage> */}
-      <MenuItemPage menuItem={menuItem} />
+    <ToggleDrawerProvider>
+      <MenuItemPage
+        menuItem={menuItem}
+        isOpen={isOpen}
+        toggleDrawer={toggleDrawer}
+      />
       {categoryMenu}
-      {/* {categoryMenu} <MenuItemPage /> */}
-    </>
+    </ToggleDrawerProvider>
   );
 }

@@ -12,6 +12,7 @@ router.get("/", (req: Request, res: Response) => {
   if(id1.match(regex) && id2.match(regex)){
     req.session.restaurant_id = id1
     req.session.table_id = id2
+    res.send("OKAY OKAY")
   } else {
     res.send('Invalid parameters')
   }

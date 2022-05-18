@@ -7,6 +7,7 @@ import CurrentOrder from "./components/CurrentOrder";
 import Menu from "./components/Menu";
 import TemporaryDrawer from "./components/Drawer";
 import Table from "./components/Table";
+import Landing from "./components/Landing";
 
 import { order1 } from "./mockdata";
 
@@ -14,7 +15,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/landing*" element={<Landing />} />
+        <Route path="/test" element={<App />} />
         <Route
           path="/current-order"
           element={
@@ -54,6 +56,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <>
               <TemporaryDrawer />
             </>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>There's nothing here!</p>
+            </main>
           }
         />
       </Routes>
