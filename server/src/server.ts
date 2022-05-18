@@ -26,8 +26,7 @@ app.use(bodyParser.json());
 declare module 'express-session' {
   export interface SessionData {
     restaurant_id: string;
-    table_id: string | undefined;
-    name: string | undefined;
+    employee_id: string
   }
 }
 
@@ -66,11 +65,30 @@ io.on('connection', (socket) => {
   console.log(`New client connected`);
 
   io.in(socket.id).socketsJoin(room);
-  console.log(`${socket.data.name} has joined room ${room}`);
 
-  socket.on('updateOrder', (order) => {
-    io.to(room).emit('updateOrder', socket.data.customerName, order);
+  socket.on('SUBMIT_NAME', (name) => {
+    socket.data.name = name
+    io.to(room).emit('SUBMIT_NAME', name)
+  })
+
+  socket.on('UPDATE_ORDER', (order) => {
+    io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
   });
+
+  socket.on('SUBMIT_ORDER', () => {
+
+    const clientList = io.sockets.adapter.rooms.get(room)
+    const fullOrder: {[key:string]: {}} = {}
+
+    for(const clientId in clientList){
+      const clientSocket = io.sockets.sockets.get(clientId)
+      if(clientSocket) {
+        fullOrder[clientSocket.data.name] = clientSocket.data.order
+      }
+    }
+
+    io.to(room).emit('SUBMIT_ORDER')
+  })
 
   socket.on('disconnect', () => {
     console.log('Client disconnected');
@@ -80,12 +98,12 @@ io.on('connection', (socket) => {
 //======================================
 
 // Router imports
-const sessionRoute = require('./routes/table-session-router');
-const customerNameRoute = require('./routes/name-input-router');
+const menuRoute = require('./routes/menu-router')
+const employeeLoginRoute = require('./routes/login-router');
 
 // Resource routes
-app.use('/api/landing', sessionRoute);
-app.use('/api/name-input', customerNameRoute);
+app.use('/api/menu', menuRoute)
+app.use('/api/employee-login', employeeLoginRoute)
 
 app.get('/', (req: Request, res: Response) => {
   res.send({ response: 'test' }).status(200);
