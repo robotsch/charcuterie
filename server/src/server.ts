@@ -60,9 +60,11 @@ const io = new Server(server, {
 let interval: any;
 io.on('connection', (socket) => {
   console.log(`New client connected`);
+  console.log(socket.handshake.query.name);
   let sockets: any
   socket.on('join', (data) => {
     socket.data.name = data.name
+    console.log(socket.data.name, socket.data.restaurant, socket.data.table)
     io.in(socket.id).socketsJoin(`rst${data.restaurant}.tbl${data.table}`)
     io.in("rst1.tbl1").fetchSockets()
       .then((data) => sockets = data)
