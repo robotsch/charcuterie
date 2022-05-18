@@ -13,20 +13,20 @@ export default function setSocket() {
 
   useEffect(() => {
     if (ws.current) {
-      ws.current.on("NEW_USER", (msg: any) => {
-        console.log("NEW_USER users", users, msg);
+      ws.current.on("SUBMIT_NAME", (msg: any) => {
+        console.log("SUBMIT_NAME users", users, msg);
         setUsers((prev: any) => [...prev, msg]);
       });
     }
 
     return () => {
-      ws.current.off("NEW_USER");
+      ws.current.off("SUBMIT_NAME");
     };
-    
+
   }, [ws.current]);
 
   const setName = (name: string) => {
-    ws.current.emit("SET_NAME", { name });
+    ws.current.emit("SUBMIT_NAME", { name });
   };
 
   return { user, users, setName };
