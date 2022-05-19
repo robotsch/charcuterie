@@ -23,40 +23,32 @@ export default function Landing(props: any) {
 
   const { table, setTable } = useContext(tableContext);
 
-  // useEffect(() => {
-  //   // setRestaurant(searchParms.get("id1"));
-  //   // setTable(searchParms.get("id2"));
-  //   // axios
-  //   //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
-  //   //   .get("")
-  //   //   .then((res) => {
-  //   // DO SOMETHING TO RESPONSE HERE
-  //   //   landingHeader = (
-  //   //     <div>
-  //   //       <h1>WELCOME TO</h1>
-  //   //       <span>RED</span>
-  //   //       <span>BLOSSOM</span>
-  //   //       <h5>You are seated at table {table}</h5>
-  //   //     </div>
-  //   //   );
-  //   // });
-  //   setLandingHeader(
-  //     <div>
-  //       <h1>WELCOME TO</h1>
-  //       <span>RED</span>
-  //       <span> BLOSSOM</span>
-  //       <h5>You are seated at table {table}</h5>
-  //     </div>
-  //   );
-
-  //   // ws.current = io("http://localhost:3001", {
-  //   //   query: { restaurant, table },
-  //   // });
-  // }, []);
-
-  // ws.current.on("updateOrder", () => {
-  //   console.log("my brother in christ the order is updating");
-  // });
+  useEffect(() => {
+    // setRestaurant(searchParms.get("id1"));
+    // setTable(searchParms.get("id2"));
+    // axios
+    //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
+    //   .get("")
+    //   .then((res) => {
+    // DO SOMETHING TO RESPONSE HERE
+    //   landingHeader = (
+    //     <div>
+    //       <h1>WELCOME TO</h1>
+    //       <span>RED</span>
+    //       <span>BLOSSOM</span>
+    //       <h5>You are seated at table {table}</h5>
+    //     </div>
+    //   );
+    // });
+    setLandingHeader(
+      <div>
+        <h1>WELCOME TO</h1>
+        <span>RED</span>
+        <span> BLOSSOM</span>
+        <h5>You are seated at table {table}</h5>
+      </div>
+    );
+  }, []);
 
   const submitName = (event: any) => {
     event.preventDefault();
@@ -80,8 +72,6 @@ export default function Landing(props: any) {
       </form>
     </div>
   );
-
-  console.log("users in landing", users);
 
   return (
     <div>

@@ -14,7 +14,6 @@ export default function setSocket() {
   useEffect(() => {
     if (ws.current) {
       ws.current.on("SUBMIT_NAME", (msg: any) => {
-        console.log("SUBMIT_NAME users", users, msg);
         setUsers((prev: any) => [...prev, msg]);
       });
     }
