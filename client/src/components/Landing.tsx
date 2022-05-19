@@ -18,21 +18,15 @@ type LandingHeaderMode = "NOT_LOADED" | "LOADED";
 export default function Landing() {
   axios.defaults.withCredentials = true;
 
-  // const { user, users, setName } = props;
-
   const [user, setUser] = useState<string | null>(localStorage.getItem("user"));
   const [users, setUsers] = useState<any>(localStorage.getItem("users"));
 
   console.log(user, users);
   const [searchParms, getSearchParams] = useSearchParams();
 
-  // const { restaurant, setRestaurant } = useContext(restaurantContext);
-  const [restaurant, setRestaurant] = useState(
-    localStorage.getItem("restaurant")
-  );
+  const [restaurant, setRestaurant] = useState<any>("0");
 
-  // const { table, setTable } = useContext(tableContext);
-  const [table, setTable] = useState(localStorage.getItem("table"));
+  const [table, setTable] = useState<any>("0");
 
   const [headerMode, setHeaderMode] = useState<LandingHeaderMode>("NOT_LOADED");
   const [mode, setMode] = useState<LandingMode>("LANDING");
@@ -45,6 +39,8 @@ export default function Landing() {
   useEffect(() => {
     setRestaurant(searchParms.get("id1"));
     setTable(searchParms.get("id2"));
+    localStorage.setItem("restaurant", searchParms.get("id1") || "0");
+    localStorage.setItem("table", searchParms.get("id2") || "0");
 
     if (user !== null) {
       setMode("LANDING");
