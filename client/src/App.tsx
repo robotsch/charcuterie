@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv'
+import * as dotenv from "dotenv";
 import { useState } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -20,6 +20,7 @@ import Table from "./components/Table";
 import Landing from "./components/Landing";
 
 import Employee from "./employee-components/Employee";
+import EmployeeLogin from "./employee-components/EmployeeLogin";
 
 import useSocket from "./hooks/useSocket";
 
@@ -95,6 +96,14 @@ export default function App() {
                 element={
                   <>
                     <Employee />
+                  </>
+                }
+              />
+              <Route
+                path="/employeelogin"
+                element={
+                  <>
+                    <EmployeeLogin />
                   </>
                 }
               />
