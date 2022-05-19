@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('Client has disconnected:', socket.data.name);
+    console.log('Client has disconnected:', socket.id);
     io.to(room).emit('USER_DISCONNECT', socket.data.name);
   });
 });
