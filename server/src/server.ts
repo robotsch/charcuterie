@@ -69,26 +69,36 @@ const getAllNames = (sockets: any) => {
 
 let interval: any;
 io.on('connection', (socket) => {
-  let sockets: any;
+
   socket.data = socket.handshake.query;
-  const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
+  let rstRoom = `rst${socket.data.restaurant}`;
+  let cstRoom = ''
 
+  if(socket.data.table) {
+    cstRoom = rstRoom + `.tbl${socket.data.table}`
+    io.in(socket.id).socketsJoin(cstRoom);
+  } else {
+    const token = socket.handshake.auth.token
+    // TODO: validate this token
+    if(token) {
+      io.in(socket.id).socketsJoin(rstRoom)
+    }
+  }
+  
   console.log(`New client connected`, socket.id);
-
-  io.in(socket.id).socketsJoin(room);
 
   socket.on('SUBMIT_NAME', ({ name }) => {
     socket.data.name = name;
-    const names = getAllNames(io.sockets.adapter.rooms.get(room));
-    io.to(room).emit('SUBMIT_NAME', names);
+    const names = getAllNames(io.sockets.adapter.rooms.get(cstRoom));
+    io.to(cstRoom).emit('SUBMIT_NAME', names);
   });
 
   socket.on('UPDATE_ORDER', (order) => {
-    io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
+    io.to(cstRoom).emit('UPDATE_ORDER', socket.data.customerName, order);
   });
 
   socket.on('SUBMIT_ORDER', () => {
-    const clientList = io.sockets.adapter.rooms.get(room);
+    const clientList = io.sockets.adapter.rooms.get(cstRoom);
     const fullOrder: { [key: string]: {} } = {};
 
     for (const clientId in clientList) {
@@ -98,7 +108,7 @@ io.on('connection', (socket) => {
       }
     }
 
-    io.to(room).emit('SUBMIT_ORDER');
+    io.to(cstRoom).emit('SUBMIT_ORDER');
   });
 
   socket.on('disconnect', () => {
