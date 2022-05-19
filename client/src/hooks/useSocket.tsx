@@ -18,9 +18,9 @@ export default function setSocket() {
       });
 
       ws.current.on("USER_DISCONNECT", (removedUser: string) => {
-        setUsers((prev: any) =>
-          prev.filter((user: string) => user !== removedUser)
-        );
+        // setUsers((prev: any) =>
+        //   prev.filter((user: string) => user !== removedUser)
+        // );
       });
     }
 

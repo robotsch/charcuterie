@@ -13,7 +13,7 @@ import UserList from "./UserList";
 export default function Landing(props: any) {
   axios.defaults.withCredentials = true;
 
-  const { user, users, sendNewUser, setName } = props;
+  const { user, users, setName } = props;
 
   const [searchParms, getSearchParams] = useSearchParams();
 
@@ -30,7 +30,6 @@ export default function Landing(props: any) {
         onSubmit={(event: any) => {
           event.preventDefault();
           const name = event.target[0].value;
-          console.log("NAME", name);
           setName(name);
         }}
       >
@@ -49,6 +48,16 @@ export default function Landing(props: any) {
   useEffect(() => {
     setRestaurant(searchParms.get("id1"));
     setTable(searchParms.get("id2"));
+
+    console.log("user in landing use effect on load", user)
+    if (user !== null) {
+      setBody(
+        <div>
+          Hello {user}
+          <UserList users={users} />
+        </div>
+      );
+    }
   }, []);
 
   useEffect(() => {
@@ -91,7 +100,6 @@ export default function Landing(props: any) {
     <div>
       {landingHeader}
       {body}
-      {/* <UserList users={users} /> */}
     </div>
   );
 }
