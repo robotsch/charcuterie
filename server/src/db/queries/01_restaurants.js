@@ -66,7 +66,7 @@ const deleteRestaurantById = function (id) {
 
 exports.deleteRestaurantById = deleteRestaurantById
 
-const updateRestaurantMenuById = function (id, price, name, description, image_url, category) {
+const addMenuItemByRestaurantId = function (id, price, name, description, image_url, category) {
   MongoClient.connect(url, function(err, db) {
   if (err) throw err;
   let dbo = db.db("mydb");
@@ -90,7 +90,7 @@ const updateRestaurantMenuById = function (id, price, name, description, image_u
 });
 }
 
-exports.updateRestaurantMenuById = updateRestaurantMenuById 
+exports.addMenuItemByRestaurantId = addMenuItemByRestaurantId 
 
 
 const getEmployeeWithUsername = function (username) {
@@ -138,9 +138,26 @@ const getMenuByRestaurantId = function (id) {
 
 exports.getMenuByRestaurantId = getMenuByRestaurantId;
 
+const deleteMenuitemByRestaurantById = function (id) {
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  let myobj = { _id: id };
+  dbo.collection("restaurants").deleteOne(myobj, function(err, res) {
+    if (err) throw err;
+    console.log("res: ", res) //confirmed that the res from insertOne returns the newly inserted entry data
+    console.log(id, " Restaurant removed from Collection");
+    db.close();
+  });
+});
+}
+
+exports.deleteMenuItemByRestaurantById = deleteRestaurantById
+
 //deleteRestaurantById(ObjectId("628594f9b9fec226e1926067"));
 //createRestaurant()
-//updateRestaurantMenuById(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "California Roll", "A taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
-//updateRestaurantMenuById(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
+//addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "California Roll", "A taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
+//addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
 //getEmployeeWithUsername("jado")
-getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
+//getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
+
