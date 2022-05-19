@@ -51,10 +51,12 @@ MongoClient.connect(url, function (err, db) {
         {
           _id: ObjectId("6283f1d9804b848eb5e45604"),
           name: "Joe",
+          password: "password123"
         },
         {
           _id: ObjectId("6283f1d9804b848eb5e45605"),
           name: "Jane",
+          password: "password123"
         },
       ],
     },
@@ -105,10 +107,12 @@ MongoClient.connect(url, function (err, db) {
         {
           _id: ObjectId("6283f1d9804b848eb5e4560a"),
           name: "Johnny",
+          password: "password123"
         },
         {
           _id: ObjectId("6283f1d9804b848eb5e4560b"),
           name: "Amber",
+          password: "password123"
         },
       ],
     },
