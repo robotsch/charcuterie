@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv'
 import { useState } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -28,7 +29,7 @@ import TableProvider from "./providers/TableProvider";
 import { salads, soups, order1 } from "./mockdata";
 
 export default function App() {
-  const { user, users, setName } = useSocket();
+  // const { user, users, setName } = useSocket();
 
   return (
     <div className="App">
@@ -38,7 +39,7 @@ export default function App() {
             <Routes>
               <Route
                 path="/landing/*"
-                element={<Landing {...{ user, users, setName }} />}
+                // element={<Landing {...{ user, users, setName }} />}
               />
               <Route
                 path="/current-order"
