@@ -13,62 +13,26 @@ import UserList from "./UserList";
 export default function Landing(props: any) {
   axios.defaults.withCredentials = true;
 
-  const { user, users, sendNewUser, setName } = props;
+  const { user, users, setName } = props;
 
   const [searchParms, getSearchParams] = useSearchParams();
 
-  const [landingHeader, setLandingHeader] = useState(<h1>Placeholder</h1>);
+  const [landingHeader, setLandingHeader] = useState<any>();
 
   const { restaurant, setRestaurant } = useContext(restaurantContext);
 
   const { table, setTable } = useContext(tableContext);
 
-  // useEffect(() => {
-  //   // setRestaurant(searchParms.get("id1"));
-  //   // setTable(searchParms.get("id2"));
-  //   // axios
-  //   //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
-  //   //   .get("")
-  //   //   .then((res) => {
-  //   // DO SOMETHING TO RESPONSE HERE
-  //   //   landingHeader = (
-  //   //     <div>
-  //   //       <h1>WELCOME TO</h1>
-  //   //       <span>RED</span>
-  //   //       <span>BLOSSOM</span>
-  //   //       <h5>You are seated at table {table}</h5>
-  //   //     </div>
-  //   //   );
-  //   // });
-  //   setLandingHeader(
-  //     <div>
-  //       <h1>WELCOME TO</h1>
-  //       <span>RED</span>
-  //       <span> BLOSSOM</span>
-  //       <h5>You are seated at table {table}</h5>
-  //     </div>
-  //   );
-
-  //   // ws.current = io("http://localhost:3001", {
-  //   //   query: { restaurant, table },
-  //   // });
-  // }, []);
-
-  // ws.current.on("updateOrder", () => {
-  //   console.log("my brother in christ the order is updating");
-  // });
-
-  const submitName = (event: any) => {
-    event.preventDefault();
-    const name = event.target[0].value;
-    console.log("NAME", name);
-    setName(name);
-  };
-
   const [body, setBody] = useState(
     <div>
       Please enter your name:
-      <form onSubmit={submitName}>
+      <form
+        onSubmit={(event: any) => {
+          event.preventDefault();
+          const name = event.target[0].value;
+          setName(name);
+        }}
+      >
         <TextField
           type="text"
           name="name"
@@ -81,13 +45,61 @@ export default function Landing(props: any) {
     </div>
   );
 
-  console.log("users in landing", users);
+  useEffect(() => {
+    setRestaurant(searchParms.get("id1"));
+    setTable(searchParms.get("id2"));
+
+    console.log("user in landing use effect on load", user)
+    if (user !== null) {
+      setBody(
+        <div>
+          Hello {user}
+          <UserList users={users} />
+        </div>
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    // axios
+    //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
+    //   .get("")
+    //   .then((res) => {
+    // DO SOMETHING TO RESPONSE HERE
+    //   setLandingHeader(
+    //     <div>
+    //       <h1>WELCOME TO</h1>
+    //       <span>RED</span>
+    //       <span>BLOSSOM</span>
+    //       <h5>You are seated at table {table}</h5>
+    //     </div>
+    //   );
+    // });
+    setLandingHeader(
+      <div>
+        <h1>WELCOME TO</h1>
+        <span>RED</span>
+        <span> BLOSSOM</span>
+        <h5>You are seated at table {table}</h5>
+      </div>
+    );
+  }, [table, restaurant]);
+
+  useEffect(() => {
+    if (user) {
+      setBody(
+        <div>
+          Hello {user}
+          <UserList users={users} />
+        </div>
+      );
+    }
+  }, [user, users]);
 
   return (
     <div>
       {landingHeader}
       {body}
-      <UserList users={users} />
     </div>
   );
 }

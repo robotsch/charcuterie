@@ -56,19 +56,31 @@ const io = new Server(server, {
 });
 //======================================
 
+const getAllNames = (sockets: any) => {
+  const names = [];
+  for (const clientID of sockets) {
+    const socket = io.sockets.sockets.get(clientID);
+    if (socket && socket.data.name !== undefined) {
+      names.push(socket.data.name);
+    }
+  }
+  return names;
+};
+
 let interval: any;
 io.on('connection', (socket) => {
   let sockets: any;
   socket.data = socket.handshake.query;
   const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
 
-  console.log(`New client connected`);
+  console.log(`New client connected`, socket.id);
 
   io.in(socket.id).socketsJoin(room);
 
-  socket.on('SUBMIT_NAME', (name) => {
+  socket.on('SUBMIT_NAME', ({ name }) => {
     socket.data.name = name;
-    io.to(room).emit('SUBMIT_NAME', name);
+    const names = getAllNames(io.sockets.adapter.rooms.get(room));
+    io.to(room).emit('SUBMIT_NAME', names);
   });
 
   socket.on('UPDATE_ORDER', (order) => {
@@ -87,6 +99,12 @@ io.on('connection', (socket) => {
     }
 
     io.to(room).emit('SUBMIT_ORDER');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client has disconnected', socket.id);
+    console.log(socket.data.name);
+    io.to(room).emit('USER_DISCONNECT', socket.data.name);
   });
 });
 
