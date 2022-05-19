@@ -7,8 +7,6 @@ import MenuFooter from "./MenuFooter";
 
 import { salads, soups, order1 } from "../mockdata";
 
-import Button from "@mui/material/Button";
-
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
 import CurrentOrderDrawerProvider from "../providers/CurrentOrderDrawerProvider";
 

@@ -1,9 +1,10 @@
 import { useContext } from "react";
 
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { CardActionArea } from "@mui/material";
+import CardActionArea from "@mui/material/CardActionArea";
+import Button from "@mui/material/Button";
 
 import { FoodItem } from "../../ts/foodItem_interface";
 

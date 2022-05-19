@@ -37,6 +37,7 @@ export default function MenuItemPage(props: any) {
           <Box sx={{ backgroundColor: "#1B2432" }}>
             <Button variant="contained">${(price / 100).toFixed(2)}</Button>
           </Box>
+          <Button variant="contained">Add to Current Order</Button>
         </Box>
       </Drawer>
     </>
