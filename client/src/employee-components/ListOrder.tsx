@@ -15,7 +15,7 @@ export default function LiveOrder(props: Order) {
         <Typography variant="h5">Order #{id}</Typography>
         <Typography variant="body1">Group: {group}</Typography>
         <Typography variant="body1">Table: {table}</Typography>
-        <Typography variant="body1">TimePlaced: {timePlaced}</Typography>
+        <Typography variant="body1">Placed at: {timePlaced}</Typography>
         <List>
           {orderFoodItems.map((foodItem) => {
             return (

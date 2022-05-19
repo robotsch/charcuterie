@@ -6,9 +6,7 @@ import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import QRcode from 'qrcode';
 import { Server, Socket } from 'socket.io';
-import cookie from 'cookie';
 import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 const clientPromise = require('./db/db');
@@ -72,9 +70,11 @@ let interval: any;
 io.on('connection', (socket) => {
 
   let sockets: any;
-  socket.data = socket.handshake.query;
   let room: string
+  let orderNum = 1
   
+  socket.data = socket.handshake.query;
+
   console.log(`New client connected`, socket.id);
 
   socket.on('SUBMIT_NAME', ({ name }) => {
@@ -106,11 +106,20 @@ io.on('connection', (socket) => {
       }
     }
 
-    io.to(room).emit('SUBMIT_ORDER', fullOrder);
+    const d = new Date().toLocaleTimeString()
+    const order = {id: orderNum, group:10, table: '10', timePlaced: d, orderFoodItems: [{
+      id: 2,
+      name: "Seaweed & Tofu Salad",
+      price: 1600,
+      quantity: 3
+    }]}
+
+    orderNum++
+    io.to(room).emit('SUBMIT_ORDER', order);
   });
 
   socket.on('disconnect', () => {
-    console.log('Client has disconnected:', socket.data.name);
+    console.log('Client has disconnected:', socket.id);
     io.to(room).emit('USER_DISCONNECT', socket.data.name);
   });
 });
