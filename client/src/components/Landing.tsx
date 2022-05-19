@@ -17,21 +17,47 @@ export default function Landing(props: any) {
 
   const [searchParms, getSearchParams] = useSearchParams();
 
-  const [landingHeader, setLandingHeader] = useState(<h1>Placeholder</h1>);
+  const [landingHeader, setLandingHeader] = useState<any>();
 
   const { restaurant, setRestaurant } = useContext(restaurantContext);
 
   const { table, setTable } = useContext(tableContext);
 
+  const [body, setBody] = useState(
+    <div>
+      Please enter your name:
+      <form
+        onSubmit={(event: any) => {
+          event.preventDefault();
+          const name = event.target[0].value;
+          console.log("NAME", name);
+          setName(name);
+        }}
+      >
+        <TextField
+          type="text"
+          name="name"
+          label="Name"
+          variant="standard"
+          placeholder="(max 15 characters)"
+        ></TextField>
+        <Button type="submit">Confirm</Button>
+      </form>
+    </div>
+  );
+
   useEffect(() => {
-    // setRestaurant(searchParms.get("id1"));
-    // setTable(searchParms.get("id2"));
+    setRestaurant(searchParms.get("id1"));
+    setTable(searchParms.get("id2"));
+  }, []);
+
+  useEffect(() => {
     // axios
     //   .get(`http://localhost:3001/api/restaurant/${restaurant}/landing}`)
     //   .get("")
     //   .then((res) => {
     // DO SOMETHING TO RESPONSE HERE
-    //   landingHeader = (
+    //   setLandingHeader(
     //     <div>
     //       <h1>WELCOME TO</h1>
     //       <span>RED</span>
@@ -48,36 +74,24 @@ export default function Landing(props: any) {
         <h5>You are seated at table {table}</h5>
       </div>
     );
-  }, []);
+  }, [table, restaurant]);
 
-  const submitName = (event: any) => {
-    event.preventDefault();
-    const name = event.target[0].value;
-    console.log("NAME", name);
-    setName(name);
-  };
-
-  const [body, setBody] = useState(
-    <div>
-      Please enter your name:
-      <form onSubmit={submitName}>
-        <TextField
-          type="text"
-          name="name"
-          label="Name"
-          variant="standard"
-          placeholder="(max 15 characters)"
-        ></TextField>
-        <Button type="submit">Confirm</Button>
-      </form>
-    </div>
-  );
+  useEffect(() => {
+    if (user) {
+      setBody(
+        <div>
+          Hello {user}
+          <UserList users={users} />
+        </div>
+      );
+    }
+  }, [user]);
 
   return (
     <div>
       {landingHeader}
       {body}
-      <UserList users={users} />
+      {/* <UserList users={users} /> */}
     </div>
   );
 }

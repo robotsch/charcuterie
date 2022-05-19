@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 
 export default function setSocket() {
   const ws = useRef<null | any>(null);
-  const [user, setUser] = useState<any>({});
+  const [user, setUser] = useState<string | null>(null);
   const [users, setUsers] = useState<any>([]);
   const [messages, setMessages] = useState<any>([]);
 
@@ -21,10 +21,10 @@ export default function setSocket() {
     return () => {
       ws.current.off("SUBMIT_NAME");
     };
-
   }, [ws.current]);
-
+  
   const setName = (name: string) => {
+    setUser(name);
     ws.current.emit("SUBMIT_NAME", { name });
   };
 
