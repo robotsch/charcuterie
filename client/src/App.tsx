@@ -18,6 +18,8 @@ import TemporaryDrawer from "./components/Drawer";
 import Table from "./components/Table";
 import Landing from "./components/Landing";
 
+import Employee from "./employee-components/Employee";
+
 import useSocket from "./hooks/useSocket";
 
 import RestaurantProvider from "./providers/RestaurantProvider";
@@ -29,7 +31,7 @@ export default function App() {
   const { user, users, setName } = useSocket();
 
   return (
-    <div className="App">
+    <div>
       <RestaurantProvider>
         <TableProvider>
           <BrowserRouter>
@@ -85,6 +87,14 @@ export default function App() {
                   <main style={{ padding: "1rem" }}>
                     <p>There's nothing here!</p>
                   </main>
+                }
+              />
+              <Route
+                path="/employee"
+                element={
+                  <>
+                    <Employee />
+                  </>
                 }
               />
             </Routes>
