@@ -2,7 +2,7 @@ import { TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useRef, useEffect, useState, useContext } from "react";
 import { io } from "socket.io-client";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { restaurantContext } from "../providers/RestaurantProvider";
 import { tableContext } from "../providers/TableProvider";
@@ -112,12 +112,16 @@ export default function Landing() {
             ></TextField>
             <Button type="submit">Confirm</Button>
           </form>
+          {/* <UserList users={users} /> */}
         </div>
       )}
       {mode === "NAME_ENTERED" && (
         <div>
           Hello {user}
           <UserList users={users} />
+          <Link to="/Menu">
+            <Button>Menu</Button>
+          </Link>
         </div>
       )}
       <Button

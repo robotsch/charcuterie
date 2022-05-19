@@ -10,7 +10,6 @@ export default function MenuItemList(props: any) {
   const menuItemList = menuItems.map((menuItem: FoodItem) => {
     return (
       <MenuItem
-        toggleDrawer={toggleDrawer}
         setMenuItem={setMenuItem}
         key={menuItem.id}
         {...menuItem}

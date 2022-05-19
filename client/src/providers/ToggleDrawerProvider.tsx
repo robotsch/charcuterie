@@ -1,6 +1,6 @@
 import { createContext, useState, KeyboardEvent, MouseEvent } from "react";
 
-export const toggleDrawerContext = createContext<any>(undefined);
+export const toggleDrawerContext = createContext<any>(false);
 
 export default function ToggleDrawerProvider(props: any) {
   const [isOpen, setIsOpen] = useState(false);
