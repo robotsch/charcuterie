@@ -10,6 +10,7 @@ MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     console.log(result);
     db.close();
+    return result
   });
 });
 }
@@ -25,6 +26,7 @@ const getRestaurantsWithId = function (id) {
     if (err) throw err;
     console.log(result);
     db.close();
+    return result
   });
 });
 }
@@ -90,7 +92,36 @@ const updateRestaurantMenuById = function (id, price, name, description, image_u
 
 exports.updateRestaurantMenuById = updateRestaurantMenuById 
 
+
+const getEmployeeWithUsername = function (restoid, username) {
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  let dbo = db.db("mydb");
+  let query = { _id: restoid, employees: { $elemMatch: { username: username }} };
+  dbo.collection("restaurants").find(query).toArray(function(err, result) {
+    if (err) throw err;
+    //console.log(result);
+    let employeesArr = result[0].employees
+    //console.log("arr: ", employeesArr)
+
+    db.close();
+ 
+    for (const elem of employeesArr) {
+      if (elem.username === username) {
+        console.log("elem: ", elem)
+        return elem
+      }
+    }
+
+  });
+});
+}
+
+exports.getEmployeeWithUsername = getEmployeeWithUsername;
+
+
 //deleteRestaurantById(ObjectId("628594f9b9fec226e1926067"));
 //createRestaurant()
 //updateRestaurantMenuById(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "California Roll", "A taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
-updateRestaurantMenuById(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
+//updateRestaurantMenuById(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
+getEmployeeWithUsername(ObjectId("6283f1d9804b848eb5e4560c"), "jado")

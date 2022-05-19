@@ -50,12 +50,16 @@ MongoClient.connect(url, function (err, db) {
       employees: [
         {
           _id: ObjectId("6283f1d9804b848eb5e45604"),
-          name: "Joe",
+          fname: "Joe",
+          lname: "Joes",
+          username: "jojo",
           password: "password123"
         },
         {
           _id: ObjectId("6283f1d9804b848eb5e45605"),
-          name: "Jane",
+          fname: "Jane",
+          lname: "Doe",
+          username: "jado",
           password: "password123"
         },
       ],
@@ -106,12 +110,16 @@ MongoClient.connect(url, function (err, db) {
       employees: [
         {
           _id: ObjectId("6283f1d9804b848eb5e4560a"),
-          name: "Johnny",
+          fname: "Johnny",
+          lname: "Depp",
+          username: "captainjack",
           password: "password123"
         },
         {
           _id: ObjectId("6283f1d9804b848eb5e4560b"),
-          name: "Amber",
+          fname: "Amber",
+          lname: "Heard",
+          username: "mera",
           password: "password123"
         },
       ],
