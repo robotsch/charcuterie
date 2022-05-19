@@ -40,13 +40,13 @@ const getOrderById = function (id) {
 
 exports.getOrderById = getOrderById;
 
-const createOrderByTableId = function (table_id, subordersArr) {
+const createOrderByTableId = function (table_id, customersArr) {
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     let dbo = db.db('mydb');
     let myobj = {
       table_id: table_id,
-      suborders: subordersArr,
+      customers: customersArr,
       status: 'pending',
     };
     dbo.collection('orders').insertOne(myobj, function (err, res) {
@@ -61,20 +61,22 @@ const createOrderByTableId = function (table_id, subordersArr) {
 exports.createOrderByTableId = createOrderByTableId;
 
 //test
-//getOrderById(ObjectId("62857d610bd83e8355c684e5"))
+//getOrderById(ObjectId('6286c456311fb901c1d4ca3d'));
 //getOrdersByTableId(ObjectId('6283f6a703f54b7c82c5fffc'));
 
-// let subordersArr = [
-//   {
-//     name: 'Christian',
-//     menu_item_id: ObjectId('6283f1d9804b848eb5e45600'),
-//     quantity: 2,
-//   },
-//   {
-//     name: 'Jack',
-//     menu_item_id: ObjectId('6283f1d9804b848eb5e45601'),
-//     quantity: 1,
-//   },
-// ];
+let customersArr = [
+  {
+    name: 'Christian',
+    sub_orders: [
+      { menu_item_id: ObjectId('6283f1d9804b848eb5e45600'), quantity: 100 },
+    ],
+  },
+  {
+    name: 'Jack',
+    sub_orders: [
+      { menu_item_id: ObjectId('6283f1d9804b848eb5e45601'), quantity: 26 },
+    ],
+  },
+];
 
-// createOrderByTableId(ObjectId('6283f6a703f54b7c82c5fffc'), subordersArr);
+createOrderByTableId(ObjectId('6283f6a703f54b7c82c5fffc'), customersArr);
