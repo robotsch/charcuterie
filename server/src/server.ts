@@ -7,7 +7,8 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import { Server, Socket } from 'socket.io';
-import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
+
+const restaurantQueries = require('./db/queries/01_restaurants')
 
 const clientPromise = require('./db/db');
 
@@ -89,6 +90,10 @@ io.on('connection', (socket) => {
   socket.on('EMPLOYEE', ({restaurant}) => {
     room = restaurant
     io.in(socket.id).socketsJoin(room)
+  })
+
+  socket.on('DB_TEST', () => {
+    
   })
 
   socket.on('UPDATE_ORDER', (order) => {
