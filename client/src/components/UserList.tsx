@@ -1,8 +1,9 @@
 export default function UserList(props: any) {
+  console.log("users in UserLlist", props?.users)
   return (
     <div>
-      {props.users.map((user: any) => {
-        return <h6 key={user.name}>{user.name}</h6>;
+      {props.users.map((user: string) => {
+        return <h6 key={user}>{user}</h6>;
       })}
     </div>
   );

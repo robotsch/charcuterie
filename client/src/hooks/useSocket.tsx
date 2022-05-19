@@ -13,16 +13,24 @@ export default function setSocket() {
 
   useEffect(() => {
     if (ws.current) {
-      ws.current.on("SUBMIT_NAME", (msg: any) => {
-        setUsers((prev: any) => [...prev, msg]);
+      ws.current.on("SUBMIT_NAME", (user: string) => {
+        console.log("user in useSocket from SUBMIT_NAME", user);
+        setUsers((prev: any) => [...prev, user]);
+      });
+
+      ws.current.on("USER_DISCONNECT", (removedUser: string) => {
+        setUsers((prev: any) =>
+          prev.filter((user: string) => user !== removedUser)
+        );
       });
     }
 
     return () => {
       ws.current.off("SUBMIT_NAME");
+      ws.current.off("USER_DISCONNECT");
     };
   }, [ws.current]);
-  
+
   const setName = (name: string) => {
     setUser(name);
     ws.current.emit("SUBMIT_NAME", { name });

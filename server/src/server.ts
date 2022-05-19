@@ -62,12 +62,14 @@ io.on('connection', (socket) => {
   socket.data = socket.handshake.query;
   const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
 
-  console.log(`New client connected`);
+  console.log(`New client connected`, socket.id);
 
   io.in(socket.id).socketsJoin(room);
 
-  socket.on('SUBMIT_NAME', (name) => {
+  socket.on('SUBMIT_NAME', ({ name }) => {
     socket.data.name = name;
+    console.log(io.sockets.adapter.rooms.get(room));
+    console.log("submit name", name)
     io.to(room).emit('SUBMIT_NAME', name);
   });
 
@@ -87,6 +89,12 @@ io.on('connection', (socket) => {
     }
 
     io.to(room).emit('SUBMIT_ORDER');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client has disconnected', socket.id);
+    console.log(socket.data.name);
+    io.to(room).emit('USER_DISCONNECT', socket.data.name);
   });
 });
 

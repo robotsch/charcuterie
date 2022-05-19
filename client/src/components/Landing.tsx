@@ -85,7 +85,7 @@ export default function Landing(props: any) {
         </div>
       );
     }
-  }, [user]);
+  }, [user, users]);
 
   return (
     <div>
