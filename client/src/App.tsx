@@ -31,11 +31,11 @@ export default function App() {
   const { user, users, setName } = useSocket();
 
   return (
-    <div>
-      <RestaurantProvider>
-        <TableProvider>
-          <BrowserRouter>
-            <Routes>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <RestaurantProvider>
+            <TableProvider>
               <Route
                 path="/landing/*"
                 element={<Landing {...{ user, users, setName }} />}
@@ -81,26 +81,26 @@ export default function App() {
                   </>
                 }
               />
-              <Route
-                path="*"
-                element={
-                  <main style={{ padding: "1rem" }}>
-                    <p>There's nothing here!</p>
-                  </main>
-                }
-              />
-              <Route
-                path="/employee"
-                element={
-                  <>
-                    <Employee />
-                  </>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        </TableProvider>
-      </RestaurantProvider>
+            </TableProvider>
+          </RestaurantProvider>
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+          <Route
+            path="/employee"
+            element={
+              <>
+                <Employee />
+              </>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
