@@ -100,5 +100,5 @@ export const order2: Order = {
 };
 
 export const orderList: OrderList = {
-  orders: [order1, order2],
+  orders: [order1],
 };
