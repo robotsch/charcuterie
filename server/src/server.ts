@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 import QRcode from 'qrcode';
 import { Server, Socket } from 'socket.io';
 import cookie from 'cookie';
+import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
 
 const clientPromise = require('./db/db');
 
@@ -69,19 +70,26 @@ const getAllNames = (sockets: any) => {
 
 let interval: any;
 io.on('connection', (socket) => {
+
   let sockets: any;
   socket.data = socket.handshake.query;
-  const room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
-
+  let room: string
+  
   console.log(`New client connected`, socket.id);
-
-  io.in(socket.id).socketsJoin(room);
 
   socket.on('SUBMIT_NAME', ({ name }) => {
     socket.data.name = name;
+    room = `rst1.tbl1`;
+    // room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
+    io.in(socket.id).socketsJoin(room);
     const names = getAllNames(io.sockets.adapter.rooms.get(room));
     io.to(room).emit('SUBMIT_NAME', names);
   });
+
+  socket.on('EMPLOYEE', ({restaurant}) => {
+    room = restaurant
+    io.in(socket.id).socketsJoin(room)
+  })
 
   socket.on('UPDATE_ORDER', (order) => {
     io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
@@ -98,12 +106,11 @@ io.on('connection', (socket) => {
       }
     }
 
-    io.to(room).emit('SUBMIT_ORDER');
+    io.to(room).emit('SUBMIT_ORDER', fullOrder);
   });
 
   socket.on('disconnect', () => {
-    console.log('Client has disconnected', socket.id);
-    console.log(socket.data.name);
+    console.log('Client has disconnected:', socket.data.name);
     io.to(room).emit('USER_DISCONNECT', socket.data.name);
   });
 });
