@@ -5,6 +5,7 @@ import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
@@ -37,7 +38,22 @@ export default function MenuItemPage(props: any) {
           <Box sx={{ backgroundColor: "#1B2432" }}>
             <Button variant="contained">${(price / 100).toFixed(2)}</Button>
           </Box>
-          <Button variant="contained">Add to Current Order</Button>
+          <form
+            onSubmit={(event: any) => {
+              event.preventDefault();
+              console.log(event.target[0].value);
+            }}
+          >
+            <TextField
+              type="number"
+              name="quantity"
+              label="Quantity"
+              placeholder="1"
+            ></TextField>
+            <Button type="submit" variant="contained">
+              Add to Current Order
+            </Button>
+          </form>
         </Box>
       </Drawer>
     </>
