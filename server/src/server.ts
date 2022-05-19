@@ -70,26 +70,26 @@ const getAllNames = (sockets: any) => {
 
 let interval: any;
 io.on('connection', (socket) => {
-
   let sockets: any;
   socket.data = socket.handshake.query;
-  let room: string
-  
+  let room: string;
+
   console.log(`New client connected`, socket.id);
 
-  socket.on('SUBMIT_NAME', ({ name }) => {
+  socket.on('SUBMIT_NAME', ({ name, restaurant, table }) => {
     socket.data.name = name;
-    room = `rst1.tbl1`;
+    // room = `rst1.tbl1`;
     // room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
+    room = `rst${restaurant}.tbl${table}`
     io.in(socket.id).socketsJoin(room);
     const names = getAllNames(io.sockets.adapter.rooms.get(room));
     io.to(room).emit('SUBMIT_NAME', names);
   });
 
-  socket.on('EMPLOYEE', ({restaurant}) => {
-    room = restaurant
-    io.in(socket.id).socketsJoin(room)
-  })
+  socket.on('EMPLOYEE', ({ restaurant }) => {
+    room = restaurant;
+    io.in(socket.id).socketsJoin(room);
+  });
 
   socket.on('UPDATE_ORDER', (order) => {
     io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
@@ -130,3 +130,4 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 server.listen(3001, () => console.log(`Server running on ${3001}`));
+

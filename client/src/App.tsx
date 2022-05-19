@@ -40,6 +40,7 @@ export default function App() {
               <Route
                 path="/landing/*"
                 // element={<Landing {...{ user, users, setName }} />}
+                element={<Landing />}
               />
               <Route
                 path="/current-order"
