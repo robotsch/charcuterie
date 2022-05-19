@@ -32,10 +32,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <RestaurantProvider>
-            <TableProvider>
+      <RestaurantProvider>
+        <TableProvider>
+          <BrowserRouter>
+            <Routes>
               <Route
                 path="/landing/*"
                 element={<Landing {...{ user, users, setName }} />}
@@ -56,7 +56,7 @@ export default function App() {
                 }
               />
               <Route
-                path="/menu"
+                path="menu"
                 element={
                   <>
                     <TemporaryDrawer />
@@ -81,26 +81,26 @@ export default function App() {
                   </>
                 }
               />
-            </TableProvider>
-          </RestaurantProvider>
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
-          <Route
-            path="/employee"
-            element={
-              <>
-                <Employee />
-              </>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+              <Route
+                path="/employee"
+                element={
+                  <>
+                    <Employee />
+                  </>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </TableProvider>
+      </RestaurantProvider>
     </div>
   );
 }
