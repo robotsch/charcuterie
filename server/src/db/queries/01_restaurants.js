@@ -18,8 +18,8 @@ const getAllRestaurants = function () {
   });
 };
 
-let x = getAllRestaurants();
-console.log('x: ', x);
+// let x = getAllRestaurants();
+// console.log('x: ', x);
 
 exports.getAllRestaurants = getAllRestaurants;
 
