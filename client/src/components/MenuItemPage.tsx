@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 
@@ -6,13 +6,37 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
+import ws from "../sockets/socket";
+
 export default function MenuItemPage(props: any) {
-  const { name, price, url, description } = props.menuItem;
+  const { id, name, price, url, description } = props.menuItem;
+
+  // const { currentOrder, setCurrentOrder } = props;
 
   const { isOpen, toggleDrawer } = useContext(toggleDrawerContext);
+
+  // useEffect(() => {
+  //   ws.on("UPDATE_ORDER", ({ name, order }) => {
+  //     console.log("in MenuItemPage", { name, order });
+  //     setCurrentOrder((prev: any) => {
+  //       if (prev[name] !== undefined && prev[name][order.id] !== undefined) {
+  //         const updatedOrder = prev[name][order.id];
+  //         updatedOrder.quantity += order.quantity;
+  //         return {
+  //           ...prev,
+  //           [name]: { ...prev[name], [order.id]: updatedOrder },
+  //         };
+  //       }
+  //       return { ...prev, [name]: { ...prev[name], [order.id]: order } };
+  //     });
+  //   });
+
+  //   return () => {
+  //     ws.off("UPDATE_ORDER");
+  //   };
+  // }, []);
 
   return (
     <>
@@ -42,6 +66,15 @@ export default function MenuItemPage(props: any) {
             onSubmit={(event: any) => {
               event.preventDefault();
               console.log(event.target[0].value);
+              ws.emit("UPDATE_ORDER", {
+                name: localStorage.getItem("user"),
+                order: {
+                  ...props.menuItem,
+                  quantity: parseInt(event.target[0].value),
+                },
+                restaurant: localStorage.getItem("restaurant"),
+                table: localStorage.getItem("table"),
+              });
             }}
           >
             <TextField

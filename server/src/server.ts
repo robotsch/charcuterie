@@ -80,7 +80,7 @@ io.on('connection', (socket) => {
     socket.data.name = name;
     // room = `rst1.tbl1`;
     // room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
-    room = `rst${restaurant}.tbl${table}`
+    room = `rst${restaurant}.tbl${table}`;
     io.in(socket.id).socketsJoin(room);
     const names = getAllNames(io.sockets.adapter.rooms.get(room));
     io.to(room).emit('SUBMIT_NAME', names);
@@ -91,8 +91,12 @@ io.on('connection', (socket) => {
     io.in(socket.id).socketsJoin(room);
   });
 
-  socket.on('UPDATE_ORDER', (order) => {
-    io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
+  socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
+    console.log(name, order, restaurant, table);
+    room = `rst${restaurant}.tbl${table}`;
+    console.log(room);
+    io.in(socket.id).socketsJoin(room);
+    io.to(room).emit('UPDATE_ORDER', {name, order});
   });
 
   socket.on('SUBMIT_ORDER', () => {
@@ -130,4 +134,3 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 server.listen(3001, () => console.log(`Server running on ${3001}`));
-

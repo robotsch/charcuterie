@@ -15,10 +15,16 @@ export default function Menu() {
 
   const categories = [salads, soups];
 
+  // const [currentOrder, setCurrentOrder] = useState({});
+
   return (
     <ToggleDrawerProvider>
       <CurrentOrderDrawerProvider>
-        <MenuItemPage menuItem={menuItem} />
+        <MenuItemPage
+          menuItem={menuItem}
+          // currentOrder={currentOrder}
+          // setCurrentOrder={setCurrentOrder}
+        />
         {categories.map((category) => {
           return (
             <MenuItemList
@@ -29,13 +35,11 @@ export default function Menu() {
           );
         })}
         <MenuFooter />
-        <CurrentOrder
-          id={order1.id}
-          group={order1.group}
-          table={order1.table}
-          timePlaced={order1.timePlaced}
-          orderFoodItems={order1.orderFoodItems}
-        />
+        <CurrentOrder />
+        {/* <CurrentOrder
+          currentOrder={currentOrder}
+          setCurrentOrder={setCurrentOrder}
+        /> */}
       </CurrentOrderDrawerProvider>
     </ToggleDrawerProvider>
   );
