@@ -1,42 +1,41 @@
-let MongoClient = require("mongodb").MongoClient;
-let ObjectId = require("mongodb").ObjectId;
-let url = "mongodb://localhost:27017/";
+let MongoClient = require('mongodb').MongoClient;
+let ObjectId = require('mongodb').ObjectId;
+let url = 'mongodb://localhost:27017/';
 
 MongoClient.connect(url, function (err, db) {
   if (err) throw err;
-  let dbo = db.db("mydb");
+  let dbo = db.db('mydb');
   let myobj = [
     {
-      _id: ObjectId("6283f6a703f54b7c82c5fffc"),
-      restaurant_id: ObjectId("6283f1d9804b848eb5e4560c"),
-      qr_code: "example"
-     
+      _id: ObjectId('6283f6a703f54b7c82c5fffc'),
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
+      readable_name: 1,
     },
     {
-      _id: ObjectId("6283f6a703f54b7c82c5fffd"),
-      restaurant_id: ObjectId("6283f1d9804b848eb5e4560c"),
-      qr_code: "example"
+      _id: ObjectId('6283f6a703f54b7c82c5fffd'),
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
+      readable_name: 2,
     },
     {
-      _id: ObjectId("6283f6a703f54b7c82c5fffe"),
-      restaurant_id: ObjectId("6283f1d9804b848eb5e4560c"),
-      qr_code: "example"
+      _id: ObjectId('6283f6a703f54b7c82c5fffe'),
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
+      readable_name: 3,
     },
     {
-      _id: ObjectId("6283f6a703f54b7c82c5ffff"),
-      restaurant_id: ObjectId("6283f1d9804b848eb5e4560d"),
-      qr_code: "example"
+      _id: ObjectId('6283f6a703f54b7c82c5ffff'),
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560d'),
+      readable_name: 1,
     },
     {
-      _id: ObjectId("6283f89194fb302443de7351"),
-      restaurant_id: ObjectId("6283f1d9804b848eb5e4560d"),
-      qr_code: "example"
+      _id: ObjectId('6283f89194fb302443de7351'),
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560d'),
+      readable_name: 2,
     },
   ];
 
-  dbo.collection("tables").insertMany(myobj, function (err, res) {
+  dbo.collection('tables').insertMany(myobj, function (err, res) {
     if (err) throw err;
-    console.log("Number of documents inserted: " + res.insertedCount);
+    console.log('Number of documents inserted: ' + res.insertedCount);
     db.close();
   });
 });
