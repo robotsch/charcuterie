@@ -3,9 +3,8 @@ import SideBar from "./SideBar";
 
 export default function Employee() {
   return (
-    <div>
-      <SideBar></SideBar>
+    <SideBar>
       <LiveOrderList />
-    </div>
+    </SideBar>
   );
 }

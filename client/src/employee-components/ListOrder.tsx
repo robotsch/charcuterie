@@ -6,21 +6,15 @@ import CardContent from "@mui/material/CardContent";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
-export default function LiveOrder(props: Order) {
-  const { id, group, table, timePlaced, orderFoodItems } = props;
-
+export default function LiveOrder(props: any) {
   return (
     <Card>
       <CardContent sx={{ padding: 0 }}>
-        <Typography variant="h5">Order #{id}</Typography>
-        <Typography variant="body1">Group: {group}</Typography>
-        <Typography variant="body1">Table: {table}</Typography>
-        <Typography variant="body1">Placed at: {timePlaced}</Typography>
         <List>
-          {orderFoodItems.map((foodItem) => {
+          {Object.values(props).map((foodItem: any) => {
             return (
               <ListItem key={foodItem.id}>
-                {foodItem.name} x {foodItem.quantity}
+              <Typography variant="body2">{foodItem.name} x {foodItem.quantity}</Typography>
               </ListItem>
             );
           })}

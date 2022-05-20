@@ -158,12 +158,15 @@ export default function CurrentOrder() {
                     order: parsedCurrentOrder,
                   };
 
-                  console.log("parsedCurrentOrder", send);
-                  
+                  console.log("send", send);
+
                   // axios
                   //   .post("", send)
                   //   .then(() => {
-                  ws.emit("SUBMIT_ORDER");
+                  ws.emit("SUBMIT_ORDER", {
+                    restaurant: localStorage.getItem("restaurant"),
+                    currentOrder,
+                  });
                   // })
                   // .catch((error) => console.log(error));
                 }}

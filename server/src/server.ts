@@ -122,8 +122,9 @@ io.on('connection', (socket) => {
     io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
-  socket.on('SUBMIT_ORDER', () => {
-    io.to(room).emit('SUBMIT_ORDER')
+  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
+    io.to(room).emit('SUBMIT_ORDER');
+    io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
   });
 
   socket.on('disconnect', () => {
