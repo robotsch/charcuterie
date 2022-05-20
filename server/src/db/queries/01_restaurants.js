@@ -12,10 +12,14 @@ const getAllRestaurants = function () {
       .toArray(function (err, result) {
         if (err) throw err;
         console.log(result);
+        return result;
         db.close();
       });
   });
 };
+
+let x = getAllRestaurants();
+console.log('x: ', x);
 
 exports.getAllRestaurants = getAllRestaurants;
 
