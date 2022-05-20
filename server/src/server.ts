@@ -8,7 +8,16 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import { Server, Socket } from 'socket.io';
 
-const restaurantQueries = require('./db/queries/01_restaurants')
+import {
+  getAllRestaurants,
+  getRestaurantsWithId,
+  createRestaurant,
+  deleteRestaurantById,
+  addMenuItemByRestaurantId,
+  getEmployeeWithUsername,
+  getMenuByRestaurantId,
+  deleteMenuitemByRestaurantById,
+} from './db/queries/01_restaurants';
 
 const clientPromise = require('./db/db');
 
@@ -69,13 +78,11 @@ const getAllNames = (sockets: any) => {
 
 let interval: any;
 io.on('connection', (socket) => {
-  
-  const x = restaurantQueries.getAllRestaurants()
-
   let sockets: any;
-  let room: string
-  let orderNum = 1
-  
+  let room: string;
+  let orderNum = 1;
+  console.log('special: ', getAllRestaurants);
+
   socket.data = socket.handshake.query;
 
   console.log(`New client connected`, socket.id);
@@ -89,15 +96,14 @@ io.on('connection', (socket) => {
     io.to(room).emit('SUBMIT_NAME', names);
   });
 
-  socket.on('EMPLOYEE', ({restaurant}) => {
-    room = restaurant
-    io.in(socket.id).socketsJoin(room)
-  })
+  socket.on('EMPLOYEE', ({ restaurant }) => {
+    room = restaurant;
+    io.in(socket.id).socketsJoin(room);
+  });
 
   socket.on('DB_TEST', () => {
-    io.emit('DB_TEST', x)
-    // io.emit('DB_TEST', restaurantQueries.getAllRestaurants())
-  }) 
+    getAllRestaurants().then((res: any) => io.emit('DB_TEST', res));
+  });
 
   socket.on('UPDATE_ORDER', (order) => {
     io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
@@ -114,15 +120,23 @@ io.on('connection', (socket) => {
       }
     }
 
-    const d = new Date().toLocaleTimeString()
-    const order = {id: orderNum, group:10, table: '10', timePlaced: d, orderFoodItems: [{
-      id: 2,
-      name: "Seaweed & Tofu Salad",
-      price: 1600,
-      quantity: 3
-    }]}
+    const d = new Date().toLocaleTimeString();
+    const order = {
+      id: orderNum,
+      group: 10,
+      table: '10',
+      timePlaced: d,
+      orderFoodItems: [
+        {
+          id: 2,
+          name: 'Seaweed & Tofu Salad',
+          price: 1600,
+          quantity: 3,
+        },
+      ],
+    };
 
-    orderNum++
+    orderNum++;
     io.to(room).emit('SUBMIT_ORDER', order);
   });
 

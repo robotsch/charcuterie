@@ -1,27 +1,29 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-let url = process.env.DB_URL;
+let url = 'mongodb://localhost:27017/';
 
-const getAllRestaurants = function () {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    return dbo
-      .collection('restaurants')
-      .find()
-      .toArray(function (err, result) {
-        if (err) throw err;
-        console.log(result);
-        return result;
-        db.close();
-      });
+export const getAllRestaurants = function () {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      return dbo
+        .collection('restaurants')
+        .find()
+        .toArray(function (err, result) {
+          if (err) throw err;
+          //console.log(result);
+          db.close();
+          resolve(result);
+        });
+    });
   });
 };
 
-// let x = getAllRestaurants();
-// console.log('x: ', x);
+//let x = getAllRestaurants();
+//console.log('x: ', x);
 
-exports.getAllRestaurants = getAllRestaurants;
+//exports.getAllRestaurants = getAllRestaurants;
 
 const getRestaurantsWithId = function (id) {
   MongoClient.connect(url, function (err, db) {
@@ -40,7 +42,7 @@ const getRestaurantsWithId = function (id) {
   });
 };
 
-exports.getRestaurantsWithId = getRestaurantsWithId;
+//exports.getRestaurantsWithId = getRestaurantsWithId;
 
 const createRestaurant = function () {
   MongoClient.connect(url, function (err, db) {
@@ -56,7 +58,7 @@ const createRestaurant = function () {
   });
 };
 
-exports.createRestaurant = createRestaurant;
+//exports.createRestaurant = createRestaurant;
 
 const deleteRestaurantById = function (id) {
   MongoClient.connect(url, function (err, db) {
@@ -72,7 +74,7 @@ const deleteRestaurantById = function (id) {
   });
 };
 
-exports.deleteRestaurantById = deleteRestaurantById;
+//exports.deleteRestaurantById = deleteRestaurantById;
 
 const addMenuItemByRestaurantId = function (
   id,
@@ -106,7 +108,7 @@ const addMenuItemByRestaurantId = function (
   });
 };
 
-exports.addMenuItemByRestaurantId = addMenuItemByRestaurantId;
+//exports.addMenuItemByRestaurantId = addMenuItemByRestaurantId;
 
 const getEmployeeWithUsername = function (username) {
   MongoClient.connect(url, function (err, db) {
@@ -134,7 +136,7 @@ const getEmployeeWithUsername = function (username) {
   });
 };
 
-exports.getEmployeeWithUsername = getEmployeeWithUsername;
+//xports.getEmployeeWithUsername = getEmployeeWithUsername;
 
 const getMenuByRestaurantId = function (id) {
   MongoClient.connect(url, function (err, db) {
@@ -156,7 +158,7 @@ const getMenuByRestaurantId = function (id) {
   });
 };
 
-exports.getMenuByRestaurantId = getMenuByRestaurantId;
+//exports.getMenuByRestaurantId = getMenuByRestaurantId;
 
 const deleteMenuitemByRestaurantById = function (id) {
   MongoClient.connect(url, function (err, db) {
@@ -172,7 +174,7 @@ const deleteMenuitemByRestaurantById = function (id) {
   });
 };
 
-exports.deleteMenuItemByRestaurantById = deleteRestaurantById;
+//exports.deleteMenuItemByRestaurantById = deleteRestaurantById;
 
 //deleteRestaurantById(ObjectId("628594f9b9fec226e1926067"));
 //createRestaurant()
@@ -181,4 +183,15 @@ exports.deleteMenuItemByRestaurantById = deleteRestaurantById;
 //getEmployeeWithUsername("jado")
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
 
-getAllRestaurants();
+//getAllRestaurants();
+
+export {
+  getAllRestaurants,
+  getRestaurantsWithId,
+  createRestaurant,
+  deleteRestaurantById,
+  addMenuItemByRestaurantId,
+  getEmployeeWithUsername,
+  getMenuByRestaurantId,
+  deleteMenuitemByRestaurantById,
+};
