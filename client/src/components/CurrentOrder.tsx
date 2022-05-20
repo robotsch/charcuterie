@@ -22,12 +22,7 @@ interface Order {
   quantity: number;
   url: string;
 }
-interface CurrentOrderProps {
-  currentOrder: {
-    [key: string]: Order;
-  };
-  setCurrentOrder: Function;
-}
+
 
 interface CurrentOrder {
   [key: string]: Order;
