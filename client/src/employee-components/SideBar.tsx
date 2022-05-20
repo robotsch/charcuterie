@@ -16,7 +16,7 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 
 const drawerWidth = 240;
 
-export default function PermanentDrawerLeft() {
+export default function PermanentDrawerLeft(props: any) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -83,6 +83,7 @@ export default function PermanentDrawerLeft() {
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
+        {props.children}
       </Box>
     </Box>
   );

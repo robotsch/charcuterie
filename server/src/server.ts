@@ -122,8 +122,9 @@ io.on('connection', (socket) => {
     io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
-  socket.on('SUBMIT_ORDER', () => {
-    io.to(room).emit('SUBMIT_ORDER')
+  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
+    io.to(room).emit('SUBMIT_ORDER');
+    io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
   });
 
   socket.on('disconnect', () => {
@@ -137,12 +138,12 @@ io.on('connection', (socket) => {
 // Router imports
 const menuRoute = require('./routes/menu-router');
 const employeeLoginRoute = require('./routes/login-router');
-const qrRoute = require('./routes/qr-code-router')
+const qrRoute = require('./routes/qr-code-router');
 
 // Resource routes
 app.use('/api/menu', menuRoute);
 app.use('/api/employee-login', employeeLoginRoute);
-app.use('/api/qr-generate', qrRoute)
+app.use('/api/qr-generate', qrRoute);
 
 app.get('/', (req: Request, res: Response) => {
   res.send({ response: 'test' }).status(200);
