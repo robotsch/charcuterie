@@ -2,7 +2,7 @@ let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
 let url = 'mongodb://localhost:27017/';
 
-export const getAllRestaurants = function () {
+const getAllRestaurants = function () {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
