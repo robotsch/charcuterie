@@ -41,7 +41,10 @@ export default function CurrentOrder() {
 
   // console.log(currentOrder);
 
-  const [currentOrder, setCurrentOrder] = useState<CurrentOrder>({});
+  // const [currentOrder, setCurrentOrder] = useState<CurrentOrder>({});
+  const [currentOrder, setCurrentOrder] = useState<CurrentOrder>(
+    JSON.parse(localStorage.getItem("currentOrder")) || {}
+  );
 
   const { isOpenCurrentOrder, toggleCurrentOrderDrawer } = useContext(
     currentOrderDrawerContext
@@ -53,8 +56,16 @@ export default function CurrentOrder() {
   }, [currentOrder]);
 
   useEffect(() => {
+    ws.on("connect", () => {
+      ws.emit("RECONNECT", {
+        name: localStorage.getItem("user"),
+        restaurant: localStorage.getItem("restaurant"),
+        table: localStorage.getItem("table"),
+      });
+    });
+
     ws.on("UPDATE_ORDER", ({ name, order }) => {
-      console.log("in MenuItemPage", { name, order });
+      console.log("in CurrentOrder useEffect []", { name, order });
       setCurrentOrder((prev: any) => {
         if (prev[name] !== undefined && prev[name][order.id] !== undefined) {
           const updatedOrder = prev[name][order.id];

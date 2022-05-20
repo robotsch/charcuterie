@@ -65,7 +65,7 @@ export default function MenuItemPage(props: any) {
           <form
             onSubmit={(event: any) => {
               event.preventDefault();
-              console.log(event.target[0].value);
+              console.log(event.target[0].value, "x", props.menuItem.name);
               ws.emit("UPDATE_ORDER", {
                 name: localStorage.getItem("user"),
                 order: {

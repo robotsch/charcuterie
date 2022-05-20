@@ -86,6 +86,11 @@ io.on('connection', (socket) => {
     io.to(room).emit('SUBMIT_NAME', names);
   });
 
+  socket.on('RECONNECT', ({ name, restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    io.in(socket.id).socketsJoin(room);
+  });
+
   socket.on('EMPLOYEE', ({ restaurant }) => {
     room = restaurant;
     io.in(socket.id).socketsJoin(room);
@@ -96,7 +101,7 @@ io.on('connection', (socket) => {
     room = `rst${restaurant}.tbl${table}`;
     console.log(room);
     io.in(socket.id).socketsJoin(room);
-    io.to(room).emit('UPDATE_ORDER', {name, order});
+    io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
   socket.on('SUBMIT_ORDER', () => {
