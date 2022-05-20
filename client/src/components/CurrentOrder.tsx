@@ -43,7 +43,7 @@ export default function CurrentOrder() {
 
   // const [currentOrder, setCurrentOrder] = useState<CurrentOrder>({});
   const [currentOrder, setCurrentOrder] = useState<CurrentOrder>(
-    JSON.parse(localStorage.getItem("currentOrder")) || {}
+    JSON.parse(localStorage.getItem("currentOrder") || "{}")
   );
 
   const { isOpenCurrentOrder, toggleCurrentOrderDrawer } = useContext(
