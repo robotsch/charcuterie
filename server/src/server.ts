@@ -150,13 +150,15 @@ io.on('connection', (socket) => {
 
 // Router imports
 const menuRoute = require('./routes/menu-router');
+const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
-const qrRoute = require('./routes/qr-code-router')
+const qrRoute = require('./routes/qr-code-router');
 
 // Resource routes
 app.use('/api/menu', menuRoute);
+app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
-app.use('/api/qr-generate', qrRoute)
+app.use('/api/qr-generate', qrRoute);
 
 app.get('/', (req: Request, res: Response) => {
   res.send({ response: 'test' }).status(200);

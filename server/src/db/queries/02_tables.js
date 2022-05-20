@@ -1,6 +1,7 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-let url = 'mongodb://localhost:27017/';
+// let url = 'mongodb://localhost:27017/';
+let url = process.env.DB_URL;
 
 //gets all tables from a provided restaurant id
 const getAllTablesByRestaurantId = function (id) {
