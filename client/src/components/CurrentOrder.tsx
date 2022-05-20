@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import Button from "@mui/material/Button";
 
 import ws from "../sockets/socket";
 
@@ -23,10 +24,11 @@ interface Order {
   url: string;
 }
 
-
 interface CurrentOrder {
   [key: string]: Order;
 }
+
+type OrderState = "NO_ITEMS" | "ITEMS" | "SUBMITTED";
 
 import { currentOrderDrawerContext } from "../providers/CurrentOrderDrawerProvider";
 
@@ -41,13 +43,21 @@ export default function CurrentOrder() {
     JSON.parse(localStorage.getItem("currentOrder") || "{}")
   );
 
+  const [orderState, setOrderState] = useState<OrderState>("ITEMS");
+
   const { isOpenCurrentOrder, toggleCurrentOrderDrawer } = useContext(
     currentOrderDrawerContext
   );
 
   useEffect(() => {
+    console.log("orderState in useEffect [currentOrder]", orderState);
     console.log("currentOrder", currentOrder);
     localStorage.setItem("currentOrder", JSON.stringify(currentOrder));
+    if (Object.keys(currentOrder).length === 0) {
+      setOrderState("NO_ITEMS");
+    } else {
+      setOrderState("ITEMS");
+    }
   }, [currentOrder]);
 
   useEffect(() => {
@@ -56,6 +66,8 @@ export default function CurrentOrder() {
         name: localStorage.getItem("user"),
         restaurant: localStorage.getItem("restaurant"),
         table: localStorage.getItem("table"),
+        // emit users and order in case that someone joins a table after
+        // items have already been added to current order by other users at table
       });
     });
 
@@ -112,14 +124,31 @@ export default function CurrentOrder() {
           <Container sx={{ backgroundColor: "orange" }} disableGutters>
             <h1 className="mont">CURRENT ORDER</h1>
             <Divider />
-            {Object.keys(currentOrder).length === 0 ? (
+            {orderState === "NO_ITEMS" && (
               <Typography variant="body1">
                 No items added to the list
               </Typography>
-            ) : (
-              Object.keys(currentOrder).map((name) => {
-                return getItemsForName(name);
-              })
+            )}
+            {orderState === "ITEMS" && (
+              <form
+                onSubmit={(event: any) => {
+                  event.preventDefault();
+                  console.log("submit order", currentOrder);
+                  setOrderState("SUBMITTED");
+                }}
+              >
+                {Object.keys(currentOrder).map((name) => {
+                  return getItemsForName(name);
+                })}
+                <Button type="submit" variant="contained">
+                  Submit Order
+                </Button>
+              </form>
+            )}
+            {orderState === "SUBMITTED" && (
+              <Typography variant="body1">
+                Your order has been submitted!
+              </Typography>
             )}
           </Container>
         </Box>
