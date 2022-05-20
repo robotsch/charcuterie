@@ -87,13 +87,19 @@ io.on('connection', (socket) => {
 
   console.log(`New client connected`, socket.id);
 
-  socket.on('SUBMIT_NAME', ({ name }) => {
+  socket.on('SUBMIT_NAME', ({ name, restaurant, table }) => {
     socket.data.name = name;
-    room = `rst1.tbl1`;
+    // room = `rst1.tbl1`;
     // room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
+    room = `rst${restaurant}.tbl${table}`;
     io.in(socket.id).socketsJoin(room);
     const names = getAllNames(io.sockets.adapter.rooms.get(room));
     io.to(room).emit('SUBMIT_NAME', names);
+  });
+
+  socket.on('RECONNECT', ({ name, restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    io.in(socket.id).socketsJoin(room);
   });
 
   socket.on('EMPLOYEE', ({ restaurant }) => {
@@ -105,39 +111,19 @@ io.on('connection', (socket) => {
     getAllRestaurants().then((res: any) => io.emit('DB_TEST', res));
   });
 
-  socket.on('UPDATE_ORDER', (order) => {
-    io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
+  socket.on('EMPLOYEE', ({ restaurant }) => {
+    room = restaurant;
+    io.in(socket.id).socketsJoin(room);
+  });
+
+  socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    io.in(socket.id).socketsJoin(room);
+    io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
   socket.on('SUBMIT_ORDER', () => {
-    const clientList = io.sockets.adapter.rooms.get(room);
-    const fullOrder: { [key: string]: {} } = {};
-
-    for (const clientId in clientList) {
-      const clientSocket = io.sockets.sockets.get(clientId);
-      if (clientSocket) {
-        fullOrder[clientSocket.data.name] = clientSocket.data.order;
-      }
-    }
-
-    const d = new Date().toLocaleTimeString();
-    const order = {
-      id: orderNum,
-      group: 10,
-      table: '10',
-      timePlaced: d,
-      orderFoodItems: [
-        {
-          id: 2,
-          name: 'Seaweed & Tofu Salad',
-          price: 1600,
-          quantity: 3,
-        },
-      ],
-    };
-
-    orderNum++;
-    io.to(room).emit('SUBMIT_ORDER', order);
+    io.to(room).emit('SUBMIT_ORDER')
   });
 
   socket.on('disconnect', () => {

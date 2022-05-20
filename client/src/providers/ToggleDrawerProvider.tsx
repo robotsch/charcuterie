@@ -1,6 +1,6 @@
 import { createContext, useState, KeyboardEvent, MouseEvent } from "react";
 
-export const toggleDrawerContext = createContext<any>(undefined);
+export const toggleDrawerContext = createContext<any>(false);
 
 export default function ToggleDrawerProvider(props: any) {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +9,8 @@ export default function ToggleDrawerProvider(props: any) {
     (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
       if (
         event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
+        ((event as KeyboardEvent).key !== "Escape" ||
+          (event as KeyboardEvent).key === "Tab" ||
           (event as KeyboardEvent).key === "Shift")
       ) {
         return;
