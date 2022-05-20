@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-let url = 'mongodb://localhost:27017/';
+let url = process.env.DB_URL
 
 const getOrdersByTableId = function (id) {
   return new Promise((resolve, reject) => {
