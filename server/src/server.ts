@@ -117,42 +117,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
-    // console.log(name, order, restaurant, table);
     room = `rst${restaurant}.tbl${table}`;
-    // console.log(room);
     io.in(socket.id).socketsJoin(room);
     io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
   socket.on('SUBMIT_ORDER', () => {
-    const clientList = io.sockets.adapter.rooms.get(room);
-    const fullOrder: { [key: string]: {} } = {};
-
-    for (const clientId in clientList) {
-      const clientSocket = io.sockets.sockets.get(clientId);
-      if (clientSocket) {
-        fullOrder[clientSocket.data.name] = clientSocket.data.order;
-      }
-    }
-
-    const d = new Date().toLocaleTimeString();
-    const order = {
-      id: orderNum,
-      group: 10,
-      table: '10',
-      timePlaced: d,
-      orderFoodItems: [
-        {
-          id: 2,
-          name: 'Seaweed & Tofu Salad',
-          price: 1600,
-          quantity: 3,
-        },
-      ],
-    };
-
-    orderNum++;
-    io.to(room).emit('SUBMIT_ORDER', order);
+    io.to(room).emit('SUBMIT_ORDER')
   });
 
   socket.on('disconnect', () => {

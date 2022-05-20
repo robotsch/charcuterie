@@ -73,10 +73,10 @@ export default function CurrentOrder() {
       });
     });
 
-    ws.on("SUBMIT_ORDER", (order) => {
+    ws.on("SUBMIT_ORDER", () => {
       setOrderState("SUBMITTED");
-      setCurrentOrder({})
-      console.log("SUBMIT_ORDER listener", order);
+      setCurrentOrder({});
+      console.log("SUBMIT_ORDER listener");
     });
 
     ws.on("UPDATE_ORDER", ({ name, order }) => {
@@ -106,7 +106,6 @@ export default function CurrentOrder() {
         <>
           <Typography>{name}</Typography>
           {Object.values(currentOrder[name]).map((item) => {
-            // console.log(item);
             return (
               <ListItem key={item.id}>
                 {item.quantity} x {item.name}
@@ -153,11 +152,17 @@ export default function CurrentOrder() {
                     });
                   }
 
+                  const send = {
+                    restaurant: localStorage.getItem("restaurant"),
+                    table: localStorage.getItem("table"),
+                    order: parsedCurrentOrder,
+                  };
+
+                  console.log("parsedCurrentOrder", send);
+                  
                   // axios
-                  //   .post("", parsedCurrentOrder)
+                  //   .post("", send)
                   //   .then(() => {
-                  setOrderState("SUBMITTED");
-                  setCurrentOrder({});
                   ws.emit("SUBMIT_ORDER");
                   // })
                   // .catch((error) => console.log(error));
