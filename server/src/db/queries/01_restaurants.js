@@ -6,14 +6,13 @@ const getAllRestaurants = function () {
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     let dbo = db.db('mydb');
-    dbo
+    return dbo
       .collection('restaurants')
       .find()
       .toArray(function (err, result) {
         if (err) throw err;
         console.log(result);
         db.close();
-        return result;
       });
   });
 };
@@ -177,3 +176,5 @@ exports.deleteMenuItemByRestaurantById = deleteRestaurantById;
 //addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
 //getEmployeeWithUsername("jado")
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
+
+getAllRestaurants();
