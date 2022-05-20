@@ -69,6 +69,8 @@ const getAllNames = (sockets: any) => {
 
 let interval: any;
 io.on('connection', (socket) => {
+  
+  const x = restaurantQueries.getAllRestaurants()
 
   let sockets: any;
   let room: string
@@ -93,8 +95,9 @@ io.on('connection', (socket) => {
   })
 
   socket.on('DB_TEST', () => {
-    
-  })
+    io.emit('DB_TEST', x)
+    // io.emit('DB_TEST', restaurantQueries.getAllRestaurants())
+  }) 
 
   socket.on('UPDATE_ORDER', (order) => {
     io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
