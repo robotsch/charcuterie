@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-let url = 'mongodb://localhost:27017/';
+let url = process.env.DB_URL;
 
 const getAllRestaurants = function () {
   MongoClient.connect(url, function (err, db) {

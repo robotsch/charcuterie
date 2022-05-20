@@ -12,12 +12,19 @@ export default function LiveOrderList() {
   useEffect(() => {
     ws.emit("EMPLOYEE", "restaurant");
 
+    
+
     ws.on("SUBMIT_ORDER", (order) => {
       updateOrders(order);
     });
+    ws.on("DB_TEST", (res) => {
+      console.log("result: ", res)
+    });
+
     console.log(orders);
     return () => {
       ws.off("SUBMIT_ORDER");
+      ws.off("DB_TEST");
     };
   }, []);
 
@@ -43,6 +50,7 @@ export default function LiveOrderList() {
       <button
         onClick={() => {
           ws.emit("SUBMIT_ORDER");
+          ws.emit("DB_TEST");
         }}
       >
         Test
