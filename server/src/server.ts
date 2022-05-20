@@ -6,10 +6,18 @@ import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import QRcode from 'qrcode';
 import { Server, Socket } from 'socket.io';
-import cookie from 'cookie';
-import { LEGAL_TCP_SOCKET_OPTIONS } from 'mongodb';
+
+import {
+  getAllRestaurants,
+  getRestaurantsWithId,
+  createRestaurant,
+  deleteRestaurantById,
+  addMenuItemByRestaurantId,
+  getEmployeeWithUsername,
+  getMenuByRestaurantId,
+  deleteMenuitemByRestaurantById,
+} from './db/queries/01_restaurants';
 
 const clientPromise = require('./db/db');
 
@@ -71,6 +79,10 @@ const getAllNames = (sockets: any) => {
 let interval: any;
 io.on('connection', (socket) => {
   let sockets: any;
+  let room: string;
+  let orderNum = 1;
+  console.log('special: ', getAllRestaurants);
+
   socket.data = socket.handshake.query;
   let room: string;
 
@@ -89,6 +101,15 @@ io.on('connection', (socket) => {
   socket.on('RECONNECT', ({ name, restaurant, table }) => {
     room = `rst${restaurant}.tbl${table}`;
     io.in(socket.id).socketsJoin(room);
+  });
+  
+  socket.on('EMPLOYEE', ({ restaurant }) => {
+    room = restaurant;
+    io.in(socket.id).socketsJoin(room);
+  });
+
+  socket.on('DB_TEST', () => {
+    getAllRestaurants().then((res: any) => io.emit('DB_TEST', res));
   });
 
   socket.on('EMPLOYEE', ({ restaurant }) => {
@@ -115,7 +136,24 @@ io.on('connection', (socket) => {
       }
     }
 
-    io.to(room).emit('SUBMIT_ORDER', fullOrder);
+    const d = new Date().toLocaleTimeString();
+    const order = {
+      id: orderNum,
+      group: 10,
+      table: '10',
+      timePlaced: d,
+      orderFoodItems: [
+        {
+          id: 2,
+          name: 'Seaweed & Tofu Salad',
+          price: 1600,
+          quantity: 3,
+        },
+      ],
+    };
+
+    orderNum++;
+    io.to(room).emit('SUBMIT_ORDER', order);
   });
 
   socket.on('disconnect', () => {

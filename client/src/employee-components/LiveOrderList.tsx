@@ -1,28 +1,62 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import LiveOrder from "./ListOrder";
 import { Typography } from "@mui/material";
 import { orderList } from "../mockdata";
-import ws from "../sockets/socket"
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import ws from "../sockets/socket";
 
 export default function LiveOrderList() {
-  useEffect(() => {
-    ws.emit('EMPLOYEE', 'restaurant')
-    
-    ws.on('SUBMIT_ORDER', (order) => {
-      console.log(order)
-    })
+  const [orders, setOrders] = useState<any[]>([]);
 
+  useEffect(() => {
+    ws.emit("EMPLOYEE", "restaurant");
+
+    
+
+    ws.on("SUBMIT_ORDER", (order) => {
+      updateOrders(order);
+    });
+    ws.on("DB_TEST", (res) => {
+      console.log("result: ", res)
+    });
+
+    console.log(orders);
     return () => {
-      ws.off('test')
-    }
-  }, [])
-  
+      ws.off("SUBMIT_ORDER");
+      ws.off("DB_TEST");
+    };
+  }, []);
+
+  const updateOrders = (order: {}) => {
+    setOrders((prev) => [...prev, order]);
+  };
+
+  const renderedOrders = orders.map((order) => {
+    return (
+      <LiveOrder
+        key={order.id}
+        id={order.id}
+        group={order.group}
+        table={order.table}
+        timePlaced={order.timePlaced}
+        orderFoodItems={order.orderFoodItems}
+      />
+    );
+  });
+
   return (
     <>
+      <button
+        onClick={() => {
+          ws.emit("SUBMIT_ORDER");
+          ws.emit("DB_TEST");
+        }}
+      >
+        Test
+      </button>
       <Typography variant="h4">Live Order Feed</Typography>
-      {orderList.orders.map((order) => {
-        return <LiveOrder key={order.id} {...order} />;
-      })}
+      {renderedOrders}
     </>
   );
 }

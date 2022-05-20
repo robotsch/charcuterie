@@ -20,6 +20,7 @@ import Table from "./components/Table";
 import Landing from "./components/Landing";
 
 import Employee from "./employee-components/Employee";
+import EmployeeLogin from "./employee-components/EmployeeLogin";
 
 import useSocket from "./hooks/useSocket";
 
@@ -33,6 +34,7 @@ export default function App() {
 
   return (
     <div className="App">
+<<<<<<< HEAD
       <BrowserRouter>
         <Routes>
           <Route path="/landing/*" element={<Landing />} />
@@ -95,6 +97,85 @@ export default function App() {
           />
         </Routes>
       </BrowserRouter>
+=======
+      <RestaurantProvider>
+        <TableProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="/landing/*"
+                // element={<Landing {...{ user, users, setName }} />}
+              />
+              <Route
+                path="/current-order"
+                element={
+                  <>
+                    <TemporaryDrawer />
+                    <CurrentOrder
+                      id={order1.id}
+                      group={order1.group}
+                      table={order1.table}
+                      timePlaced={order1.timePlaced}
+                      orderFoodItems={order1.orderFoodItems}
+                    />
+                  </>
+                }
+              />
+              <Route
+                path="menu"
+                element={
+                  <>
+                    <TemporaryDrawer />
+                    <Menu />
+                  </>
+                }
+              />
+              <Route
+                path="/table"
+                element={
+                  <>
+                    <TemporaryDrawer />
+                    <Table />
+                  </>
+                }
+              />
+              <Route
+                path="/bill"
+                element={
+                  <>
+                    <TemporaryDrawer />
+                  </>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                }
+              />
+              <Route
+                path="/employee"
+                element={
+                  <>
+                    <Employee />
+                  </>
+                }
+              />
+              <Route
+                path="/employeelogin"
+                element={
+                  <>
+                    <EmployeeLogin />
+                  </>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </TableProvider>
+      </RestaurantProvider>
+>>>>>>> main
     </div>
   );
 }
