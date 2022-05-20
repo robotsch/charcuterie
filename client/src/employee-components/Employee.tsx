@@ -1,5 +1,11 @@
 import LiveOrderList from "./LiveOrderList";
+import SideBar from "./SideBar";
 
 export default function Employee() {
-  return <LiveOrderList />
+  return (
+    <div>
+      <SideBar></SideBar>
+      <LiveOrderList />
+    </div>
+  );
 }
