@@ -26,34 +26,41 @@ export const getAllRestaurants = function () {
 //exports.getAllRestaurants = getAllRestaurants;
 
 const getRestaurantsWithId = function (id) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let query = { _id: id };
-    dbo
-      .collection('restaurants')
-      .find(query)
-      .toArray(function (err, result) {
-        if (err) throw err;
-        console.log(result);
-        db.close();
-        return result;
-      });
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { _id: id };
+      return dbo
+        .collection('restaurants')
+        .find(query)
+        .toArray(function (err, result) {
+          if (err) throw err;
+          console.log(result);
+          db.close();
+          resolve(result);
+        });
+    });
   });
 };
 
 //exports.getRestaurantsWithId = getRestaurantsWithId;
 
 const createRestaurant = function () {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let myobj = { menu_items: [], employees: [] };
-    dbo.collection('restaurants').insertOne(myobj, function (err, res) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
       if (err) throw err;
-      console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-      console.log('New Restaurant added to Collection');
-      db.close();
+      let dbo = db.db('mydb');
+      let myobj = { menu_items: [], employees: [] };
+      return dbo
+        .collection('restaurants')
+        .insertOne(myobj, function (err, res) {
+          if (err) throw err;
+          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
+          console.log('New Restaurant added to Collection');
+          db.close();
+          resolve(res);
+        });
     });
   });
 };
@@ -61,15 +68,20 @@ const createRestaurant = function () {
 //exports.createRestaurant = createRestaurant;
 
 const deleteRestaurantById = function (id) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let myobj = { _id: id };
-    dbo.collection('restaurants').deleteOne(myobj, function (err, res) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
       if (err) throw err;
-      console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-      console.log(id, ' Restaurant removed from Collection');
-      db.close();
+      let dbo = db.db('mydb');
+      let myobj = { _id: id };
+      return dbo
+        .collection('restaurants')
+        .deleteOne(myobj, function (err, res) {
+          if (err) throw err;
+          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
+          console.log(id, ' Restaurant removed from Collection');
+          db.close();
+          resolve(res);
+        });
     });
   });
 };
@@ -84,92 +96,104 @@ const addMenuItemByRestaurantId = function (
   image_url,
   category
 ) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let query = { _id: id };
-    let menuObj = {
-      _id: ObjectId(),
-      price: price,
-      name: name,
-      description: description,
-      image_url: image_url,
-      category: category,
-    };
-    let insertVal = { $push: { menu_items: menuObj } };
-    dbo
-      .collection('restaurants')
-      .updateOne(query, insertVal, function (err, res) {
-        if (err) throw err;
-        console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-        console.log('Added ', insertVal, ' to Restaurant: ', id);
-        db.close();
-      });
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { _id: id };
+      let menuObj = {
+        _id: ObjectId(),
+        price: price,
+        name: name,
+        description: description,
+        image_url: image_url,
+        category: category,
+      };
+      let insertVal = { $push: { menu_items: menuObj } };
+      return dbo
+        .collection('restaurants')
+        .updateOne(query, insertVal, function (err, res) {
+          if (err) throw err;
+          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
+          console.log('Added ', insertVal, ' to Restaurant: ', id);
+          db.close();
+          resolve(res);
+        });
+    });
   });
 };
 
 //exports.addMenuItemByRestaurantId = addMenuItemByRestaurantId;
 
 const getEmployeeWithUsername = function (username) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let query = { employees: { $elemMatch: { username: username } } };
-    dbo
-      .collection('restaurants')
-      .find(query)
-      .toArray(function (err, result) {
-        if (err) throw err;
-        //console.log(result);
-        let employeesArr = result[0].employees;
-        //console.log("arr: ", employeesArr)
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { employees: { $elemMatch: { username: username } } };
+      return dbo
+        .collection('restaurants')
+        .find(query)
+        .toArray(function (err, result) {
+          if (err) throw err;
+          //console.log(result);
+          let employeesArr = result[0].employees;
+          //console.log("arr: ", employeesArr)
 
-        db.close();
+          db.close();
 
-        for (const elem of employeesArr) {
-          if (elem.username === username) {
-            console.log('elem: ', elem);
-            return elem;
+          for (const elem of employeesArr) {
+            if (elem.username === username) {
+              console.log('elem: ', elem);
+              resolve(elem);
+            }
           }
-        }
-      });
+        });
+    });
   });
 };
 
 //xports.getEmployeeWithUsername = getEmployeeWithUsername;
 
 const getMenuByRestaurantId = function (id) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let query = { _id: id };
-    dbo
-      .collection('restaurants')
-      .find(query)
-      .toArray(function (err, result) {
-        if (err) throw err;
-        //console.log(result);
-        let restoObj = result[0].menu_items;
-        console.log('restoObj: ', restoObj);
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { _id: id };
+      return dbo
+        .collection('restaurants')
+        .find(query)
+        .toArray(function (err, result) {
+          if (err) throw err;
+          //console.log(result);
+          let restoObj = result[0].menu_items;
+          console.log('restoObj: ', restoObj);
 
-        db.close();
-        return restoObj;
-      });
+          db.close();
+          resolve(restoObj);
+        });
+    });
   });
 };
 
 //exports.getMenuByRestaurantId = getMenuByRestaurantId;
 
 const deleteMenuitemByRestaurantById = function (id) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let myobj = { _id: id };
-    dbo.collection('restaurants').deleteOne(myobj, function (err, res) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
       if (err) throw err;
-      console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-      console.log(id, ' Restaurant removed from Collection');
-      db.close();
+      let dbo = db.db('mydb');
+      let myobj = { _id: id };
+      return dbo
+        .collection('restaurants')
+        .deleteOne(myobj, function (err, res) {
+          if (err) throw err;
+          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
+          console.log(id, ' Restaurant removed from Collection');
+          db.close();
+          resolve(res);
+        });
     });
   });
 };
