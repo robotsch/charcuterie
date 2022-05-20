@@ -80,7 +80,7 @@ export default function App() {
             }
           />
           <Route
-            path="/employeelogin"
+            path="/employee/login"
             element={
               <>
                 <EmployeeLogin />

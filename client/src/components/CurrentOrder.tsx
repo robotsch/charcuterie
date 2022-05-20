@@ -32,6 +32,7 @@ type OrderState = "NO_ITEMS" | "ITEMS" | "SUBMITTED";
 
 import { currentOrderDrawerContext } from "../providers/CurrentOrderDrawerProvider";
 import axios from "axios";
+import { ProductionQuantityLimits } from "@mui/icons-material";
 
 // export default function CurrentOrder(props: CurrentOrderProps) {
 export default function CurrentOrder() {
@@ -73,7 +74,8 @@ export default function CurrentOrder() {
     });
 
     ws.on("SUBMIT_ORDER", (order) => {
-      setOrderState("SUBMITTED")
+      setOrderState("SUBMITTED");
+      setCurrentOrder({})
       console.log("SUBMIT_ORDER listener", order);
     });
 
@@ -141,15 +143,24 @@ export default function CurrentOrder() {
                 onSubmit={(event: any) => {
                   event.preventDefault();
                   console.log("submit order", currentOrder);
-                  const parsedCurrentOrder = 
-                  axios
-                    .post("", {})
-                    .then(() => {
-                      setOrderState("SUBMITTED");
-                      setCurrentOrder({});
-                      ws.emit("SUBMIT_ORDER");
-                    })
-                    .catch((error) => console.log(error));
+
+                  const parsedCurrentOrder: { [key: string]: any } = {};
+                  for (const name in currentOrder) {
+                    parsedCurrentOrder[name] = Object.values(
+                      currentOrder[name]
+                    ).map((item) => {
+                      return { id: item.id, quantity: item.quantity };
+                    });
+                  }
+
+                  // axios
+                  //   .post("", parsedCurrentOrder)
+                  //   .then(() => {
+                  setOrderState("SUBMITTED");
+                  setCurrentOrder({});
+                  ws.emit("SUBMIT_ORDER");
+                  // })
+                  // .catch((error) => console.log(error));
                 }}
               >
                 {Object.keys(currentOrder).map((name) => {
