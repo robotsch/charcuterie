@@ -84,7 +84,6 @@ io.on('connection', (socket) => {
   console.log('special: ', getAllRestaurants);
 
   socket.data = socket.handshake.query;
-  let room: string;
 
   console.log(`New client connected`, socket.id);
 
@@ -102,7 +101,7 @@ io.on('connection', (socket) => {
     room = `rst${restaurant}.tbl${table}`;
     io.in(socket.id).socketsJoin(room);
   });
-  
+
   socket.on('EMPLOYEE', ({ restaurant }) => {
     room = restaurant;
     io.in(socket.id).socketsJoin(room);
