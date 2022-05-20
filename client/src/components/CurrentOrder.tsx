@@ -31,6 +31,7 @@ interface CurrentOrder {
 type OrderState = "NO_ITEMS" | "ITEMS" | "SUBMITTED";
 
 import { currentOrderDrawerContext } from "../providers/CurrentOrderDrawerProvider";
+import axios from "axios";
 
 // export default function CurrentOrder(props: CurrentOrderProps) {
 export default function CurrentOrder() {
@@ -71,6 +72,11 @@ export default function CurrentOrder() {
       });
     });
 
+    ws.on("SUBMIT_ORDER", (order) => {
+      setOrderState("SUBMITTED")
+      console.log("SUBMIT_ORDER listener", order);
+    });
+
     ws.on("UPDATE_ORDER", ({ name, order }) => {
       console.log("in CurrentOrder useEffect []", { name, order });
       setCurrentOrder((prev: any) => {
@@ -88,6 +94,7 @@ export default function CurrentOrder() {
 
     return () => {
       ws.off("UPDATE_ORDER");
+      ws.off("SUBMIT_ORDER");
     };
   }, []);
 
@@ -134,7 +141,15 @@ export default function CurrentOrder() {
                 onSubmit={(event: any) => {
                   event.preventDefault();
                   console.log("submit order", currentOrder);
-                  setOrderState("SUBMITTED");
+                  const parsedCurrentOrder = 
+                  axios
+                    .post("", {})
+                    .then(() => {
+                      setOrderState("SUBMITTED");
+                      setCurrentOrder({});
+                      ws.emit("SUBMIT_ORDER");
+                    })
+                    .catch((error) => console.log(error));
                 }}
               >
                 {Object.keys(currentOrder).map((name) => {

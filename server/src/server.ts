@@ -117,9 +117,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
-    console.log(name, order, restaurant, table);
+    // console.log(name, order, restaurant, table);
     room = `rst${restaurant}.tbl${table}`;
-    console.log(room);
+    // console.log(room);
     io.in(socket.id).socketsJoin(room);
     io.to(room).emit('UPDATE_ORDER', { name, order });
   });

@@ -31,11 +31,6 @@ export default function Landing() {
   const [headerMode, setHeaderMode] = useState<LandingHeaderMode>("NOT_LOADED");
   const [mode, setMode] = useState<LandingMode>("LANDING");
 
-  const setName = (name: string) => {
-    setUser(name);
-    ws.emit("SUBMIT_NAME", { name, restaurant, table });
-  };
-
   useEffect(() => {
     setRestaurant(searchParms.get("id1"));
     setTable(searchParms.get("id2"));
@@ -96,7 +91,8 @@ export default function Landing() {
             onSubmit={(event: any) => {
               event.preventDefault();
               const name = event.target[0].value;
-              setName(name);
+              setUser(name);
+              ws.emit("SUBMIT_NAME", { name, restaurant, table });
             }}
           >
             <TextField
