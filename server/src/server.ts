@@ -87,13 +87,19 @@ io.on('connection', (socket) => {
 
   console.log(`New client connected`, socket.id);
 
-  socket.on('SUBMIT_NAME', ({ name }) => {
+  socket.on('SUBMIT_NAME', ({ name, restaurant, table }) => {
     socket.data.name = name;
-    room = `rst1.tbl1`;
+    // room = `rst1.tbl1`;
     // room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
+    room = `rst${restaurant}.tbl${table}`;
     io.in(socket.id).socketsJoin(room);
     const names = getAllNames(io.sockets.adapter.rooms.get(room));
     io.to(room).emit('SUBMIT_NAME', names);
+  });
+
+  socket.on('RECONNECT', ({ name, restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    io.in(socket.id).socketsJoin(room);
   });
 
   socket.on('EMPLOYEE', ({ restaurant }) => {
@@ -105,39 +111,20 @@ io.on('connection', (socket) => {
     getAllRestaurants().then((res: any) => io.emit('DB_TEST', res));
   });
 
-  socket.on('UPDATE_ORDER', (order) => {
-    io.to(room).emit('UPDATE_ORDER', socket.data.customerName, order);
+  socket.on('EMPLOYEE', ({ restaurant }) => {
+    room = restaurant;
+    io.in(socket.id).socketsJoin(room);
   });
 
-  socket.on('SUBMIT_ORDER', () => {
-    const clientList = io.sockets.adapter.rooms.get(room);
-    const fullOrder: { [key: string]: {} } = {};
+  socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    io.in(socket.id).socketsJoin(room);
+    io.to(room).emit('UPDATE_ORDER', { name, order });
+  });
 
-    for (const clientId in clientList) {
-      const clientSocket = io.sockets.sockets.get(clientId);
-      if (clientSocket) {
-        fullOrder[clientSocket.data.name] = clientSocket.data.order;
-      }
-    }
-
-    const d = new Date().toLocaleTimeString();
-    const order = {
-      id: orderNum,
-      group: 10,
-      table: '10',
-      timePlaced: d,
-      orderFoodItems: [
-        {
-          id: 2,
-          name: 'Seaweed & Tofu Salad',
-          price: 1600,
-          quantity: 3,
-        },
-      ],
-    };
-
-    orderNum++;
-    io.to(room).emit('SUBMIT_ORDER', order);
+  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
+    io.to(room).emit('SUBMIT_ORDER');
+    io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
   });
 
   socket.on('disconnect', () => {
@@ -150,13 +137,15 @@ io.on('connection', (socket) => {
 
 // Router imports
 const menuRoute = require('./routes/menu-router');
+const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
-const qrRoute = require('./routes/qr-code-router')
+const qrRoute = require('./routes/qr-code-router');
 
 // Resource routes
 app.use('/api/menu', menuRoute);
+app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
-app.use('/api/qr-generate', qrRoute)
+app.use('/api/qr-generate', qrRoute);
 
 app.get('/', (req: Request, res: Response) => {
   res.send({ response: 'test' }).status(200);

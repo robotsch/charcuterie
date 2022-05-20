@@ -2,58 +2,45 @@ import { useState, useContext } from "react";
 
 import MenuItemList from "./MenuItemList";
 import MenuItemPage from "./MenuItemPage";
+import CurrentOrder from "./CurrentOrder";
+import MenuFooter from "./MenuFooter";
 
-import { salads, soups } from "../mockdata";
+import { salads, soups, order1 } from "../mockdata";
 
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
+import CurrentOrderDrawerProvider from "../providers/CurrentOrderDrawerProvider";
 
 export default function Menu() {
-  const [menuItem, setMenuItem] = useState({
-    id: 1,
-    name: "Seaweed & Tofu Salad",
-    category: 1,
-    price: 1600,
-    url: "/assets/img/seaweed-tofu-salad.jpeg",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  });
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDrawer =
-    (open: boolean) => (event: KeyboardEvent | MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as KeyboardEvent).key === "Tab" ||
-          (event as KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
-
-      setIsOpen(open);
-    };
+  const [menuItem, setMenuItem] = useState({});
 
   const categories = [salads, soups];
 
-  const categoryMenu = categories.map((category) => {
-    return (
-      <MenuItemList
-        toggleDrawer={toggleDrawer}
-        setMenuItem={setMenuItem}
-        key={category.id}
-        {...category}
-      ></MenuItemList>
-    );
-  });
+  // const [currentOrder, setCurrentOrder] = useState({});
 
   return (
     <ToggleDrawerProvider>
-      <MenuItemPage
-        menuItem={menuItem}
-        isOpen={isOpen}
-        toggleDrawer={toggleDrawer}
-      />
-      {categoryMenu}
+      <CurrentOrderDrawerProvider>
+        <MenuItemPage
+          menuItem={menuItem}
+          // currentOrder={currentOrder}
+          // setCurrentOrder={setCurrentOrder}
+        />
+        {categories.map((category) => {
+          return (
+            <MenuItemList
+              setMenuItem={setMenuItem}
+              key={category.id}
+              {...category}
+            ></MenuItemList>
+          );
+        })}
+        <MenuFooter />
+        <CurrentOrder />
+        {/* <CurrentOrder
+          currentOrder={currentOrder}
+          setCurrentOrder={setCurrentOrder}
+        /> */}
+      </CurrentOrderDrawerProvider>
     </ToggleDrawerProvider>
   );
 }
