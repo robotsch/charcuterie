@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
+
 import LiveOrder from "./ListOrder";
-import { List, Typography } from "@mui/material";
-import { orderList } from "../mockdata";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import ws from "../sockets/socket";
 import SideBar from "./SideBar";
+
+import ws from "../sockets/socket";
+
+import { orderList } from "../mockdata";
+
+import Card from "@mui/material/Card";
+import { List, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
 
 export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    ws.emit("EMPLOYEE", { restaurant: "1" });
+    ws.emit("EMPLOYEE", { restaurant: "6283f1d9804b848eb5e4560c" });
 
     ws.on("SUBMIT_ORDER", (order) => {
       console.log("SUBMIT_ORDER", order);
@@ -49,20 +54,24 @@ export default function LiveOrderList() {
   return (
     <Box
       component="main"
-      sx={{ display: "flex", bgcolor: "background.default", p: 3 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "background.default",
+        p: 3,
+      }}
     >
-      <Typography paragraph>
-        <button
-          onClick={() => {
-            // ws.emit("SUBMIT_ORDER");
-            ws.emit("DB_TEST");
-          }}
-        >
-          DB_TEST
-        </button>
-        <Typography variant="h4">Live Order Feed</Typography>
-        {renderedOrders}
-      </Typography>
+      <Typography variant="h4">Live Order Feed</Typography>
+      <Button
+        variant="contained"
+        onClick={() => {
+          // ws.emit("SUBMIT_ORDER");
+          ws.emit("DB_TEST");
+        }}
+      >
+        DB_TEST
+      </Button>
+      {renderedOrders}
     </Box>
   );
 }

@@ -5,6 +5,8 @@ import MenuItemPage from "./MenuItemPage";
 import CurrentOrder from "./CurrentOrder";
 import MenuFooter from "./MenuFooter";
 
+import axios from "axios";
+
 import { salads, soups, order1 } from "../mockdata";
 
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
@@ -16,6 +18,12 @@ export default function Menu() {
   const categories = [salads, soups];
 
   // const [currentOrder, setCurrentOrder] = useState({});
+  axios
+    .get(
+      `http://localhost:3001/api/menu?id=${localStorage.getItem("restaurant")}`
+    )
+    .then((res) => console.log("get for restaurant", res))
+    .catch((err) => console.log("ERROR", err));
 
   return (
     <ToggleDrawerProvider>
