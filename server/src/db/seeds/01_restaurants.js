@@ -113,14 +113,14 @@ MongoClient.connect(url, function (err, db) {
           fname: "Johnny",
           lname: "Depp",
           username: "captainjack",
-          password: "password123"
+          password: "$2y$10$bPR.Rk.G7EpzXBrnP4CDvO6uk3P1TrsLBs0YAUvHZ8fhKldkGFuT6"
         },
         {
           _id: ObjectId("6283f1d9804b848eb5e4560b"),
           fname: "Amber",
           lname: "Heard",
           username: "mera",
-          password: "password123"
+          password: "$2y$10$R0i.BbZCKB.9HNvYz7f3xu8XjHs3FlwdiR8k7jyK29CnNnCDCjzRG"
         },
       ],
     },
