@@ -5,7 +5,7 @@ import { orderList } from "../mockdata";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ws from "../sockets/socket";
-import SideBar from "./SideBar";
+
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 
@@ -48,14 +48,6 @@ export default function LiveOrderList() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <SideBar />
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
-          Tables Current Groups
-        </Box>
-
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
