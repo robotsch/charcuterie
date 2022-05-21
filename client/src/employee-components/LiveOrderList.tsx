@@ -1,18 +1,32 @@
 import { useState, useEffect } from "react";
 
-import LiveOrder from "./ListOrder";
-import SideBar from "./SideBar";
-
 import ws from "../sockets/socket";
 
 import { orderList } from "../mockdata";
 
 import Card from "@mui/material/Card";
 import { List, Typography } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+
+interface Item {
+  _id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  quantity: number;
+  price: number;
+}
+interface ItemsByID {
+  [key: string]: Item;
+}
+
+interface Order {
+  [key: string]: ItemsByID;
+}
 
 export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -36,19 +50,49 @@ export default function LiveOrderList() {
     };
   }, []);
 
-  const renderedOrders = orders.map((order) => {
+  const renderedOrders = orders.map((order: Order, index) => {
+    console.log(order);
+    console.log(orders.length);
     return (
-      <Card sx={{ margin: 3, padding: 1 }}>
-        {Object.keys(order).map((name) => {
+      <Card key={index} sx={{ my: 2, p: 1 }}>
+        {Object.entries(order).map(([name, items]) => {
           return (
             <>
               <Typography variant="body1">{name}</Typography>
-              <LiveOrder key={name} {...order[name]} />
+              <List>
+                {Object.values(items).map((item: Item) => {
+                  return (
+                    <ListItem key={item._id}>
+                      <Typography variant="body2">
+                        {item.name} x {item.quantity}
+                      </Typography>
+                    </ListItem>
+                  );
+                })}
+              </List>
             </>
           );
         })}
       </Card>
     );
+    // return Object.entries(order).map(([name, items]) => {
+    //   return (
+    //     <Card key={name} sx={{ my: 2, p: 1 }}>
+    //       <Typography variant="body1">{name}</Typography>
+    //       <List>
+    //         {Object.values(items).map((item: Item) => {
+    //           return (
+    //             <ListItem key={item._id}>
+    //               <Typography variant="body2">
+    //                 {item.name} x {item.quantity}
+    //               </Typography>
+    //             </ListItem>
+    //           );
+    //         })}
+    //       </List>
+    //     </Card>
+    //   );
+    // });
   });
 
   return (

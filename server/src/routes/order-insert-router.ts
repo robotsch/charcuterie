@@ -7,38 +7,43 @@ const sanitize = require('mongo-sanitize');
 const router: Router = express.Router();
 
 router.post('/', (req: Request, res: Response) => {
-  const restaurant = sanitize(req.body.restaurant)
-  const table = sanitize(req.body.table)
-  const orders = sanitize(req.body.order)
+  const restaurant = sanitize(req.body.restaurant);
+  const table = sanitize(req.body.table);
+  const orders = sanitize(req.body.order);
 
-  const custArr = []
+  console.log('restaurant', restaurant);
+  console.log('table', table);
+  // console.log('orders', orders);
 
-  for(const name in orders) {
-    const sub_orders: any[] = []
-    
-    orders[name].order.forEach((item: any) => {
+  const custArr = [];
+
+  for (const name in orders) {
+    const sub_orders: any[] = [];
+
+    orders[name].forEach((item: any) => {
       sub_orders.push({
         menu_item_id: ObjectId(item.id),
-        quantity: item.quantity
-      })
-    })
+        quantity: item.quantity,
+      });
+    });
 
     const orderObj = {
       name: name,
-      sub_orders: sub_orders
-    }
-    
-    custArr.push(orderObj)
+      sub_orders: sub_orders,
+    };
+
+    custArr.push(orderObj);
   }
-  
-  oQueries.createOrderByTableId(ObjectId(table), custArr)
-    .then((res) => {
-      console.log(res)
+
+  oQueries
+    .createOrderByTableId(ObjectId(table), custArr)
+    .then((dbRes) => {
+      console.log(dbRes);
+      res.send("OKAY BRO")
     })
     .catch((err) => {
-      res.status(500).send(`Failed to submit order: ${err}`)
-    })
-
+      res.status(500).send(`Failed to submit order: ${err}`);
+    });
 });
 
 module.exports = router;

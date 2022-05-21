@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 import ws from "../sockets/socket";
 
 interface Order {
-  id: number;
+  _id: number;
   name: string;
   price: number;
   description: string;
@@ -52,7 +52,7 @@ export default function CurrentOrder() {
   );
 
   useEffect(() => {
-    console.log("orderState in useEffect [currentOrder]", orderState);
+    // console.log("orderState in useEffect [currentOrder]", orderState);
     console.log("currentOrder", currentOrder);
     localStorage.setItem("currentOrder", JSON.stringify(currentOrder));
     if (Object.keys(currentOrder).length === 0) {
@@ -82,15 +82,15 @@ export default function CurrentOrder() {
     ws.on("UPDATE_ORDER", ({ name, order }) => {
       console.log("in CurrentOrder useEffect []", { name, order });
       setCurrentOrder((prev: any) => {
-        if (prev[name] !== undefined && prev[name][order.id] !== undefined) {
-          const updatedOrder = prev[name][order.id];
+        if (prev[name] !== undefined && prev[name][order._id] !== undefined) {
+          const updatedOrder = prev[name][order._id];
           updatedOrder.quantity += order.quantity;
           return {
             ...prev,
-            [name]: { ...prev[name], [order.id]: updatedOrder },
+            [name]: { ...prev[name], [order._id]: updatedOrder },
           };
         }
-        return { ...prev, [name]: { ...prev[name], [order.id]: order } };
+        return { ...prev, [name]: { ...prev[name], [order._id]: order } };
       });
     });
 
@@ -148,7 +148,8 @@ export default function CurrentOrder() {
                     parsedCurrentOrder[name] = Object.values(
                       currentOrder[name]
                     ).map((item) => {
-                      return { id: item.id, quantity: item.quantity };
+                      // console.log(item);
+                      return { id: item._id, quantity: item.quantity };
                     });
                   }
 
@@ -160,15 +161,18 @@ export default function CurrentOrder() {
 
                   console.log("send", send);
 
-                  // axios
-                  //   .post("", send)
-                  //   .then(() => {
-                  ws.emit("SUBMIT_ORDER", {
-                    restaurant: localStorage.getItem("restaurant"),
-                    currentOrder,
-                  });
-                  // })
-                  // .catch((error) => console.log(error));
+                  axios
+                    .post("http://localhost:3001/api/order", send)
+                    .then((res) => {
+                      console.log('HERE');
+                      ws.emit("SUBMIT_ORDER", {
+                        restaurant: localStorage.getItem("restaurant"),
+                        currentOrder,
+                      });
+                      console.log(res);
+                      console.log(res.data);
+                    })
+                    .catch((error) => console.log(error));
                 }}
               >
                 {Object.keys(currentOrder).map((name) => {

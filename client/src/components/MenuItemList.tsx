@@ -8,10 +8,11 @@ export default function MenuItemList(props: any) {
   const { name, menuItems, setMenuItem } = props;
 
   const menuItemList = menuItems.map((menuItem: FoodItem) => {
+    // console.log("MenuItemList menuItem", menuItem);
     return (
       <MenuItem
         setMenuItem={setMenuItem}
-        key={menuItem.id}
+        key={menuItem._id}
         {...menuItem}
       ></MenuItem>
     );

@@ -10,10 +10,12 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import ws from "../sockets/socket";
 
-import "./MenuItemPage.scss"
+import "./MenuItemPage.scss";
 
 export default function MenuItemPage(props: any) {
-  const { name, price, image_url, description } = props.menuItem;
+  const { _id, name, price, image_url, description } = props.menuItem;
+
+  // console.log(props);
 
   const { isOpen, toggleDrawer } = useContext(toggleDrawerContext);
 
@@ -44,7 +46,6 @@ export default function MenuItemPage(props: any) {
           <form
             onSubmit={(event: any) => {
               event.preventDefault();
-              console.log(event.target[0].value, "x", props.menuItem.name);
               ws.emit("UPDATE_ORDER", {
                 name: localStorage.getItem("user"),
                 order: {

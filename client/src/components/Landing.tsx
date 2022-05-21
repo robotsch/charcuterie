@@ -24,16 +24,16 @@ export default function Landing() {
   console.log(user, users);
   const [searchParms, getSearchParams] = useSearchParams();
 
-  const [restaurant, setRestaurant] = useState<any>("0");
+  const [restaurant, setRestaurant] = useState<string>("");
 
-  const [table, setTable] = useState<any>("0");
+  const [table, setTable] = useState<string>("");
 
   const [headerMode, setHeaderMode] = useState<LandingHeaderMode>("NOT_LOADED");
   const [mode, setMode] = useState<LandingMode>("LANDING");
 
   useEffect(() => {
-    setRestaurant(searchParms.get("id1"));
-    setTable(searchParms.get("id2"));
+    setRestaurant(searchParms.get("id1") || "");
+    setTable(searchParms.get("id2") || "");
     localStorage.setItem("restaurant", searchParms.get("id1") || "0");
     localStorage.setItem("table", searchParms.get("id2") || "0");
 
