@@ -1,7 +1,7 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-// let url = 'mongodb://localhost:27017/';
-let url = process.env.DB_URL;
+let url = 'mongodb://localhost:27017/';
+//let url = process.env.DB_URL;
 
 const getAllRestaurants = function () {
   return new Promise((resolve, reject) => {
@@ -181,18 +181,20 @@ const getMenuByRestaurantId = function (id) {
 
 //exports.getMenuByRestaurantId = getMenuByRestaurantId;
 
-const deleteMenuitemByRestaurantById = function (id) {
+const deleteMenuitemByRestaurantById = function (restoId, menuId) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       let dbo = db.db('mydb');
-      let myobj = { _id: id };
+      let query = { _id: restoId };
+
+      let insertVal = { $pull: { menu_items: { _id: menuId } } };
       return dbo
         .collection('restaurants')
-        .deleteOne(myobj, function (err, res) {
+        .updateOne(query, insertVal, function (err, res) {
           if (err) throw err;
           console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-          console.log(id, ' Restaurant removed from Collection');
+          console.log('Removed ', insertVal, ' from Restaurant: ', restoId);
           db.close();
           resolve(res);
         });
@@ -204,20 +206,39 @@ const deleteMenuitemByRestaurantById = function (id) {
 
 //deleteRestaurantById(ObjectId("628594f9b9fec226e1926067"));
 //createRestaurant()
-//addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "California Roll", "A taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
-//addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
+// addMenuItemByRestaurantId(
+//   ObjectId('6283f1d9804b848eb5e4560c'),
+//   9.99,
+//   'California Roll',
+//   'A taste of California',
+//   'https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg',
+//   'Rolls'
+// );
+// addMenuItemByRestaurantId(
+//   ObjectId('6283f1d9804b848eb5e4560c'),
+//   9.99,
+//   'Double California Roll',
+//   'Twice the taste of California',
+//   'https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg',
+//   'Rolls'
+// );
 //getEmployeeWithUsername('jado');
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
 
 //getAllRestaurants();
 
-export {
-  getAllRestaurants,
-  getRestaurantsWithId,
-  createRestaurant,
-  deleteRestaurantById,
-  addMenuItemByRestaurantId,
-  getEmployeeWithUsername,
-  getMenuByRestaurantId,
-  deleteMenuitemByRestaurantById,
-};
+deleteMenuitemByRestaurantById(
+  ObjectId('6283f1d9804b848eb5e4560c'),
+  ObjectId('6289379b39e83170ecfacfc3')
+);
+
+// export {
+//   getAllRestaurants,
+//   getRestaurantsWithId,
+//   createRestaurant,
+//   deleteRestaurantById,
+//   addMenuItemByRestaurantId,
+//   getEmployeeWithUsername,
+//   getMenuByRestaurantId,
+//   deleteMenuitemByRestaurantById,
+// };
