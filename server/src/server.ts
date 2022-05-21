@@ -124,6 +124,7 @@ io.on('connection', (socket) => {
 
   socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
     io.to(room).emit('SUBMIT_ORDER');
+    // insert order into database
     io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
   });
 

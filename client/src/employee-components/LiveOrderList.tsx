@@ -16,8 +16,9 @@ export default function LiveOrderList() {
     ws.emit("EMPLOYEE", { restaurant: "1" });
 
     ws.on("SUBMIT_ORDER", (order) => {
-      // console.log(order);
+      console.log("SUBMIT_ORDER", order);
       setOrders((prev) => [...prev, order]);
+      console.log("orders", orders);
     });
 
     ws.on("DB_TEST", (res) => {
@@ -32,7 +33,7 @@ export default function LiveOrderList() {
 
   const renderedOrders = orders.map((order) => {
     return (
-      <>
+      <Card sx={{ margin: 3, padding: 1 }}>
         {Object.keys(order).map((name) => {
           return (
             <>
@@ -41,7 +42,7 @@ export default function LiveOrderList() {
             </>
           );
         })}
-      </>
+      </Card>
     );
   });
 
