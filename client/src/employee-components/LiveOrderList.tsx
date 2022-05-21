@@ -46,35 +46,22 @@ export default function LiveOrderList() {
   });
 
   return (
-    <>
-      <Box sx={{ display: "flex" }}>
-        <SideBar />
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+    <Box
+      component="main"
+      sx={{ display: "flex", bgcolor: "background.default", p: 3 }}
+    >
+      <Typography paragraph>
+        <button
+          onClick={() => {
+            // ws.emit("SUBMIT_ORDER");
+            ws.emit("DB_TEST");
+          }}
         >
-          Tables Current Groups
-        </Box>
-
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
-          <Typography paragraph>
-            <button
-              onClick={() => {
-                ws.emit("SUBMIT_ORDER");
-                ws.emit("DB_TEST");
-              }}
-            >
-              Test
-            </button>
-            <Typography variant="h4">Live Order Feed</Typography>
-            {renderedOrders}
-          </Typography>
-        </Box>
-      </Box>
-    </>
+          DB_TEST
+        </button>
+        <Typography variant="h4">Live Order Feed</Typography>
+        {renderedOrders}
+      </Typography>
+    </Box>
   );
 }
-
