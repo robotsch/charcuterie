@@ -13,11 +13,7 @@ export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    ws.emit("EMPLOYEE", "restaurant");
-=======
     ws.emit("EMPLOYEE", { restaurant: "1" });
->>>>>>> 102792c67090b240c2e54c3b12b4ed48071b5664
 
     ws.on("SUBMIT_ORDER", (order) => {
       // console.log(order);
@@ -51,39 +47,8 @@ export default function LiveOrderList() {
 
   return (
     <>
-<<<<<<< HEAD
-      <Box sx={{ display: "flex" }}>
-        <SideBar />
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
-          Tables Current Groups
-        </Box>
-
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-        >
-          <Typography paragraph>
-            <button
-              onClick={() => {
-                ws.emit("SUBMIT_ORDER");
-                ws.emit("DB_TEST");
-              }}
-            >
-              Test
-            </button>
-            <Typography variant="h4">Live Order Feed</Typography>
-            {renderedOrders}
-          </Typography>
-        </Box>
-      </Box>
-=======
       <Typography variant="h4">Live Order Feed</Typography>
       {renderedOrders}
->>>>>>> 102792c67090b240c2e54c3b12b4ed48071b5664
     </>
   );
 }
-
