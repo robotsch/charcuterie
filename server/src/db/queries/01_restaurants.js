@@ -145,8 +145,9 @@ const getEmployeeWithUsername = function (username) {
 
           for (const elem of employeesArr) {
             if (elem.username === username) {
-              console.log('elem: ', elem);
-              resolve(elem);
+              let returnObj = { restoId: result[0]._id, employee: elem };
+              //console.log('returnObj: ', returnObj);
+              resolve(returnObj);
             }
           }
         });
@@ -205,7 +206,7 @@ const deleteMenuitemByRestaurantById = function (id) {
 //createRestaurant()
 //addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "California Roll", "A taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
 //addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
-//getEmployeeWithUsername("jado")
+//getEmployeeWithUsername('jado');
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
 
 //getAllRestaurants();

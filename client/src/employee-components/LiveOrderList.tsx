@@ -5,6 +5,9 @@ import { orderList } from "../mockdata";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ws from "../sockets/socket";
+import SideBar from "./SideBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 
 export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -44,9 +47,33 @@ export default function LiveOrderList() {
 
   return (
     <>
-      <Typography variant="h4">Live Order Feed</Typography>
-      {renderedOrders}
+      <Box sx={{ display: "flex" }}>
+        <SideBar />
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+        >
+          Tables Current Groups
+        </Box>
+
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+        >
+          <Typography paragraph>
+            <button
+              onClick={() => {
+                ws.emit("SUBMIT_ORDER");
+                ws.emit("DB_TEST");
+              }}
+            >
+              Test
+            </button>
+            <Typography variant="h4">Live Order Feed</Typography>
+            {renderedOrders}
+          </Typography>
+        </Box>
+      </Box>
     </>
   );
 }
-

@@ -13,6 +13,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import Button from "@mui/material/Button";
+import LogoutIcon from "@mui/icons-material/Logout";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const drawerWidth = 240;
 
@@ -36,19 +39,47 @@ export default function PermanentDrawerLeft(props: any) {
         <Toolbar>LOGO</Toolbar>
         <Divider />
         <List>
-          {["Home", "Order History", "Menu"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <HomeIcon /> : <AccessAlarmIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem key="Home" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Order History" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <AccessAlarmIcon />
+              </ListItemIcon>
+              <ListItemText primary="Order History" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key="Menu" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <MenuBookIcon />
+              </ListItemIcon>
+              <ListItemText primary="Menu" />
+            </ListItemButton>
+          </ListItem>
         </List>
         <Divider />
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: "30px",
+            left: "55px",
+          }}
+        >
+          <Button variant="contained">
+            <LogoutIcon />
+            Log out
+          </Button>
+        </Box>
       </Drawer>
+<<<<<<< HEAD
+=======
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
@@ -85,6 +116,7 @@ export default function PermanentDrawerLeft(props: any) {
         </Typography>
         {props.children}
       </Box>
+>>>>>>> 102792c67090b240c2e54c3b12b4ed48071b5664
     </Box>
   );
 }
