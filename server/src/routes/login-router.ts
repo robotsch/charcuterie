@@ -1,11 +1,23 @@
 import express, { Request, Response, Router } from 'express';
-import { validatePassword } from '../utils/auth-utils'
+import { authenticateUser } from '../utils/auth-utils'
+import * as rQueries from '../db/queries/01_restaurants'
 
 const router: Router = express.Router();
 
-router.post('/', (req: Request, res: Response) => {
-  const userData = req.body
+router.get('/', (req: Request, res: Response) => {
+  const userData = {
+    username: 'captainjack',
+    password: 'password123'
+  }
 
+  // TODO: figure out how we scope this to restaurant
+  authenticateUser(userData)
+    .then((id) => {
+      if(id) {
+        req.session.employee_id = id
+      }
+    })
+});
   // userQueries.getUserWithEmail(userData.email)
   //   .then((result) => {
   //     if (result) {
@@ -24,6 +36,5 @@ router.post('/', (req: Request, res: Response) => {
   //     }
   //   })
   //   .catch((err) => console.log(err));
-});
 
 module.exports = router;
