@@ -5,7 +5,7 @@ import MenuItem from "./MenuItem";
 import { FoodItem } from "../../ts/foodItem_interface";
 
 export default function MenuItemList(props: any) {
-  const { name, menuItems, setMenuItem, toggleDrawer } = props;
+  const { name, menuItems, setMenuItem } = props;
 
   const menuItemList = menuItems.map((menuItem: FoodItem) => {
     return (

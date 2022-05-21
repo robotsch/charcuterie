@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import MenuItemList from "./MenuItemList";
 import MenuItemPage from "./MenuItemPage";
@@ -7,47 +7,70 @@ import MenuFooter from "./MenuFooter";
 
 import axios from "axios";
 
-import { salads, soups, order1 } from "../mockdata";
-
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
 import CurrentOrderDrawerProvider from "../providers/CurrentOrderDrawerProvider";
+
+interface MenuItem {
+  id: string;
+  category: string;
+  description: string;
+  image_url: string;
+  price: number;
+}
+
+interface Menu {
+  [key: string]: Array<MenuItem>;
+}
 
 export default function Menu() {
   const [menuItem, setMenuItem] = useState({});
 
-  const categories = [salads, soups];
+  const [menu, setMenu] = useState({});
 
-  // const [currentOrder, setCurrentOrder] = useState({});
-  axios
-    .get(
-      `http://localhost:3001/api/menu?id=${localStorage.getItem("restaurant")}`
-    )
-    .then((res) => console.log("get for restaurant", res))
-    .catch((err) => console.log("ERROR", err));
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3001/api/menu?id=${localStorage.getItem(
+          "restaurant"
+        )}`
+      )
+      .then((res) => {
+        const setCategories: Set<string> = new Set(
+          res.data.map((item: MenuItem) => item.category)
+        );
+
+        const categories: Array<string> = [...setCategories];
+
+        const parsedMenu: Menu = {};
+        categories.forEach((category: string) => {
+          parsedMenu[category] = [];
+        });
+
+        res.data.forEach((item: MenuItem) => {
+          parsedMenu[item.category].push(item);
+        });
+
+        setMenu(parsedMenu);
+      })
+      .catch((err) => console.log("ERROR", err));
+  }, []);
 
   return (
     <ToggleDrawerProvider>
       <CurrentOrderDrawerProvider>
-        <MenuItemPage
-          menuItem={menuItem}
-          // currentOrder={currentOrder}
-          // setCurrentOrder={setCurrentOrder}
-        />
-        {categories.map((category) => {
+        <MenuItemPage menuItem={menuItem} />
+        {Object.entries(menu).map(([category, menuItems]) => {
           return (
             <MenuItemList
+              key={category}
               setMenuItem={setMenuItem}
-              key={category.id}
-              {...category}
-            ></MenuItemList>
+              name={category}
+              menuItems={menuItems}
+            />
           );
         })}
         <MenuFooter />
         <CurrentOrder />
-        {/* <CurrentOrder
-          currentOrder={currentOrder}
-          setCurrentOrder={setCurrentOrder}
-        /> */}
       </CurrentOrderDrawerProvider>
     </ToggleDrawerProvider>
   );
