@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-//let url = 'mongodb://localhost:27017/';
+// let url = 'mongodb://localhost:27017/';
 let url = process.env.DB_URL;
 
 const getAllRestaurants = function () {
@@ -89,14 +89,7 @@ const deleteRestaurantById = function (id) {
 
 //exports.deleteRestaurantById = deleteRestaurantById;
 
-const addMenuItemByRestaurantId = function (
-  id,
-  price,
-  name,
-  description,
-  image_url,
-  category
-) {
+const addMenuItemByRestaurantId = function (id, itemData) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -104,18 +97,13 @@ const addMenuItemByRestaurantId = function (
       let query = { _id: id };
       let menuObj = {
         _id: ObjectId(),
-        price: price,
-        name: name,
-        description: description,
-        image_url: image_url,
-        category: category,
+        ...itemData,
       };
       let insertVal = { $push: { menu_items: menuObj } };
       return dbo
         .collection('restaurants')
         .updateOne(query, insertVal, function (err, res) {
           if (err) throw err;
-          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
           console.log('Added ', insertVal, ' to Restaurant: ', id);
           db.close();
           resolve(res);
@@ -170,8 +158,6 @@ const getMenuByRestaurantId = function (id) {
           if (err) throw err;
           //console.log(result);
           let restoObj = result[0].menu_items;
-          console.log('restoObj: ', restoObj);
-
           db.close();
           resolve(restoObj);
         });
@@ -181,7 +167,7 @@ const getMenuByRestaurantId = function (id) {
 
 //exports.getMenuByRestaurantId = getMenuByRestaurantId;
 
-const deleteMenuitemByRestaurantById = function (restoId, menuId) {
+const deleteMenuItemByRestaurantId = function (restoId, menuId) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -202,7 +188,7 @@ const deleteMenuitemByRestaurantById = function (restoId, menuId) {
   });
 };
 
-//exports.deleteMenuItemByRestaurantById = deleteRestaurantById;
+// exports.deleteMenuItemByRestaurantById = deleteMenuItemByRestaurantId;
 
 //deleteRestaurantById(ObjectId("628594f9b9fec226e1926067"));
 //createRestaurant()
@@ -240,5 +226,5 @@ export {
   addMenuItemByRestaurantId,
   getEmployeeWithUsername,
   getMenuByRestaurantId,
-  deleteMenuitemByRestaurantById,
+  deleteMenuItemByRestaurantId,
 };

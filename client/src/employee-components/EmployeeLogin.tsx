@@ -1,3 +1,4 @@
+// @ts-nocheck
 export default function EmployeeLogin() {
   return (
     <div className="container-md">

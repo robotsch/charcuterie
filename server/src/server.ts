@@ -16,14 +16,17 @@ import {
   addMenuItemByRestaurantId,
   getEmployeeWithUsername,
   getMenuByRestaurantId,
-  deleteMenuitemByRestaurantById,
+  deleteMenuItemByRestaurantId,
 } from './db/queries/01_restaurants';
 
 const clientPromise = require('./db/db');
 
 const app = express();
 app.use(morgan('dev'));
-app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
+
+const clientAddr = process.env.CLIENT_ORIGIN!;
+
+app.use(cors({ origin: [clientAddr], credentials: true }));
 app.use(bodyParser.json());
 
 /**
@@ -60,7 +63,7 @@ app.use(
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: clientAddr,
   },
 });
 //======================================
@@ -139,12 +142,18 @@ io.on('connection', (socket) => {
 const menuRoute = require('./routes/menu-router');
 const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
+const addMenuItemRoute = require('./routes/add-menu-item-router');
+const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const qrRoute = require('./routes/qr-code-router');
+
+app.use(express.static('client/dist'));
 
 // Resource routes
 app.use('/api/menu', menuRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
+app.use('/api/add-menu-item', addMenuItemRoute);
+app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/qr-generate', qrRoute);
 
 app.get('/', (req: Request, res: Response) => {
