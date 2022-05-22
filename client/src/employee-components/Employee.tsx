@@ -5,15 +5,11 @@ import TablesStatus from "./TablesStatus";
 
 export default function Employee() {
   return (
-    <Box sx={{ display: "flex" }}>
-      <SideBar />
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-      >
-        <TablesStatus />
+    <SideBar>
+      <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+        Tables Current Groups
       </Box>
       <LiveOrderList />
-    </Box>
+    </SideBar>
   );
 }

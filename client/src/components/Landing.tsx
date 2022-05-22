@@ -24,18 +24,24 @@ export default function Landing() {
   console.log(user, users);
   const [searchParms, getSearchParams] = useSearchParams();
 
-  const [restaurant, setRestaurant] = useState<any>("0");
+  const [restaurant, setRestaurant] = useState<string>("");
 
-  const [table, setTable] = useState<any>("0");
+  const [table, setTable] = useState<string>("");
 
   const [headerMode, setHeaderMode] = useState<LandingHeaderMode>("NOT_LOADED");
   const [mode, setMode] = useState<LandingMode>("LANDING");
 
   useEffect(() => {
-    setRestaurant(searchParms.get("id1"));
-    setTable(searchParms.get("id2"));
+    setRestaurant(searchParms.get("id1") || "");
+    setTable(searchParms.get("id2") || "");
     localStorage.setItem("restaurant", searchParms.get("id1") || "0");
     localStorage.setItem("table", searchParms.get("id2") || "0");
+    console.log(restaurant, table);
+
+    ws.emit("CONNECT_TO_ROOM", {
+      restaurant: searchParms.get("id1"),
+      table: searchParms.get("id2"),
+    });
 
     if (user !== null) {
       setMode("LANDING");
@@ -104,18 +110,17 @@ export default function Landing() {
             ></TextField>
             <Button type="submit">Confirm</Button>
           </form>
-          {/* <UserList users={users} /> */}
         </div>
       )}
       {mode === "NAME_ENTERED" && (
         <div>
           Hello {user}
-          <UserList users={users} />
           <Link to="/Menu">
             <Button>Menu</Button>
           </Link>
         </div>
       )}
+      <UserList users={users} />
       <Button
         type="button"
         onClick={() => {

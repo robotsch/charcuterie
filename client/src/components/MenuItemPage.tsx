@@ -10,33 +10,14 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import ws from "../sockets/socket";
 
-export default function MenuItemPage(props: any) {
-  const { id, name, price, url, description } = props.menuItem;
+import "./MenuItemPage.scss";
 
-  // const { currentOrder, setCurrentOrder } = props;
+export default function MenuItemPage(props: any) {
+  const { _id, name, price, image_url, description } = props.menuItem;
+
+  // console.log(props);
 
   const { isOpen, toggleDrawer } = useContext(toggleDrawerContext);
-
-  // useEffect(() => {
-  //   ws.on("UPDATE_ORDER", ({ name, order }) => {
-  //     console.log("in MenuItemPage", { name, order });
-  //     setCurrentOrder((prev: any) => {
-  //       if (prev[name] !== undefined && prev[name][order.id] !== undefined) {
-  //         const updatedOrder = prev[name][order.id];
-  //         updatedOrder.quantity += order.quantity;
-  //         return {
-  //           ...prev,
-  //           [name]: { ...prev[name], [order.id]: updatedOrder },
-  //         };
-  //       }
-  //       return { ...prev, [name]: { ...prev[name], [order.id]: order } };
-  //     });
-  //   });
-
-  //   return () => {
-  //     ws.off("UPDATE_ORDER");
-  //   };
-  // }, []);
 
   return (
     <>
@@ -55,7 +36,7 @@ export default function MenuItemPage(props: any) {
             <ArrowBackIosNewIcon />
           </Button>
           <div className="menuItemPage-img-container">
-            <img src={url} alt="FOOD"></img>
+            <img src={image_url} alt="FOOD"></img>
           </div>
           <h3 className="mont">{name}</h3>
           {description}
@@ -65,7 +46,6 @@ export default function MenuItemPage(props: any) {
           <form
             onSubmit={(event: any) => {
               event.preventDefault();
-              console.log(event.target[0].value, "x", props.menuItem.name);
               ws.emit("UPDATE_ORDER", {
                 name: localStorage.getItem("user"),
                 order: {
