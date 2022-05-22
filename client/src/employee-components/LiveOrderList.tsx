@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 
 import ws from "../sockets/socket";
 
-import { orderList } from "../mockdata";
-
 import Card from "@mui/material/Card";
 import { List, Typography } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
