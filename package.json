@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "cd client && npm i && npm run build && cd .. && cd client && npm i && tsc"
+    "heroku-prebuild": "cd server && npm i && npm run build && cd .. && cd client && npm i"
   },
   "keywords": [],
   "author": "",
