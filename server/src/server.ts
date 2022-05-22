@@ -23,7 +23,10 @@ const clientPromise = require('./db/db');
 
 const app = express();
 app.use(morgan('dev'));
-app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
+
+const clientAddr = process.env.CLIENT_ORIGIN!
+
+app.use(cors({ origin: [clientAddr], credentials: true }));
 app.use(bodyParser.json());
 
 /**
@@ -60,7 +63,7 @@ app.use(
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: clientAddr,
   },
 });
 //======================================
