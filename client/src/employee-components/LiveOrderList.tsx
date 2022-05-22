@@ -31,13 +31,20 @@ export default function LiveOrderList() {
   }, []);
 
   const renderedOrders = orders.map((order) => {
+    // console.log("order:", order);
+    // console.log("order objkeys:", Object.keys(order));
+
     return (
       <>
         {Object.keys(order).map((name) => {
           return (
             <>
-              <Typography variant="body1">{name}</Typography>
-              <LiveOrder key={name} {...order[name]} />
+              <Card>
+                <CardContent sx={{ padding: 0 }}>
+                  <Typography variant="body1">{name}'s Order</Typography>
+                  <LiveOrder key={name} {...order[name]} />
+                </CardContent>
+              </Card>
             </>
           );
         })}
@@ -55,7 +62,10 @@ export default function LiveOrderList() {
           <Typography paragraph>
             <button
               onClick={() => {
-                ws.emit("SUBMIT_ORDER");
+                ws.emit("SUBMIT_ORDER", {
+                  restaurant: "6283f1d9804b848eb5e4560c",
+                  currentOrder: {},
+                });
                 ws.emit("DB_TEST");
               }}
             >
