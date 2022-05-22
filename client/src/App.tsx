@@ -21,6 +21,7 @@ import Landing from "./components/Landing";
 
 import Employee from "./employee-components/Employee";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
+import OrderHistory from "./employee-components/OrderHistory";
 
 import useSocket from "./hooks/useSocket";
 
@@ -84,6 +85,15 @@ export default function App() {
             element={
               <>
                 <EmployeeLogin />
+              </>
+            }
+          />
+
+          <Route
+            path="/employee/history"
+            element={
+              <>
+                <OrderHistory />
               </>
             }
           />
