@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
 function createData(
   image: string,
@@ -53,7 +54,7 @@ export default function PastOrders() {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.id}
+              key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -62,6 +63,9 @@ export default function PastOrders() {
               <TableCell align="center">{row.name}</TableCell>
               <TableCell align="center">${row.category}</TableCell>
               <TableCell align="center">${row.price}</TableCell>
+              <TableCell align="center">
+                <Button color="secondary">Edit</Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
