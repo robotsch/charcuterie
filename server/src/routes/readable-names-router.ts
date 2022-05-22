@@ -17,6 +17,7 @@ router.get('/', (req: Request, res: Response) => {
       tQueries.getTableReadableIdById(ObjectId(table)),
     ]).then((data) => {
       const names = { restaurant: data[0].name, table: data[1] };
+      console.log(names)
       res.send(names);
     });
   } else {

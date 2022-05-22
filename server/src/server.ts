@@ -11,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 
 import {
   getAllRestaurants,
-  getRestaurantsWithId,
+  getRestaurantWithId,
   createRestaurant,
   deleteRestaurantById,
   addMenuItemByRestaurantId,
