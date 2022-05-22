@@ -12,6 +12,8 @@ import UserList from "./UserList";
 
 import ws from "../sockets/socket";
 
+import "./Landing.scss";
+
 type LandingMode = "LANDING" | "NAME_ENTERED";
 type LandingHeaderMode = "NOT_LOADED" | "LOADED";
 
@@ -82,12 +84,19 @@ export default function Landing() {
     <div>
       {headerMode === "NOT_LOADED" && <div>empty</div>}
       {headerMode === "LOADED" && (
-        <div>
-          {/* <img>FOR HEADER IMAGE</img> */}
-          <h1>WELCOME TO</h1>
-          <span>RED</span>
-          <span> BLOSSOM</span>
-          <h5>You are seated at table {table}</h5>
+        <div id="header">
+          <img
+            src="/assets/img/header.jpg"
+            alt="Restaurant header image"
+            id="header-img"
+          />
+          <div>
+            <div>
+              <h1 className="mont">WELCOME TO</h1>
+              <span>RED BLOSSOM</span>
+              <h5>You are seated at table {table}</h5>
+            </div>
+          </div>
         </div>
       )}
       {mode === "LANDING" && (
