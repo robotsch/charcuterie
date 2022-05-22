@@ -171,10 +171,6 @@ app.get('/api/session', (req, res) => {
   res.json({isLoggedIn: !!req.session.employee_id})
 })
 
-app.get('/employee', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
-});
-
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
 });
