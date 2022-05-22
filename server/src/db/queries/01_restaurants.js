@@ -89,14 +89,7 @@ const deleteRestaurantById = function (id) {
 
 //exports.deleteRestaurantById = deleteRestaurantById;
 
-const addMenuItemByRestaurantId = function (
-  id,
-  price,
-  name,
-  description,
-  image_url,
-  category
-) {
+const addMenuItemByRestaurantId = function (id, itemData) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -104,18 +97,13 @@ const addMenuItemByRestaurantId = function (
       let query = { _id: id };
       let menuObj = {
         _id: ObjectId(),
-        price: price,
-        name: name,
-        description: description,
-        image_url: image_url,
-        category: category,
+        ...itemData
       };
       let insertVal = { $push: { menu_items: menuObj } };
       return dbo
         .collection('restaurants')
         .updateOne(query, insertVal, function (err, res) {
           if (err) throw err;
-          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
           console.log('Added ', insertVal, ' to Restaurant: ', id);
           db.close();
           resolve(res);
@@ -170,8 +158,6 @@ const getMenuByRestaurantId = function (id) {
           if (err) throw err;
           //console.log(result);
           let restoObj = result[0].menu_items;
-          console.log('restoObj: ', restoObj);
-
           db.close();
           resolve(restoObj);
         });
@@ -181,18 +167,20 @@ const getMenuByRestaurantId = function (id) {
 
 //exports.getMenuByRestaurantId = getMenuByRestaurantId;
 
-const deleteMenuitemByRestaurantById = function (id) {
+const deleteMenuItemByRestaurantId = function (restoId, menuId) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       let dbo = db.db('mydb');
-      let myobj = { _id: id };
+      let query = { _id: restoId };
+
+      let insertVal = { $pull: { menu_items: { _id: menuId } } };
       return dbo
         .collection('restaurants')
-        .deleteOne(myobj, function (err, res) {
+        .updateOne(query, insertVal, function (err, res) {
           if (err) throw err;
           console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-          console.log(id, ' Restaurant removed from Collection');
+          console.log('Removed ', insertVal, ' from Restaurant: ', restoId);
           db.close();
           resolve(res);
         });
@@ -200,16 +188,35 @@ const deleteMenuitemByRestaurantById = function (id) {
   });
 };
 
-//exports.deleteMenuItemByRestaurantById = deleteRestaurantById;
+// exports.deleteMenuItemByRestaurantById = deleteMenuItemByRestaurantId;
 
 //deleteRestaurantById(ObjectId("628594f9b9fec226e1926067"));
 //createRestaurant()
-//addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "California Roll", "A taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
-//addMenuItemByRestaurantId(ObjectId("6285c1e9c36ee97c630005d5"), 9.99, "Double California Roll", "Twice the taste of California", "https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg", "Rolls")
+// addMenuItemByRestaurantId(
+//   ObjectId('6283f1d9804b848eb5e4560c'),
+//   9.99,
+//   'California Roll',
+//   'A taste of California',
+//   'https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg',
+//   'Rolls'
+// );
+// addMenuItemByRestaurantId(
+//   ObjectId('6283f1d9804b848eb5e4560c'),
+//   9.99,
+//   'Double California Roll',
+//   'Twice the taste of California',
+//   'https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg',
+//   'Rolls'
+// );
 //getEmployeeWithUsername('jado');
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
 
 //getAllRestaurants();
+
+// deleteMenuitemByRestaurantById(
+//   ObjectId('6283f1d9804b848eb5e4560c'),
+//   ObjectId('6289379b39e83170ecfacfc3')
+// );
 
 export {
   getAllRestaurants,
@@ -219,5 +226,5 @@ export {
   addMenuItemByRestaurantId,
   getEmployeeWithUsername,
   getMenuByRestaurantId,
-  deleteMenuitemByRestaurantById,
+  deleteMenuItemByRestaurantId,
 };

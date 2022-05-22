@@ -75,12 +75,15 @@ export default function SideBar(props: any) {
           </Button>
         </Box>
       </Drawer>
+<<<<<<< HEAD
       <Box
         component="main"
         sx={{ display: "flex", bgcolor: "background.default", p: 3 }}
       >
         {props.children}
       </Box>
+=======
+>>>>>>> main
     </Box>
   );
 }

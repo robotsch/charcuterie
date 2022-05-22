@@ -1,6 +1,5 @@
 import LiveOrderList from "./LiveOrderList";
 import SideBar from "./SideBar";
-
 import Box from "@mui/material/Box";
 
 export default function Employee() {
