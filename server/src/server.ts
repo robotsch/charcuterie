@@ -6,6 +6,7 @@ import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import path from 'path';
 import { Server, Socket } from 'socket.io';
 
 import {
@@ -24,7 +25,7 @@ const clientPromise = require('./db/db');
 const app = express();
 app.use(morgan('dev'));
 
-const clientAddr = process.env.CLIENT_ORIGIN!
+const clientAddr = process.env.CLIENT_ORIGIN!;
 
 app.use(cors({ origin: [clientAddr], credentials: true }));
 app.use(bodyParser.json());
@@ -138,22 +139,24 @@ io.on('connection', (socket) => {
 const menuRoute = require('./routes/menu-router');
 const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
-const addMenuItemRoute = require('./routes/add-menu-item-router')
-const removeMenuItemRoute = require('./routes/remove-menu-item-router')
+const addMenuItemRoute = require('./routes/add-menu-item-router');
+const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const qrRoute = require('./routes/qr-code-router');
 
-app.use(express.static('client/dist'))
+app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
 // Resource routes
 app.use('/api/menu', menuRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
-app.use('/api/add-menu-item', addMenuItemRoute)
-app.use('/api/remove-menu-item', removeMenuItemRoute)
+app.use('/api/add-menu-item', addMenuItemRoute);
+app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/qr-generate', qrRoute);
 
-app.get('/', (req: Request, res: Response) => {
-  res.send({ response: 'test' }).status(200);
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
 });
 
-server.listen(3001, () => console.log(`Server running on ${3001}`));
+server.listen(process.env.PORT || 3001, () =>
+  console.log(`Server running on ${process.env.PORT || 3001}`)
+);

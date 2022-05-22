@@ -97,7 +97,7 @@ const addMenuItemByRestaurantId = function (id, itemData) {
       let query = { _id: id };
       let menuObj = {
         _id: ObjectId(),
-        ...itemData
+        ...itemData,
       };
       let insertVal = { $push: { menu_items: menuObj } };
       return dbo
