@@ -1,6 +1,7 @@
 import LiveOrderList from "./LiveOrderList";
 import SideBar from "./SideBar";
 import Box from "@mui/material/Box";
+import TablesStatus from "./TablesStatus";
 
 export default function Employee() {
   return (
@@ -10,7 +11,7 @@ export default function Employee() {
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
-        Tables Current Groups
+        <TablesStatus />
       </Box>
       <LiveOrderList />
     </Box>

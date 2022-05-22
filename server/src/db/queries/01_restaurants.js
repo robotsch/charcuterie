@@ -1,7 +1,7 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-let url = 'mongodb://localhost:27017/';
-//let url = process.env.DB_URL;
+//let url = 'mongodb://localhost:27017/';
+let url = process.env.DB_URL;
 
 const getAllRestaurants = function () {
   return new Promise((resolve, reject) => {
@@ -227,18 +227,18 @@ const deleteMenuitemByRestaurantById = function (restoId, menuId) {
 
 //getAllRestaurants();
 
-deleteMenuitemByRestaurantById(
-  ObjectId('6283f1d9804b848eb5e4560c'),
-  ObjectId('6289379b39e83170ecfacfc3')
-);
+// deleteMenuitemByRestaurantById(
+//   ObjectId('6283f1d9804b848eb5e4560c'),
+//   ObjectId('6289379b39e83170ecfacfc3')
+// );
 
-// export {
-//   getAllRestaurants,
-//   getRestaurantsWithId,
-//   createRestaurant,
-//   deleteRestaurantById,
-//   addMenuItemByRestaurantId,
-//   getEmployeeWithUsername,
-//   getMenuByRestaurantId,
-//   deleteMenuitemByRestaurantById,
-// };
+export {
+  getAllRestaurants,
+  getRestaurantsWithId,
+  createRestaurant,
+  deleteRestaurantById,
+  addMenuItemByRestaurantId,
+  getEmployeeWithUsername,
+  getMenuByRestaurantId,
+  deleteMenuitemByRestaurantById,
+};
