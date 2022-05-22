@@ -1,5 +1,5 @@
-import * as rQueries from '../db/queries/01_restaurants'
-import bcrypt from 'bcrypt'
+import * as rQueries from '../db/queries/01_restaurants';
+import bcrypt from 'bcrypt';
 
 /**
  * Takes a password string
@@ -22,13 +22,16 @@ export const validatePassword = (password: string) => {
   return password;
 };
 
-export const authenticateUser = function (credentials: { username: string, password: string}) {
-  return rQueries.getEmployeeWithUsername(credentials.username)
-    .then((userObj) => {
-      if (userObj) {
-        if (bcrypt.compareSync(credentials.password, userObj.password)) {
-          return userObj;
-        }
+export const authenticateUser = function (username: string, password: string) {
+  return rQueries.getEmployeeWithUsername(username).then((userData) => {
+    if (userData.employee) {
+      if (bcrypt.compareSync(password, userData.employee.password)) {
+        console.log(userData.employee);
+        return {
+          restaurantId: userData.restoId,
+          employeeId: userData.employee._id,
+        };
       }
-    });
+    }
+  });
 };

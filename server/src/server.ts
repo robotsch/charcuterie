@@ -7,6 +7,7 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
+import bcrypt from 'bcrypt'
 import { Server, Socket } from 'socket.io';
 
 import {
@@ -45,7 +46,7 @@ declare module 'express-session' {
 
 app.use(
   expressSession({
-    store: MongoStore.create({ clientPromise }),
+    store: MongoStore.create({ clientPromise, dbName: 'mydb' }),
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
@@ -131,6 +132,7 @@ io.on('connection', (socket) => {
     // insert order into database
     console.log('SUBMIT_ORDER', restaurant, currentOrder);
     io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
+    
   });
 
   socket.on('disconnect', () => {
@@ -160,6 +162,16 @@ app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/qr-generate', qrRoute);
+
+app.get('/test', (req, res) => {
+  req.session.restaurant_id = '1'
+  req.session.employee_id = '1'
+  res.send('send it bro')
+})
+
+app.get('/api/session', (req, res) => {
+  res.json({isLoggedIn: !!req.session.employee_id})
+})
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
