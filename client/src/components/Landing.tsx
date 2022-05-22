@@ -36,6 +36,12 @@ export default function Landing() {
     setTable(searchParms.get("id2") || "");
     localStorage.setItem("restaurant", searchParms.get("id1") || "0");
     localStorage.setItem("table", searchParms.get("id2") || "0");
+    console.log(restaurant, table);
+
+    ws.emit("CONNECT_TO_ROOM", {
+      restaurant: searchParms.get("id1"),
+      table: searchParms.get("id2"),
+    });
 
     if (user !== null) {
       setMode("LANDING");
@@ -104,18 +110,17 @@ export default function Landing() {
             ></TextField>
             <Button type="submit">Confirm</Button>
           </form>
-          {/* <UserList users={users} /> */}
         </div>
       )}
       {mode === "NAME_ENTERED" && (
         <div>
           Hello {user}
-          <UserList users={users} />
           <Link to="/Menu">
             <Button>Menu</Button>
           </Link>
         </div>
       )}
+      <UserList users={users} />
       <Button
         type="button"
         onClick={() => {

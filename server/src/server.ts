@@ -91,6 +91,12 @@ io.on('connection', (socket) => {
 
   console.log(`New client connected`, socket.id);
 
+  socket.on('CONNECT_TO_ROOM', ({ restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    console.log(socket.id, 'connected to room', room);
+    io.in(socket.id).socketsJoin(room);
+  });
+
   socket.on('SUBMIT_NAME', ({ name, restaurant, table }) => {
     socket.data.name = name;
     room = `rst${restaurant}.tbl${table}`;

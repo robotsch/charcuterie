@@ -1,3 +1,5 @@
+import Typography from "@mui/material/Typography";
+
 export default function UserList(props: any) {
   console.log(props);
   const generate = props.users && props.users !== null;
