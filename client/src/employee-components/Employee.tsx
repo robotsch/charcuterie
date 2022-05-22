@@ -7,7 +7,7 @@ export default function Employee() {
   return (
     <SideBar>
       <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-        Tables Current Groups
+        <TablesStatus />
       </Box>
       <LiveOrderList />
     </SideBar>

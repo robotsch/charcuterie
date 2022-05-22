@@ -1,6 +1,7 @@
 import SideBar from "./SideBar";
 import Box from "@mui/material/Box";
 import LiveOrderList from "./LiveOrderList";
+import PastOrders from "./PastOrders";
 
 export default function OrderHistory() {
   return (
@@ -10,7 +11,7 @@ export default function OrderHistory() {
         component="main"
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
-        Past Orders Placeholder
+        <PastOrders />
       </Box>
       <LiveOrderList />
     </Box>

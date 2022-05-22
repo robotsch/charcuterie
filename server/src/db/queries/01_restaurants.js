@@ -26,7 +26,7 @@ const getAllRestaurants = function () {
 
 //exports.getAllRestaurants = getAllRestaurants;
 
-const getRestaurantsWithId = function (id) {
+const getRestaurantWithId = function (id) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -220,7 +220,7 @@ const deleteMenuItemByRestaurantId = function (restoId, menuId) {
 
 export {
   getAllRestaurants,
-  getRestaurantsWithId,
+  getRestaurantWithId,
   createRestaurant,
   deleteRestaurantById,
   addMenuItemByRestaurantId,
