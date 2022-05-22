@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-// let url = 'mongodb://localhost:27017/';
+//let url = 'mongodb://localhost:27017/';
 let url = process.env.DB_URL;
 
 //gets all tables from a provided restaurant id
@@ -58,7 +58,32 @@ const deleteTableById = function (id) {
   });
 };
 
-export { getAllTablesByRestaurantId, createTableForRestoById, deleteTableById };
+const getTableReadableIdById = function (id) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { _id: id };
+      return dbo
+        .collection('tables')
+        .find(query)
+        .toArray(function (err, result) {
+          if (err) throw err;
+          console.log('results: ', result[0].readable_name);
+          // console.log("orders: ", result[0].orders[0]);
+          db.close();
+          resolve(result[0].readable_name);
+        });
+    });
+  });
+};
+
+export {
+  getAllTablesByRestaurantId,
+  createTableForRestoById,
+  deleteTableById,
+  getTableReadableIdById,
+};
 
 //tests
 
@@ -68,3 +93,5 @@ export { getAllTablesByRestaurantId, createTableForRestoById, deleteTableById };
 
 //createTableForRestoById(ObjectId("6283f1d9804b848eb5e4560c"))
 //deleteTableById(ObjectId('62858c31e5383c6b268f7157'));
+
+//getTableReadableIdById(ObjectId('6283f6a703f54b7c82c5fffc'));
