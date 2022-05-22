@@ -28,12 +28,14 @@ import RestaurantProvider from "./providers/RestaurantProvider";
 import TableProvider from "./providers/TableProvider";
 
 import { salads, soups, order1 } from "./mockdata";
+import { CssBaseline } from "@mui/material";
 
 export default function App() {
   // const { user, users, setName } = useSocket();
 
   return (
     <div className="App">
+      <CssBaseline />
       <BrowserRouter>
         <Routes>
           <Route path="/landing/*" element={<Landing />} />

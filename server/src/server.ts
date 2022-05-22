@@ -92,10 +92,14 @@ io.on('connection', (socket) => {
 
   console.log(`New client connected`, socket.id);
 
+  socket.on('CONNECT_TO_ROOM', ({ restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    console.log(socket.id, 'connected to room', room);
+    io.in(socket.id).socketsJoin(room);
+  });
+
   socket.on('SUBMIT_NAME', ({ name, restaurant, table }) => {
     socket.data.name = name;
-    // room = `rst1.tbl1`;
-    // room = `rst${socket.data.restaurant}.tbl${socket.data.table}`;
     room = `rst${restaurant}.tbl${table}`;
     io.in(socket.id).socketsJoin(room);
     const names = getAllNames(io.sockets.adapter.rooms.get(room));
@@ -109,16 +113,12 @@ io.on('connection', (socket) => {
 
   socket.on('EMPLOYEE', ({ restaurant }) => {
     room = restaurant;
+    console.log('EMPLOYEE room', restaurant);
     io.in(socket.id).socketsJoin(room);
   });
 
   socket.on('DB_TEST', () => {
     getAllRestaurants().then((res: any) => io.emit('DB_TEST', res));
-  });
-
-  socket.on('EMPLOYEE', ({ restaurant }) => {
-    room = restaurant;
-    io.in(socket.id).socketsJoin(room);
   });
 
   socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
@@ -129,6 +129,8 @@ io.on('connection', (socket) => {
 
   socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
     io.to(room).emit('SUBMIT_ORDER');
+    // insert order into database
+    console.log('SUBMIT_ORDER', restaurant, currentOrder);
     io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
     
   });

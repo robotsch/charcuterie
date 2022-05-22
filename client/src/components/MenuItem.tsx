@@ -13,7 +13,7 @@ import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 import "./MenuItem.scss";
 
 export default function MenuItem(props: any) {
-  const { id, name, price, url, description, setMenuItem } = props;
+  const { _id, name, price, image_url, description, setMenuItem } = props;
 
   const { toggleDrawer } = useContext(toggleDrawerContext);
 
@@ -22,11 +22,11 @@ export default function MenuItem(props: any) {
       <CardActionArea onClick={toggleDrawer(true)}>
         <CardContent
           sx={{ padding: 0 }}
-          onClick={() => setMenuItem({ id, name, price, url, description })}
+          onClick={() => setMenuItem({ _id, name, price, image_url, description })}
         >
           <div className="menuItem">
             <div className="menuItem-img-container">
-              <img src={url} alt="FOOD"></img>
+              <img src={image_url} alt="FOOD"></img>
             </div>
             <div>
               <h5 className="mont">{name}</h5>

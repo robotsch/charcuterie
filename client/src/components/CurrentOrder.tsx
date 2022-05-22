@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 import ws from "../sockets/socket";
 
 interface Order {
-  id: number;
+  _id: number;
   name: string;
   price: number;
   description: string;
@@ -32,15 +32,8 @@ type OrderState = "NO_ITEMS" | "ITEMS" | "SUBMITTED";
 
 import { currentOrderDrawerContext } from "../providers/CurrentOrderDrawerProvider";
 import axios from "axios";
-import { ProductionQuantityLimits } from "@mui/icons-material";
 
-// export default function CurrentOrder(props: CurrentOrderProps) {
 export default function CurrentOrder() {
-  // const { currentOrder, setCurrentOrder } = props;
-
-  // console.log(currentOrder);
-
-  // const [currentOrder, setCurrentOrder] = useState<CurrentOrder>({});
   const [currentOrder, setCurrentOrder] = useState<CurrentOrder>(
     JSON.parse(localStorage.getItem("currentOrder") || "{}")
   );
@@ -52,7 +45,7 @@ export default function CurrentOrder() {
   );
 
   useEffect(() => {
-    console.log("orderState in useEffect [currentOrder]", orderState);
+    // console.log("orderState in useEffect [currentOrder]", orderState);
     console.log("currentOrder", currentOrder);
     localStorage.setItem("currentOrder", JSON.stringify(currentOrder));
     if (Object.keys(currentOrder).length === 0) {
@@ -82,15 +75,15 @@ export default function CurrentOrder() {
     ws.on("UPDATE_ORDER", ({ name, order }) => {
       console.log("in CurrentOrder useEffect []", { name, order });
       setCurrentOrder((prev: any) => {
-        if (prev[name] !== undefined && prev[name][order.id] !== undefined) {
-          const updatedOrder = prev[name][order.id];
+        if (prev[name] !== undefined && prev[name][order._id] !== undefined) {
+          const updatedOrder = prev[name][order._id];
           updatedOrder.quantity += order.quantity;
           return {
             ...prev,
-            [name]: { ...prev[name], [order.id]: updatedOrder },
+            [name]: { ...prev[name], [order._id]: updatedOrder },
           };
         }
-        return { ...prev, [name]: { ...prev[name], [order.id]: order } };
+        return { ...prev, [name]: { ...prev[name], [order._id]: order } };
       });
     });
 
@@ -103,16 +96,14 @@ export default function CurrentOrder() {
   const getItemsForName = (name: string) => {
     return (
       <List key={name}>
-        <>
-          <Typography>{name}</Typography>
-          {Object.values(currentOrder[name]).map((item) => {
-            return (
-              <ListItem key={item.id}>
-                {item.quantity} x {item.name}
-              </ListItem>
-            );
-          })}
-        </>
+        <Typography>{name}</Typography>
+        {Object.values(currentOrder[name]).map((item) => {
+          return (
+            <ListItem key={item._id}>
+              {item.quantity} x {item.name}
+            </ListItem>
+          );
+        })}
       </List>
     );
   };
@@ -132,11 +123,13 @@ export default function CurrentOrder() {
           <Container sx={{ backgroundColor: "orange" }} disableGutters>
             <h1 className="mont">CURRENT ORDER</h1>
             <Divider />
+
             {orderState === "NO_ITEMS" && (
               <Typography variant="body1">
                 No items added to the list
               </Typography>
             )}
+
             {orderState === "ITEMS" && (
               <form
                 onSubmit={(event: any) => {
@@ -148,7 +141,7 @@ export default function CurrentOrder() {
                     parsedCurrentOrder[name] = Object.values(
                       currentOrder[name]
                     ).map((item) => {
-                      return { id: item.id, quantity: item.quantity };
+                      return { id: item._id, quantity: item.quantity };
                     });
                   }
 
@@ -160,15 +153,18 @@ export default function CurrentOrder() {
 
                   console.log("send", send);
 
-                  // axios
-                  //   .post("", send)
-                  //   .then(() => {
-                  ws.emit("SUBMIT_ORDER", {
-                    restaurant: localStorage.getItem("restaurant"),
-                    currentOrder,
-                  });
-                  // })
-                  // .catch((error) => console.log(error));
+                  axios
+                    .post("http://localhost:3001/api/order", send)
+                    .then((res) => {
+                      console.log("HERE", currentOrder);
+                      ws.emit("SUBMIT_ORDER", {
+                        restaurant: localStorage.getItem("restaurant"),
+                        currentOrder,
+                      });
+                      console.log(res);
+                      console.log(res.data);
+                    })
+                    .catch((error) => console.log(error));
                 }}
               >
                 {Object.keys(currentOrder).map((name) => {
@@ -179,6 +175,7 @@ export default function CurrentOrder() {
                 </Button>
               </form>
             )}
+
             {orderState === "SUBMITTED" && (
               <Typography variant="body1">
                 Your order has been submitted!
