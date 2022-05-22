@@ -24,10 +24,10 @@ export const validatePassword = (password: string) => {
 
 export const authenticateUser = function (credentials: { username: string, password: string}) {
   return rQueries.getEmployeeWithUsername(credentials.username)
-    .then((user) => {
-      if (user) {
-        if (bcrypt.compareSync(credentials.password, user.password)) {
-          return user.id;
+    .then((userObj) => {
+      if (userObj) {
+        if (bcrypt.compareSync(credentials.password, userObj.password)) {
+          return userObj;
         }
       }
     });
