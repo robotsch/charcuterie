@@ -16,7 +16,7 @@ import {
   addMenuItemByRestaurantId,
   getEmployeeWithUsername,
   getMenuByRestaurantId,
-  deleteMenuitemByRestaurantById,
+  deleteMenuItemByRestaurantId,
 } from './db/queries/01_restaurants';
 
 const clientPromise = require('./db/db');
