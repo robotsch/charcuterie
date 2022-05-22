@@ -11,6 +11,7 @@ export default function Table() {
     <Container sx={{ backgroundColor: "orange" }} disableGutters>
       <h1 className="mont">TABLE</h1>
       <Divider />
+      //
       <TablePastOrderList orders={orderList.orders} />
     </Container>
   );

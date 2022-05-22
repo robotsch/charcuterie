@@ -20,6 +20,7 @@ import Table from "./components/Table";
 import Landing from "./components/Landing";
 
 import Employee from "./employee-components/Employee";
+import EmployeeMenu from "./employee-components/EmployeeMenu";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
 import OrderHistory from "./employee-components/OrderHistory";
 
@@ -96,6 +97,15 @@ export default function App() {
             element={
               <>
                 <OrderHistory />
+              </>
+            }
+          />
+
+          <Route
+            path="/employee/menu"
+            element={
+              <>
+                <EmployeeMenu />
               </>
             }
           />
