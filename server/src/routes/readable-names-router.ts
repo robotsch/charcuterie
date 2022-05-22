@@ -13,7 +13,7 @@ router.get('/', (req: Request, res: Response) => {
     const table = sanitize(req.query.table);
 
     Promise.all([
-      rQueries.getRestaurantsWithId(ObjectId(restaurant)),
+      rQueries.getRestaurantWithId(ObjectId(restaurant)),
       tQueries.getTableReadableIdById(ObjectId(table)),
     ]).then((data) => {
       const names = { restaurant: data[0].name, table: data[1] };
