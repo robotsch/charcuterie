@@ -52,13 +52,14 @@ export default function LiveOrderList() {
   }, []);
 
   const renderedOrders = orders.map((order: Order, index) => {
-    console.log(order);
+    console.log("ORDER", order);
     console.log(orders.length);
+    console.log("HERE");
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
         {Object.entries(order).map(([name, items]) => {
           return (
-            <>
+            <div key={name}>
               <Typography variant="body1">{name}</Typography>
               <List>
                 {Object.values(items).map((item: Item) => {
@@ -71,29 +72,11 @@ export default function LiveOrderList() {
                   );
                 })}
               </List>
-            </>
+            </div>
           );
         })}
       </Card>
     );
-    // return Object.entries(order).map(([name, items]) => {
-    //   return (
-    //     <Card key={name} sx={{ my: 2, p: 1 }}>
-    //       <Typography variant="body1">{name}</Typography>
-    //       <List>
-    //         {Object.values(items).map((item: Item) => {
-    //           return (
-    //             <ListItem key={item._id}>
-    //               <Typography variant="body2">
-    //                 {item.name} x {item.quantity}
-    //               </Typography>
-    //             </ListItem>
-    //           );
-    //         })}
-    //       </List>
-    //     </Card>
-    //   );
-    // });
   });
 
   return (
@@ -110,7 +93,22 @@ export default function LiveOrderList() {
       <Button
         variant="contained"
         onClick={() => {
-          // ws.emit("SUBMIT_ORDER");
+          ws.emit("SUBMIT_ORDER", {
+            restaurant: localStorage.getItem("restaurant"),
+            currentOrder: {
+              alex: {
+                "6283f1d9804b848eb5e45602": {
+                  _id: "6283f1d9804b848eb5e45602",
+                  name: "kani sushi",
+                  price: 25.99,
+                  image_url:
+                    "https://izzycooking.com/wp-content/uploads/2022/05/Salmon-Nigiri.jpg",
+                  description: "6 pcs kani sushi",
+                  quantity: 1,
+                },
+              },
+            },
+          });
           ws.emit("DB_TEST");
         }}
       >

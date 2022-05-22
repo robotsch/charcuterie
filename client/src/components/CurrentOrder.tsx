@@ -32,15 +32,8 @@ type OrderState = "NO_ITEMS" | "ITEMS" | "SUBMITTED";
 
 import { currentOrderDrawerContext } from "../providers/CurrentOrderDrawerProvider";
 import axios from "axios";
-import { ProductionQuantityLimits } from "@mui/icons-material";
 
-// export default function CurrentOrder(props: CurrentOrderProps) {
 export default function CurrentOrder() {
-  // const { currentOrder, setCurrentOrder } = props;
-
-  // console.log(currentOrder);
-
-  // const [currentOrder, setCurrentOrder] = useState<CurrentOrder>({});
   const [currentOrder, setCurrentOrder] = useState<CurrentOrder>(
     JSON.parse(localStorage.getItem("currentOrder") || "{}")
   );
@@ -103,16 +96,14 @@ export default function CurrentOrder() {
   const getItemsForName = (name: string) => {
     return (
       <List key={name}>
-        <>
-          <Typography>{name}</Typography>
-          {Object.values(currentOrder[name]).map((item) => {
-            return (
-              <ListItem key={item.id}>
-                {item.quantity} x {item.name}
-              </ListItem>
-            );
-          })}
-        </>
+        <Typography>{name}</Typography>
+        {Object.values(currentOrder[name]).map((item) => {
+          return (
+            <ListItem key={item._id}>
+              {item.quantity} x {item.name}
+            </ListItem>
+          );
+        })}
       </List>
     );
   };
@@ -132,11 +123,13 @@ export default function CurrentOrder() {
           <Container sx={{ backgroundColor: "orange" }} disableGutters>
             <h1 className="mont">CURRENT ORDER</h1>
             <Divider />
+
             {orderState === "NO_ITEMS" && (
               <Typography variant="body1">
                 No items added to the list
               </Typography>
             )}
+
             {orderState === "ITEMS" && (
               <form
                 onSubmit={(event: any) => {
@@ -148,7 +141,6 @@ export default function CurrentOrder() {
                     parsedCurrentOrder[name] = Object.values(
                       currentOrder[name]
                     ).map((item) => {
-                      // console.log(item);
                       return { id: item._id, quantity: item.quantity };
                     });
                   }
@@ -164,7 +156,7 @@ export default function CurrentOrder() {
                   axios
                     .post("http://localhost:3001/api/order", send)
                     .then((res) => {
-                      console.log('HERE');
+                      console.log("HERE", currentOrder);
                       ws.emit("SUBMIT_ORDER", {
                         restaurant: localStorage.getItem("restaurant"),
                         currentOrder,
@@ -183,6 +175,7 @@ export default function CurrentOrder() {
                 </Button>
               </form>
             )}
+
             {orderState === "SUBMITTED" && (
               <Typography variant="body1">
                 Your order has been submitted!
