@@ -10,7 +10,6 @@ router.post('/', (req: Request, res: Response) => {
 
   authenticateUser(username, password)
     .then((userData) => {
-      console.log(userData);
       if (userData && userData.employeeId) {
         req.session.restaurant_id = userData.restaurantId;
         req.session.employee_id = userData.employeeId;

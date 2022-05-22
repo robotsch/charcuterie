@@ -20,7 +20,7 @@ router.get('/', (req: Request, res: Response) => {
       res.send(names);
     });
   } else {
-    res.send('Invalid request')
+    res.send('Invalid request');
   }
 });
 
