@@ -1,15 +1,14 @@
-import express, { Request, Response, Router,} from 'express';
+import express, { Request, Response, Router } from 'express';
 import * as rQueries from '../db/queries/01_restaurants';
 
-const sanitize = require('mongo-sanitize')
+const sanitize = require('mongo-sanitize');
 const ObjectId = require('mongodb').ObjectId;
 
-const router: Router = express.Router()
+const router: Router = express.Router();
 
-router.post("/", (req: Request, res: Response) => {
-  
-  const restaurant = sanitize(req.body.restaurant)
-  const menuItem = sanitize(req.body.restaurant)
+router.post('/', (req: Request, res: Response) => {
+  const restaurant = sanitize(req.body.restaurant);
+  const menuItem = sanitize(req.body.restaurant);
 
   rQueries
     .deleteMenuItemByRestaurantId(ObjectId(restaurant), ObjectId(menuItem))
@@ -18,4 +17,4 @@ router.post("/", (req: Request, res: Response) => {
     });
 });
 
-module.exports = router
+module.exports = router;

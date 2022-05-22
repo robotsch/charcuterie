@@ -9,11 +9,11 @@ export default function TablePastOrderList(props: OrderList) {
 
   const orderSection = orders.map((order) => {
     const orderedFoodItems = order.orderFoodItems.map((foodItem) => {
-      return (
-        <TablePastOrderItem
-          key={foodItem.id}
-          {...foodItem}
-        />
+      return ( <div></div>
+        // <TablePastOrderItem
+        //   key={foodItem.id}
+        //   {...foodItem}
+        // />
       );
     });
 
