@@ -11,7 +11,7 @@ import { Server, Socket } from 'socket.io';
 
 import {
   getAllRestaurants,
-  getRestaurantsWithId,
+  getRestaurantWithId,
   createRestaurant,
   deleteRestaurantById,
   addMenuItemByRestaurantId,
@@ -142,6 +142,7 @@ io.on('connection', (socket) => {
 //======================================
 
 // Router imports
+const namesRoute = require('./routes/readable-names-router')
 const menuRoute = require('./routes/menu-router');
 const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
@@ -152,6 +153,7 @@ const qrRoute = require('./routes/qr-code-router');
 app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
 // Resource routes
+app.use('/api/names', namesRoute)
 app.use('/api/menu', menuRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);

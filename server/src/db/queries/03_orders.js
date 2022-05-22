@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-let url = process.env.DB_URL
+let url = process.env.DB_URL;
 
 const getOrdersByTableId = function (id) {
   return new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ const getOrdersByTableId = function (id) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          console.log(result);
+
           db.close();
           resolve(result);
         });
@@ -32,7 +32,7 @@ const getOrderById = function (id) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          console.log(result);
+
           db.close();
           resolve(result);
         });
@@ -52,8 +52,7 @@ const createOrderByTableId = function (table_id, customersArr) {
       };
       dbo.collection('orders').insertOne(myobj, function (err, res) {
         if (err) throw err;
-        console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-        console.log('New Order added to Orders Collection');
+
         db.close();
         resolve(res);
       });

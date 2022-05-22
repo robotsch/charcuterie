@@ -13,7 +13,7 @@ const getAllRestaurants = function () {
         .find()
         .toArray(function (err, result) {
           if (err) throw err;
-          //console.log(result);
+
           db.close();
           resolve(result);
         });
@@ -21,12 +21,9 @@ const getAllRestaurants = function () {
   });
 };
 
-//let x = getAllRestaurants();
-//console.log('x: ', x);
-
 //exports.getAllRestaurants = getAllRestaurants;
 
-const getRestaurantsWithId = function (id) {
+const getRestaurantWithId = function (id) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -37,9 +34,8 @@ const getRestaurantsWithId = function (id) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          console.log(result);
           db.close();
-          resolve(result);
+          resolve(result[0]);
         });
     });
   });
@@ -57,8 +53,6 @@ const createRestaurant = function () {
         .collection('restaurants')
         .insertOne(myobj, function (err, res) {
           if (err) throw err;
-          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-          console.log('New Restaurant added to Collection');
           db.close();
           resolve(res);
         });
@@ -78,8 +72,7 @@ const deleteRestaurantById = function (id) {
         .collection('restaurants')
         .deleteOne(myobj, function (err, res) {
           if (err) throw err;
-          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-          console.log(id, ' Restaurant removed from Collection');
+
           db.close();
           resolve(res);
         });
@@ -104,7 +97,7 @@ const addMenuItemByRestaurantId = function (id, itemData) {
         .collection('restaurants')
         .updateOne(query, insertVal, function (err, res) {
           if (err) throw err;
-          console.log('Added ', insertVal, ' to Restaurant: ', id);
+
           db.close();
           resolve(res);
         });
@@ -125,16 +118,15 @@ const getEmployeeWithUsername = function (username) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          //console.log(result);
+
           let employeesArr = result[0].employees;
-          //console.log("arr: ", employeesArr)
 
           db.close();
 
           for (const elem of employeesArr) {
             if (elem.username === username) {
               let returnObj = { restoId: result[0]._id, employee: elem };
-              //console.log('returnObj: ', returnObj);
+
               resolve(returnObj);
             }
           }
@@ -156,7 +148,7 @@ const getMenuByRestaurantId = function (id) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          //console.log(result);
+
           let restoObj = result[0].menu_items;
           db.close();
           resolve(restoObj);
@@ -179,8 +171,7 @@ const deleteMenuItemByRestaurantId = function (restoId, menuId) {
         .collection('restaurants')
         .updateOne(query, insertVal, function (err, res) {
           if (err) throw err;
-          console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-          console.log('Removed ', insertVal, ' from Restaurant: ', restoId);
+
           db.close();
           resolve(res);
         });
@@ -220,7 +211,7 @@ const deleteMenuItemByRestaurantId = function (restoId, menuId) {
 
 export {
   getAllRestaurants,
-  getRestaurantsWithId,
+  getRestaurantWithId,
   createRestaurant,
   deleteRestaurantById,
   addMenuItemByRestaurantId,
