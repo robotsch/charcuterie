@@ -6,7 +6,7 @@ import expressSession from 'express-session';
 import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import path from 'path'
+import path from 'path';
 import { Server, Socket } from 'socket.io';
 
 import {
@@ -147,7 +147,7 @@ const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const qrRoute = require('./routes/qr-code-router');
 
-app.use(express.static(path.resolve(__dirname, "client/build")))
+app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
 // Resource routes
 app.use('/api/menu', menuRoute);
@@ -157,8 +157,10 @@ app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/qr-generate', qrRoute);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build", "index.html"))
-})
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
+});
 
-server.listen(process.env.PORT || 3001, () => console.log(`Server running on ${process.env.PORT || 3001}`));
+server.listen(process.env.PORT || 3001, () =>
+  console.log(`Server running on ${process.env.PORT || 3001}`)
+);
