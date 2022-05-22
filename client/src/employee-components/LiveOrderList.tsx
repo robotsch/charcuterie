@@ -5,6 +5,7 @@ import { orderList } from "../mockdata";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ws from "../sockets/socket";
+import { ObjectId } from "mongodb";
 
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,7 +14,7 @@ export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    ws.emit("EMPLOYEE", { restaurant: "1" });
+    ws.emit("EMPLOYEE", { restaurant: "6283f1d9804b848eb5e4560c" });
 
     ws.on("SUBMIT_ORDER", (order) => {
       // console.log(order);

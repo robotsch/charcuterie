@@ -24,7 +24,7 @@ const clientPromise = require('./db/db');
 const app = express();
 app.use(morgan('dev'));
 
-const clientAddr = process.env.CLIENT_ORIGIN!
+const clientAddr = process.env.CLIENT_ORIGIN!;
 
 app.use(cors({ origin: [clientAddr], credentials: true }));
 app.use(bodyParser.json());
@@ -142,18 +142,22 @@ io.on('connection', (socket) => {
 const menuRoute = require('./routes/menu-router');
 const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
-const addMenuItemRoute = require('./routes/add-menu-item-router')
-const removeMenuItemRoute = require('./routes/remove-menu-item-router')
+const addMenuItemRoute = require('./routes/add-menu-item-router');
+const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const qrRoute = require('./routes/qr-code-router');
 
+<<<<<<< HEAD
 app.use(express.static('../client/dist'))
+=======
+app.use(express.static('client/dist'));
+>>>>>>> a7623a2703c3d66eb05979d7054cf8ca26b50bc2
 
 // Resource routes
 app.use('/api/menu', menuRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
-app.use('/api/add-menu-item', addMenuItemRoute)
-app.use('/api/remove-menu-item', removeMenuItemRoute)
+app.use('/api/add-menu-item', addMenuItemRoute);
+app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/qr-generate', qrRoute);
 
 server.listen(process.env.PORT || 3001, () => console.log(`Server running on ${process.env.PORT || 3001}`));
