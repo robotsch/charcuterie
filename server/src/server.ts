@@ -160,4 +160,4 @@ app.get('/', (req: Request, res: Response) => {
   res.send({ response: 'test' }).status(200);
 });
 
-server.listen(3001, () => console.log(`Server running on ${3001}`));
+server.listen(process.env.PORT || 3001, () => console.log(`Server running on ${process.env.PORT || 3001}`));
