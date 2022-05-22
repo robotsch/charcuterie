@@ -156,8 +156,4 @@ app.use('/api/add-menu-item', addMenuItemRoute)
 app.use('/api/remove-menu-item', removeMenuItemRoute)
 app.use('/api/qr-generate', qrRoute);
 
-app.get('/', (req: Request, res: Response) => {
-  res.send({ response: 'test' }).status(200);
-});
-
 server.listen(process.env.PORT || 3001, () => console.log(`Server running on ${process.env.PORT || 3001}`));
