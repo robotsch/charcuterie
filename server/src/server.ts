@@ -146,11 +146,7 @@ const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const qrRoute = require('./routes/qr-code-router');
 
-<<<<<<< HEAD
 app.use(express.static('../client/dist'))
-=======
-app.use(express.static('client/dist'));
->>>>>>> a7623a2703c3d66eb05979d7054cf8ca26b50bc2
 
 // Resource routes
 app.use('/api/menu', menuRoute);
