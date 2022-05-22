@@ -15,8 +15,7 @@ const getAllTablesByRestaurantId = function (id) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          // console.log("results: ", result);
-          // console.log("orders: ", result[0].orders[0]);
+
           db.close();
           resolve(result);
         });
@@ -32,8 +31,7 @@ const createTableForRestoById = function (id) {
       let myobj = { restaurant_id: id };
       return dbo.collection('tables').insertOne(myobj, function (err, res) {
         if (err) throw err;
-        console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-        console.log('New Table added to Table Collection');
+
         db.close();
         resolve(res);
       });
@@ -49,8 +47,7 @@ const deleteTableById = function (id) {
       let myobj = { _id: id };
       return dbo.collection('tables').deleteOne(myobj, function (err, res) {
         if (err) throw err;
-        console.log('res: ', res); //confirmed that the res from insertOne returns the newly inserted entry data
-        console.log(id, ' Table removed from Table Collection');
+
         db.close();
         resolve(res);
       });
@@ -69,8 +66,7 @@ const getTableReadableIdById = function (id) {
         .find(query)
         .toArray(function (err, result) {
           if (err) throw err;
-          console.log('results: ', result[0].readable_name);
-          // console.log("orders: ", result[0].orders[0]);
+
           db.close();
           resolve(result[0].readable_name);
         });
