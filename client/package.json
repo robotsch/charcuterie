@@ -23,7 +23,8 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "sass": "^1.51.0",
-    "socket.io-client": "^4.5.1"
+    "socket.io-client": "^4.5.1",
+    "stripe": "^9.2.0"
   },
   "devDependencies": {
     "@testing-library/react": "^13.2.0",
