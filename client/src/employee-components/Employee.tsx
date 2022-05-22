@@ -10,8 +10,10 @@ export default function Employee() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log('running')
-    axios.get('http://localhost:3001/api/session', {withCredentials: true})
+    
+    const origin = process.env.CLIENT_ORIGIN!
+
+    axios.get(origin, {withCredentials: true})
       .then((data) => {
         if(data.data.isLoggedIn) {
           setLoading(false)
