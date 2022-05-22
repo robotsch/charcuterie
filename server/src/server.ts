@@ -147,7 +147,7 @@ const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const qrRoute = require('./routes/qr-code-router');
 
-app.use(express.static(path.resolve(__dirname, '../../client/build')));
+app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
 // Resource routes
 app.use('/api/menu', menuRoute);
@@ -158,7 +158,7 @@ app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/qr-generate', qrRoute);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));
 });
 
 server.listen(process.env.PORT || 3001, () =>
