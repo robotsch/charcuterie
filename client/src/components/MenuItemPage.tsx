@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { toggleDrawerContext } from "../providers/ToggleDrawerProvider";
 
@@ -21,6 +21,12 @@ export default function MenuItemPage(props: any) {
   const [quantity, setQuantity] = useState<number>(0);
   const [quantityError, setQuantityError] = useState<boolean>(false);
   const [helperText, setHelperText] = useState<string>("");
+
+  useEffect(() => {
+    setQuantity(0);
+    setQuantityError(false);
+    setHelperText("");
+  }, [props.menuItem]);
 
   return (
     <Drawer anchor={"right"} open={isOpen} onClose={toggleDrawer(false)}>
@@ -48,6 +54,7 @@ export default function MenuItemPage(props: any) {
 
         <Box sx={{ p: 2 }}>
           <form
+            id="menuItemPage-quantity"
             onSubmit={(event: any) => {
               event.preventDefault();
 
