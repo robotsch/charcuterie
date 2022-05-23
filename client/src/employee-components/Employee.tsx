@@ -10,8 +10,8 @@ export default function Employee() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const origin = "/api/session";
-    // const origin = "http://localhost:3001/api/session";
+    // const origin = "/api/session";
+    const origin = "http://localhost:3001/api/session";
 
     axios
       .get(origin, { withCredentials: true })

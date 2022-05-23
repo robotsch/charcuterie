@@ -22,8 +22,18 @@ export default function ToggleColorMode(props: any) {
         palette: {
           mode,
           primary: {
-            main: "#3f51b5"
-          }
+            main: "#512da8",
+          },
+          secondary: {
+            main: "#2589BD",
+          },
+          warning: {
+            main: "#FF8906",
+          },
+          divider: "#403F4C",
+          error: {
+            main: "#CA054D",
+          },
         },
       }),
     [mode]
@@ -31,9 +41,7 @@ export default function ToggleColorMode(props: any) {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        {props.children}
-      </ThemeProvider>
+      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
     </ColorModeContext.Provider>
   );
 }

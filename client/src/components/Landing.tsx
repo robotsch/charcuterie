@@ -16,6 +16,8 @@ import ws from "../sockets/socket";
 
 import "./Landing.scss";
 
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
 import { ColorModeContext } from "../providers/ColorModeProvider";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -79,8 +81,8 @@ export default function Landing() {
   useEffect(() => {
     axios
       .get(
-        // `http://localhost:3001/api/names?restaurant=${restaurant}&table=${table}`
-        `/api/names?restaurant=${restaurant}&table=${table}`
+        `http://localhost:3001/api/names?restaurant=${restaurant}&table=${table}`
+        // `/api/names?restaurant=${restaurant}&table=${table}`
       )
       .then((res) => {
         console.log(res.data);
@@ -106,13 +108,9 @@ export default function Landing() {
       {headerMode === "LOADED" && (
         <div id="header">
           <img
-            src="/app/clients/assets/img/header.jpg"
+            src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             alt="Restaurant header image1"
             id="header-img"
-          />
-          <img
-            src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt="Restaurant header image2"
           />
           <div>
             <div>
@@ -124,7 +122,16 @@ export default function Landing() {
         </div>
       )}
       {mode === "LANDING" && (
-        <div id="name-submission">
+        <Box
+          id="name-submission"
+          sx={{
+            py: 5,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <span>Please enter your name:</span>
           <form
             onSubmit={(event: any) => {
@@ -183,26 +190,42 @@ export default function Landing() {
               Next
             </Button>
           </form>
-        </div>
+        </Box>
       )}
       {mode === "NAME_ENTERED" && (
-        <div>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            p: 2,
+            gap: 1,
+          }}
+        >
           <Typography>Welcome {user}!</Typography>
+          <Typography sx={{ textAlign: "center" }}>
+            Once everyone has joined the table below, everyone can click on the
+            Menu button!
+          </Typography>
+          <Box sx={{ p: 2, }}>
+            <UserList users={users} />
+          </Box>
           <Link to="/Menu">
-            <Button>Menu</Button>
+            <Button sx={{width: 120, height: 40}} variant="contained">Menu</Button>
           </Link>
-        </div>
+        </Box>
       )}
-      <UserList users={users} />
-      <Button
+      {/* <Button
         type="button"
+        variant="contained"
         onClick={() => {
           console.log(localStorage);
           localStorage.clear();
         }}
       >
         Clear localstorage
-      </Button>
+      </Button> */}
       <Box
         sx={{
           display: "flex",
