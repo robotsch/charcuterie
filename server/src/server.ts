@@ -30,6 +30,7 @@ const clientAddr = process.env.CLIENT_ORIGIN!;
 
 app.use(cors({ origin: [clientAddr], credentials: true }));
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 /**
  * ============================================================
