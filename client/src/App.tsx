@@ -2,13 +2,10 @@ import * as dotenv from "dotenv";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { useState } from "react";
-
 import "./App.scss";
 
 import Menu from "./components/Menu";
 import TemporaryDrawer from "./components/Drawer";
-import Table from "./components/Table";
 import Landing from "./components/Landing";
 
 import Employee from "./employee-components/Employee";
@@ -18,29 +15,17 @@ import OrderHistory from "./employee-components/OrderHistory";
 import { CssBaseline } from "@mui/material";
 
 export default function App() {
-  const [restaurantName, setRestaurantName] = useState<string>("");
-
   return (
     <div className="App">
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/landing/*"
-            element={
-              <Landing
-                restaurantName={restaurantName}
-                setRestaurantName={setRestaurantName}
-              />
-            }
-          />
+          <Route path="/landing/*" element={<Landing />} />
           <Route
             path="/menu"
             element={
               <>
-                <TemporaryDrawer
-                  restaurantName={restaurantName}
-                />
+                <TemporaryDrawer />
                 <Menu />
               </>
             }

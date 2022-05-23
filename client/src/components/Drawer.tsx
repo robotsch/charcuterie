@@ -24,11 +24,11 @@ import { ColorModeContext } from "../providers/ColorModeProvider";
 
 type Anchor = "top";
 
-export default function TemporaryDrawer(props: any) {
+export default function TemporaryDrawer() {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
-  const { restaurantName } = props;
+  const restaurantName = localStorage.getItem("restaurantName");
 
   const [state, setState] = useState({
     top: false,
@@ -78,15 +78,13 @@ export default function TemporaryDrawer(props: any) {
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       <Button onClick={toggleDrawer("top", true)}>
         <MenuIcon />
       </Button>
-      <span id="restaurant-name">
-        {restaurantName}
-      </span>
+      <span id="restaurant-name">{restaurantName}</span>
       <IconButton
         sx={{ ml: 1 }}
         onClick={colorMode.toggleColorMode}

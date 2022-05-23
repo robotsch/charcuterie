@@ -28,7 +28,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 type LandingMode = "LANDING" | "NAME_ENTERED";
 type LandingHeaderMode = "NOT_LOADED" | "LOADED";
 
-export default function Landing(props: any) {
+export default function Landing() {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
@@ -41,7 +41,7 @@ export default function Landing(props: any) {
   const [searchParms, getSearchParams] = useSearchParams();
 
   const [restaurant, setRestaurant] = useState<string>("");
-  const { restaurantName, setRestaurantName } = props;
+  const [restaurantName, setRestaurantName] = useState<string>("");
 
   const [table, setTable] = useState<string>("");
   const [tableName, setTableName] = useState<string>("");
@@ -87,6 +87,7 @@ export default function Landing(props: any) {
       .then((res) => {
         console.log(res.data);
         setRestaurantName(res.data.restaurant);
+        localStorage.setItem("restaurantName", res.data.restaurant);
         setTableName(res.data.table);
         setHeaderMode("LOADED");
       })
