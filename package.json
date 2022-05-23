@@ -8,7 +8,7 @@
     "start": "cd server && npm run start",
     "build:server": "cd server && npm i && npm run build",
     "build:client": "cd client && npm i && npm run build",
-    "heroku-prebuild": "npm run build:server && cd .. && npm run build:client"
+    "heroku-prebuild": "npm run build:server && npm run build:client"
   },
   "keywords": [],
   "author": "",
