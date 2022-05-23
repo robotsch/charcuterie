@@ -8,43 +8,45 @@ import EmployeeLogin from "./EmployeeLogin";
 import { CircularProgress } from "@mui/material";
 
 export default function Employee() {
-  const [loading, setLoading] = useState(true)
-  const [loggedIn, setLoggedIn] = useState(false);
-
+  const [status, setStatus] = useState("loading");
   useEffect(() => {
     const origin = "/api/session";
     // const origin = "http://localhost:3001/api/session";
+    setStatus("loading");
 
     axios
       .get(origin, { withCredentials: true })
       .then((data) => {
         if (data.data.isLoggedIn) {
-          setLoggedIn(true);
+          setStatus("loggedin");
+        } else {
+          setStatus('authcheck');
         }
       })
       .catch((err) => console.log(err));
-
-    setLoading(false)
   }, []);
 
   return (
     <div>
-      {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      {status === "loading" ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="100vh"
+        >
           <CircularProgress />
         </Box>
+      ) : status === "authcheck" ? (
+        <EmployeeLogin />
       ) : (
-        loggedIn ? (
-            <SideBar>
-              <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-                <TablesStatus />
-              </Box>
-              <LiveOrderList />
-            </SideBar>
-          ) : (
-            <EmployeeLogin />
-          )
-        )}
+        <SideBar>
+          <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+            <TablesStatus />
+          </Box>
+          <LiveOrderList />
+        </SideBar>
+      )}
     </div>
   );
 }
