@@ -8,6 +8,8 @@
     "start": "cd server && npm run start",
     "build:server": "cd server && npm i && npm run build",
     "build:client": "cd client && npm i && npm run build",
+    "postbuild:server": "cd server && npm prune --production",
+    "postbuild:client": "cd client && npm prune --production",
     "heroku-prebuild": "npm run build:server && npm run build:client"
   },
   "keywords": [],
