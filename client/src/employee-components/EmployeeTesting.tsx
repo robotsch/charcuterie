@@ -32,7 +32,7 @@ export default function Employee() {
           <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
             <TablesStatus />
           </Box>
-          <LiveOrderList />
+          {/* <LiveOrderList /> */}
         </SideBar>
       ) : (
         <EmployeeLogin />
