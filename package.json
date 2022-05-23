@@ -7,7 +7,7 @@
   "scripts": {
     "build:server": "cd server && npm run build",
     "build:client": "cd client && npm run build",
-    "build": "npm run build:server && npm run build:client",
+    "heroku-postbuild": "npm run build:server && npm run build:client",
     "start": "cd server && npm run start"
   },
   "keywords": [],

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "tsc": "client/node_modules/typescript/bin/tsc",
+    "tsc": "tsc",
     "dev": "vite",
     "build": "npm run tsc && vite build",
     "preview": "vite preview",
