@@ -3,7 +3,7 @@ export default function EmployeeLogin() {
   return (
     <div className="container-md">
       <h3>Login</h3>
-      <form action="/api/login" method="post">
+      <form action="/api/employee-login" method="post">
         <div className="form-group mb-3">
           <label for="email" className="form-label">
             Username
