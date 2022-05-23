@@ -119,6 +119,11 @@ const getEmployeeWithUsername = function (username) {
         .toArray(function (err, result) {
           if (err) throw err;
 
+          if (!result[0]) {
+            db.close;
+            resolve(false);
+          }
+
           let employeesArr = result[0].employees;
 
           db.close();
@@ -130,8 +135,6 @@ const getEmployeeWithUsername = function (username) {
               resolve(returnObj);
             }
           }
-
-          resolve(false);
         });
     });
   });
