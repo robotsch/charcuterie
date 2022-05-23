@@ -5,8 +5,10 @@ import TablesStatus from "./TablesStatus";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import EmployeeLogin from "./EmployeeLogin";
+import { CircularProgress } from "@mui/material";
 
 export default function Employee() {
+  const [loading, setLoading] = useState(true)
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -21,20 +23,28 @@ export default function Employee() {
         }
       })
       .catch((err) => console.log(err));
+
+    setLoading(false)
   }, []);
 
   return (
     <div>
-      {loggedIn ? (
-        <SideBar>
-          <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-            <TablesStatus />
-          </Box>
-          <LiveOrderList />
-        </SideBar>
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+          <CircularProgress />
+        </Box>
       ) : (
-        <EmployeeLogin />
-      )}
+        loggedIn ? (
+            <SideBar>
+              <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+                <TablesStatus />
+              </Box>
+              <LiveOrderList />
+            </SideBar>
+          ) : (
+            <EmployeeLogin />
+          )
+        )}
     </div>
   );
 }
