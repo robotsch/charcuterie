@@ -1,7 +1,11 @@
 import React from "react";
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import Modal from "react-overlays/Modal";
 import styled from "styled-components";
+=======
+// import Modal from "react-overlays/Modal";
+>>>>>>> e0d20fc316c1e1d17a4fef79ab9815472311147b
 
 let rand = () => Math.floor(Math.random() * 20) - 10;
 
@@ -30,6 +34,7 @@ const RandomlyPositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
+<<<<<<< HEAD
 const AddNewTable = (props) => {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props) => <Backdrop {...props} />;
@@ -59,6 +64,40 @@ const AddNewTable = (props) => {
         </div>
       </RandomlyPositionedModal>
     </div>
+=======
+const AddNewTable = (props: any) => {
+  // const [show, setShow] = useState(false);
+
+  // const renderBackdrop = (props) => <Backdrop {...props} />;
+
+  return (
+    // <div className="modal-example">
+    //   <button
+    //     type="button"
+    //     className="btn btn-primary mb-4"
+    //     onClick={() => setShow(true)}
+    //   >
+    //     Open Modal
+    //   </button>
+    //   <p>Click to get the full Modal experience!</p>
+
+    //   <RandomlyPositionedModal
+    //     show={show}
+    //     onHide={() => setShow(false)}
+    //     renderBackdrop={renderBackdrop}
+    //     aria-labelledby="modal-label"
+    //   >
+    //     <div>
+    //       <h4 id="modal-label">Text in a modal</h4>
+    //       <p>
+    //         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+    //       </p>
+    //       <ModalExample />
+    //     </div>
+    //   </RandomlyPositionedModal>
+    // </div>
+    <div></div>
+>>>>>>> e0d20fc316c1e1d17a4fef79ab9815472311147b
   );
 };
 
