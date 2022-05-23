@@ -17,10 +17,10 @@ export default function Employee() {
     axios
       .get(origin, { withCredentials: true })
       .then((data) => {
-        if (data.data.isLoggedIn) {
-          setStatus("loggedin");
+        if (data.data.restaurant) {
+          setStatus(data.data.restaurant);
         } else {
-          setStatus('authcheck');
+          setStatus("authcheck");
         }
       })
       .catch((err) => console.log(err));
@@ -33,7 +33,7 @@ export default function Employee() {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          minHeight="100vh"
+          minHeight="300vh"
         >
           <CircularProgress />
         </Box>
@@ -44,7 +44,7 @@ export default function Employee() {
           <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
             <TablesStatus />
           </Box>
-          <LiveOrderList />
+          <LiveOrderList restaurant={status} />
         </SideBar>
       )}
     </div>
