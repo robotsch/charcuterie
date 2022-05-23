@@ -9,7 +9,7 @@
     "prebuild:client": "cd server && npm i",
     "build:server": "cd server && npm run build",
     "build:client": "cd client && npm run build",
-    "heroku-prebuild": "npm run prebuild:server && npm run prebuild: client",
+    "heroku-prebuild": "npm run prebuild:server && npm run prebuild:client",
     "build": "npm run build:server && npm run build:client",
     "start": "cd server && npm run start"
   },
