@@ -1,34 +1,37 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-overlays/Modal";
+import styled from "styled-components";
 
-// const Backdrop = styled("div")`
-//   position: fixed;
-//   z-index: 1040;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   background-color: #000;
-//   opacity: 0.5;
-// `;
+let rand = () => Math.floor(Math.random() * 20) - 10;
 
-// // we use some pseudo random coords so nested modals
-// // don't sit right on top of each other.
-// const RandomlyPositionedModal = styled(Modal)`
-//   position: fixed;
-//   width: 400px;
-//   z-index: 1040;
-//   top: ${() => 50 + rand()}%;
-//   left: ${() => 50 + rand()}%;
-//   border: 1px solid #e5e5e5;
-//   background-color: white;
-//   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-//   padding: 20px;
-// `;
+const Backdrop = styled("div")`
+  position: fixed;
+  z-index: 1040;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  opacity: 0.5;
+`;
+
+// we use some pseudo random coords so nested modals
+// don't sit right on top of each other.
+const RandomlyPositionedModal = styled(Modal)`
+  position: fixed;
+  width: 400px;
+  z-index: 1040;
+  top: ${() => 50 + rand()}%;
+  left: ${() => 50 + rand()}%;
+  border: 1px solid #e5e5e5;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+`;
 
 const AddNewTable = (props) => {
   const [show, setShow] = useState(false);
-
   const renderBackdrop = (props) => <Backdrop {...props} />;
 
   return (
@@ -41,7 +44,6 @@ const AddNewTable = (props) => {
         Open Modal
       </button>
       <p>Click to get the full Modal experience!</p>
-
       <RandomlyPositionedModal
         show={show}
         onHide={() => setShow(false)}
