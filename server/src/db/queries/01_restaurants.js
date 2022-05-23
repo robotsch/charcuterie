@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-// let url = 'mongodb://localhost:27017/';
+//let url = 'mongodb://localhost:27017/';
 let url = process.env.DB_URL;
 
 const getAllRestaurants = function () {
@@ -126,16 +126,18 @@ const getEmployeeWithUsername = function (username) {
           for (const elem of employeesArr) {
             if (elem.username === username) {
               let returnObj = { restoId: result[0]._id, employee: elem };
-
+              //console.log('return: ', returnObj);
               resolve(returnObj);
             }
           }
+
+          resolve(false);
         });
     });
   });
 };
 
-//xports.getEmployeeWithUsername = getEmployeeWithUsername;
+//exports.getEmployeeWithUsername = getEmployeeWithUsername;
 
 const getMenuByRestaurantId = function (id) {
   return new Promise((resolve, reject) => {
