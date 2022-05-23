@@ -10,11 +10,6 @@ router.post('/', (req: Request, res: Response) => {
   const restaurant = sanitize(req.body.restaurant);
   const table = sanitize(req.body.table);
   const orders = sanitize(req.body.order);
-
-  console.log('restaurant', restaurant);
-  console.log('table', table);
-  // console.log('orders', orders);
-
   const custArr = [];
 
   for (const name in orders) {
@@ -39,7 +34,7 @@ router.post('/', (req: Request, res: Response) => {
     .createOrderByTableId(ObjectId(table), custArr)
     .then((dbRes) => {
       console.log(dbRes);
-      res.send("OKAY BRO")
+      res.send('Success');
     })
     .catch((err) => {
       res.status(500).send(`Failed to submit order: ${err}`);
