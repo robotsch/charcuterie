@@ -86,7 +86,6 @@ io.on('connection', (socket) => {
   let sockets: any;
   let room: string;
   let orderNum = 1;
-  console.log('special: ', getAllRestaurants);
 
   socket.data = socket.handshake.query;
 

@@ -5,13 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.scss";
 
-import {
-  Category,
-  FoodItem,
-  Order,
-  OrderFoodItem,
-} from "../ts/foodItem_interface";
-
 import MenuItemList from "./components/MenuItemList";
 import CurrentOrder from "./components/CurrentOrder";
 import Menu from "./components/Menu";
@@ -24,12 +17,6 @@ import EmployeeMenu from "./employee-components/EmployeeMenu";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
 import OrderHistory from "./employee-components/OrderHistory";
 
-import useSocket from "./hooks/useSocket";
-
-import RestaurantProvider from "./providers/RestaurantProvider";
-import TableProvider from "./providers/TableProvider";
-
-import { salads, soups, order1 } from "./mockdata";
 import { CssBaseline } from "@mui/material";
 
 export default function App() {
