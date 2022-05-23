@@ -1,11 +1,11 @@
 {
   "name": "client",
   "private": true,
+  "proxy": "http://localhost:3001",
   "version": "0.0.0",
   "scripts": {
-    "tsc": "tsc",
     "dev": "vite",
-    "build": "npm run tsc && vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
     "cypress": "cypress open -P ."

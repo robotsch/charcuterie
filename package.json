@@ -5,10 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:server": "cd server && npm run build",
-    "build:client": "cd client && npm run build",
-    "postinstall": "npm run build:server && npm run build:client",
-    "start": "cd server && npm run start"
+    "start": "cd server && npm run start",
+    "heroku-prebuild": "cd server && npm i && npm run build && cd .. && cd client && npm i && npm run build"
   },
   "keywords": [],
   "author": "",
