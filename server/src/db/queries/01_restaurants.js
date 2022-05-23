@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-// let url = 'mongodb://localhost:27017/';
+//let url = 'mongodb://localhost:27017/';
 let url = process.env.DB_URL;
 
 const getAllRestaurants = function () {
@@ -108,6 +108,7 @@ const addMenuItemByRestaurantId = function (id, itemData) {
 //exports.addMenuItemByRestaurantId = addMenuItemByRestaurantId;
 
 const getEmployeeWithUsername = function (username) {
+  console.log(username)
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -119,6 +120,12 @@ const getEmployeeWithUsername = function (username) {
         .toArray(function (err, result) {
           if (err) throw err;
 
+          if (result.length === 0) {
+            db.close();
+            resolve(false);
+            return false;
+          }
+
           let employeesArr = result[0].employees;
 
           db.close();
@@ -126,7 +133,7 @@ const getEmployeeWithUsername = function (username) {
           for (const elem of employeesArr) {
             if (elem.username === username) {
               let returnObj = { restoId: result[0]._id, employee: elem };
-
+              //console.log('return: ', returnObj);
               resolve(returnObj);
             }
           }
@@ -135,7 +142,7 @@ const getEmployeeWithUsername = function (username) {
   });
 };
 
-//xports.getEmployeeWithUsername = getEmployeeWithUsername;
+//exports.getEmployeeWithUsername = getEmployeeWithUsername;
 
 const getMenuByRestaurantId = function (id) {
   return new Promise((resolve, reject) => {
@@ -199,7 +206,7 @@ const deleteMenuItemByRestaurantId = function (restoId, menuId) {
 //   'https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg',
 //   'Rolls'
 // );
-//getEmployeeWithUsername('jado');
+//getEmployeeWithUsername('jado123');
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
 
 //getAllRestaurants();

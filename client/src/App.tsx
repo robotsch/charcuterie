@@ -9,6 +9,8 @@ import TemporaryDrawer from "./components/Drawer";
 import Landing from "./components/Landing";
 
 import Employee from "./employee-components/Employee";
+import EmployeeTesting from "./employee-components/EmployeeTesting";
+import EmployeeMenu from "./employee-components/EmployeeMenu";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
 import OrderHistory from "./employee-components/OrderHistory";
 
@@ -68,6 +70,23 @@ export default function App() {
             element={
               <>
                 <OrderHistory />
+              </>
+            }
+          />
+
+          <Route
+            path="/employee/menu"
+            element={
+              <>
+                <EmployeeMenu />
+              </>
+            }
+          />
+          <Route
+            path="/employee/testing"
+            element={
+              <>
+                <EmployeeTesting />
               </>
             }
           />

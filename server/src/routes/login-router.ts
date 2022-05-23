@@ -13,7 +13,7 @@ router.post('/', (req: Request, res: Response) => {
       if (userData && userData.employeeId) {
         req.session.restaurant_id = userData.restaurantId;
         req.session.employee_id = userData.employeeId;
-        res.send('Success');
+        res.redirect('/employee')
       } else {
         res.send('Incorrect id or password');
       }

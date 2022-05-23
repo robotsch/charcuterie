@@ -15,9 +15,10 @@ router.post('/', apiAuthCheck ,(req: Request, res: Response) => {
     image_url: sanitize(req.body.image_url),
     category: sanitize(req.body.category),
   };
+  const id = sanitize(req.body.id)
 
   rQueries
-    .addMenuItemByRestaurantId(ObjectId('6283f1d9804b848eb5e4560c'), data)
+    .addMenuItemByRestaurantId(ObjectId(id), data)
     .then((res) => {
       res.send(res);
     });

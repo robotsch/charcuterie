@@ -27,11 +27,11 @@ interface Order {
   [key: string]: ItemsByID;
 }
 
-export default function LiveOrderList() {
+export default function LiveOrderList(props: { restaurant: string }) {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    ws.emit("EMPLOYEE", { restaurant: "6283f1d9804b848eb5e4560c" });
+    ws.emit("EMPLOYEE", { restaurant: props.restaurant });
 
     ws.on("SUBMIT_ORDER", (order) => {
       console.log("SUBMIT_ORDER", order);
