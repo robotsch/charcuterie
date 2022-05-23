@@ -28,7 +28,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 type LandingMode = "LANDING" | "NAME_ENTERED";
 type LandingHeaderMode = "NOT_LOADED" | "LOADED";
 
-export default function Landing() {
+export default function Landing(props: any) {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
@@ -41,7 +41,7 @@ export default function Landing() {
   const [searchParms, getSearchParams] = useSearchParams();
 
   const [restaurant, setRestaurant] = useState<string>("");
-  const [restaurantName, setRestaurantName] = useState<string>("");
+  const { restaurantName, setRestaurantName } = props;
 
   const [table, setTable] = useState<string>("");
   const [tableName, setTableName] = useState<string>("");
@@ -208,11 +208,13 @@ export default function Landing() {
             Once everyone has joined the table below, everyone can click on the
             Menu button!
           </Typography>
-          <Box sx={{ p: 2, }}>
+          <Box sx={{ p: 2 }}>
             <UserList users={users} />
           </Box>
           <Link to="/Menu">
-            <Button sx={{width: 120, height: 40}} variant="contained">Menu</Button>
+            <Button sx={{ width: 120, height: 40 }} variant="contained">
+              Menu
+            </Button>
           </Link>
         </Box>
       )}
@@ -226,31 +228,6 @@ export default function Landing() {
       >
         Clear localstorage
       </Button> */}
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "background.default",
-          color: "text.primary",
-          borderRadius: 1,
-          p: 3,
-        }}
-      >
-        {theme.palette.mode} mode
-        <IconButton
-          sx={{ ml: 1 }}
-          onClick={colorMode.toggleColorMode}
-          color="inherit"
-        >
-          {theme.palette.mode === "dark" ? (
-            <Brightness7Icon />
-          ) : (
-            <Brightness4Icon />
-          )}
-        </IconButton>
-      </Box>
     </div>
   );
 }
