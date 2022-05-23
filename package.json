@@ -11,7 +11,7 @@
     "build:client": "cd client && npm run build",
     "heroku-prebuild": "npm run prebuild:server && npm run prebuild: client",
     "build": "npm run build:server && npm run build:client",
-    "start": "cd server && npm run start",
+    "start": "cd server && npm run start"
   },
   "keywords": [],
   "author": "",
