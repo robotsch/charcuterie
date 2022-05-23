@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prebuild:server": "cd server && npm i",
-    "prebuild:client": "cd server && npm i",
+    "prebuild:server": "cd server && npm i -D",
+    "prebuild:client": "cd server && npm i -D",
     "build:server": "cd server && npm run build",
     "build:client": "cd client && npm run build",
     "heroku-prebuild": "npm run prebuild:server && npm run prebuild:client",
