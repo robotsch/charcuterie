@@ -5,9 +5,9 @@ import qrcode from 'qrcode'
 const router: Router = express.Router()
 
 router.post("/", apiAuthCheck, (req: Request, res: Response) => {
-  const [restaurant, table] = req.body
+  const { table } = req.body
   
-  qrcode.toDataURL(`${process.env.CLIENT_ORIGIN}/landing?id1=${restaurant}&id2=${table}`, (err, url) => {
+  qrcode.toDataURL(`${process.env.CLIENT_ORIGIN}/landing?id1=${req.session.restaurant_id}&id2=${table}`, (err, url) => {
     res.send(`<img src=${url}></img>`)
   })
 })
