@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import ToggleColorMode from "./App";
+import App from "./App";
+import ToggleColorMode from "./providers/ColorModeProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ToggleColorMode />
+  <ToggleColorMode>
+    <App />
+  </ToggleColorMode>
 );

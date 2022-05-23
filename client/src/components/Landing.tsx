@@ -16,12 +16,12 @@ import ws from "../sockets/socket";
 
 import "./Landing.scss";
 
-import { ColorModeContext } from "../App";
+import { ColorModeContext } from "../providers/ColorModeProvider";
 import Box from "@mui/material/Box";
 
 import IconButton from "@mui/material/IconButton";
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 type LandingMode = "LANDING" | "NAME_ENTERED";
 type LandingHeaderMode = "NOT_LOADED" | "LOADED";
@@ -46,6 +46,9 @@ export default function Landing() {
 
   const [headerMode, setHeaderMode] = useState<LandingHeaderMode>("NOT_LOADED");
   const [mode, setMode] = useState<LandingMode>("LANDING");
+
+  const [helperText, setHelperText] = useState<string>("");
+  const [nameError, setNameError] = useState<boolean>(false);
 
   useEffect(() => {
     setRestaurant(searchParms.get("id1") || "");
@@ -122,17 +125,49 @@ export default function Landing() {
             onSubmit={(event: any) => {
               event.preventDefault();
               const name = event.target[0].value;
+              if (name === "") {
+                setHelperText("Name required");
+                setNameError(true);
+                return;
+              }
+
+              if (name.length > 15) {
+                setHelperText("Name cannot be more than 15 characters");
+                setNameError(true);
+                return;
+              }
+
               setUser(name);
               ws.emit("SUBMIT_NAME", { name, restaurant, table });
             }}
           >
             <TextField
+              error={nameError}
               type="text"
               name="name"
               label="Name"
               variant="outlined"
               placeholder="(max 15 characters)"
+              onChange={(event: any) => {
+                const name = event.target.value;
+
+                if (name === "") {
+                  setHelperText("Name required");
+                  setNameError(true);
+                  return;
+                }
+
+                if (name.length > 15) {
+                  setHelperText("Name cannot be more than 15 characters");
+                  setNameError(true);
+                  return;
+                }
+
+                setHelperText("");
+                setNameError(false);
+              }}
               sx={{ mt: 2 }}
+              helperText={helperText}
             ></TextField>
             <Button
               color="secondary"
