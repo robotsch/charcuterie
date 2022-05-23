@@ -5,7 +5,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
     "cypress": "cypress open -P ."
