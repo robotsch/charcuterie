@@ -106,9 +106,13 @@ export default function Landing() {
       {headerMode === "LOADED" && (
         <div id="header">
           <img
-            src="../../assets/img/header.jpg"
-            alt="Restaurant header image"
+            src="/app/clients/assets/img/header.jpg"
+            alt="Restaurant header image1"
             id="header-img"
+          />
+          <img
+            src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="Restaurant header image2"
           />
           <div>
             <div>
