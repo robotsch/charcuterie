@@ -18,7 +18,7 @@ import "./Landing.scss";
 
 import { ColorModeContext } from "../providers/ColorModeProvider";
 import Box from "@mui/material/Box";
-
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -79,7 +79,8 @@ export default function Landing() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/names?restaurant=${restaurant}&table=${table}`
+        // `http://localhost:3001/api/names?restaurant=${restaurant}&table=${table}`
+        `/api/names?restaurant=${restaurant}&table=${table}`
       )
       .then((res) => {
         console.log(res.data);
@@ -105,7 +106,7 @@ export default function Landing() {
       {headerMode === "LOADED" && (
         <div id="header">
           <img
-            src="/assets/img/header.jpg"
+            src="../../assets/img/header.jpg"
             alt="Restaurant header image"
             id="header-img"
           />
@@ -182,7 +183,7 @@ export default function Landing() {
       )}
       {mode === "NAME_ENTERED" && (
         <div>
-          Hello {user}
+          <Typography>Welcome {user}!</Typography>
           <Link to="/Menu">
             <Button>Menu</Button>
           </Link>
