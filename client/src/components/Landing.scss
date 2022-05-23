@@ -27,7 +27,9 @@
 
 #header > div > div {
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.65);
+  padding: 10px;
+  border-radius: 15px;
 }
 
 #header span {
@@ -36,4 +38,25 @@
   font-family: "Bebas Neue";
   font-size: 36px;
   letter-spacing: 0.15em;
+}
+
+#header h5.mont {
+  font-weight: 500;
+  font-size: 20px;
+  color: #fff;
+}
+
+#name-submission {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#name-submission > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

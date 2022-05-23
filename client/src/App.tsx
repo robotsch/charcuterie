@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-import { useState } from "react";
+import { useState, createContext, useMemo, useContext } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -31,8 +31,55 @@ import TableProvider from "./providers/TableProvider";
 import { salads, soups, order1 } from "./mockdata";
 import { CssBaseline } from "@mui/material";
 
-export default function App() {
-  // const { user, users, setName } = useSocket();
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: "#11cb5f",
+//     },
+//     secondary: {
+//       main: "#f25f4c",
+//     },
+
+//   },
+// });
+
+export const ColorModeContext = createContext({ toggleColorMode: () => {} });
+
+export default function ToggleColorMode() {
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
+  );
+
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  );
+}
+
+function App() {
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
 
   return (
     <div className="App">
