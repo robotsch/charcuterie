@@ -11,8 +11,8 @@ export default function Employee() {
 
   useEffect(() => {
     
-    const origin = `${process.env.CLIENT_ORIGIN!}/api/session`
-    // const origin = 'http://localhost:3001/api/session'
+    const origin = '/api/session'
+    // const origin = 'http://localhost:3001/asdf'
 
     axios.get(origin, {withCredentials: true})
       .then((data) => {
