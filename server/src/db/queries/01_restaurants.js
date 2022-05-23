@@ -119,9 +119,10 @@ const getEmployeeWithUsername = function (username) {
         .toArray(function (err, result) {
           if (err) throw err;
 
-          if (!result[0]) {
-            db.close;
+          if (result.length === 0) {
+            db.close();
             resolve(false);
+            return false;
           }
 
           let employeesArr = result[0].employees;
@@ -204,7 +205,7 @@ const deleteMenuItemByRestaurantId = function (restoId, menuId) {
 //   'https://www.cheaprecipeblog.com/wp-content/uploads/2021/06/How-to-make-cheap-California-rolls-720x720.jpg',
 //   'Rolls'
 // );
-//getEmployeeWithUsername('jado');
+//getEmployeeWithUsername('jado123');
 //getMenuByRestaurantId(ObjectId("6283f1d9804b848eb5e4560c"))
 
 //getAllRestaurants();
