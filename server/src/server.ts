@@ -85,7 +85,7 @@ io.on('connection', (socket) => {
 
   socket.on('CONNECT_TO_ROOM', ({ restaurant, table }) => {
     room = `rst${restaurant}.tbl${table}`;
-    console.log(socket.id, 'connected to room', room);
+    // console.log(socket.id, 'connected to room', room);
     io.in(socket.id).socketsJoin(room);
   });
 

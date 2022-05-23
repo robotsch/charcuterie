@@ -8,8 +8,6 @@ const router: Router = express.Router();
 router.post('/', (req: Request, res: Response) => {
   const { username, password } = sanitize(req.body);
 
-  console.log(username, password)
-
   authenticateUser(username, password)
     .then((userData) => {
       if (userData && userData.employeeId) {
