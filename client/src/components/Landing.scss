@@ -1,0 +1,62 @@
+@import "../variables.scss";
+
+#header-img {
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 45vh;
+  transition: transform 0.3s;
+  // position: absolute;
+}
+
+#header h1.mont {
+  color: #fff;
+}
+
+#header > div {
+  display: flex;
+  width: 100%;
+  height: 45vh;
+  position: absolute;
+  top: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+#header > div > div {
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.65);
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#header span {
+  text-transform: uppercase;
+  color: $orange-red;
+  font-family: "Bebas Neue";
+  font-size: 36px;
+  letter-spacing: 0.15em;
+}
+
+#header h5.mont {
+  font-weight: 500;
+  font-size: 20px;
+  color: #fff;
+}
+
+#name-submission {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#name-submission > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

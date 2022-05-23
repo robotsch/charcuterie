@@ -1,12 +1,9 @@
 import * as dotenv from "dotenv";
-import { useState } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.scss";
 
-import MenuItemList from "./components/MenuItemList";
-import CurrentOrder from "./components/CurrentOrder";
 import Menu from "./components/Menu";
 import TemporaryDrawer from "./components/Drawer";
 import Table from "./components/Table";
@@ -21,7 +18,6 @@ import OrderHistory from "./employee-components/OrderHistory";
 import { CssBaseline } from "@mui/material";
 
 export default function App() {
-  // const { user, users, setName } = useSocket();
 
   return (
     <div className="App">

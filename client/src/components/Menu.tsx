@@ -29,11 +29,12 @@ export default function Menu() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3001/api/menu?id=${localStorage.getItem(
-          "restaurant"
-        )}`
-      )
+      // .get(
+      //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+      //     "restaurant"
+      //   )}`
+      // )
+      .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
       .then((res) => {
         const setCategories: Set<string> = new Set(
           res.data.map((item: MenuItem) => item.category)
