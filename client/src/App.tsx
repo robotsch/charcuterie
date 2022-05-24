@@ -7,7 +7,7 @@ import "./App.scss";
 import Menu from "./components/Menu";
 import TemporaryDrawer from "./components/Drawer";
 import Landing from "./components/Landing";
-import Bill from "./components/Bill"
+import Bill from "./components/bill-components/Bill"
 
 import Employee from "./employee-components/Employee";
 import EmployeeTesting from "./employee-components/EmployeeTesting";
