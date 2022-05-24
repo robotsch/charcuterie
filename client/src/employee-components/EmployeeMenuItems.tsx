@@ -14,36 +14,6 @@ import AddMenuItem from "./AddMenuItem";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
-function createData(
-  image: string,
-  name: string,
-  category: string,
-  price: string
-) {
-  return { image, name, category, price };
-}
-
-const rows = [
-  createData(
-    "https://www.pressurecookrecipes.com/wp-content/uploads/2021/05/miso-soup.jpg",
-    "miso soup",
-    "soup",
-    "3.99"
-  ),
-  createData(
-    "https://www.pressurecookrecipes.com/wp-content/uploads/2021/05/miso-soup.jpg",
-    "tuna rolls",
-    "rolls",
-    "14.99"
-  ),
-  createData(
-    "https://www.pressurecookrecipes.com/wp-content/uploads/2021/05/miso-soup.jpg",
-    "salmon handroll",
-    "handroll",
-    "9.99"
-  ),
-];
-
 export default function EmployeeMenuItems() {
   const [menu, setMenu] = useState({});
 

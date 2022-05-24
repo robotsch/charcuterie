@@ -22,6 +22,25 @@ const rows = [
 ];
 
 export default function PastOrders() {
+  const [orders, setOrders] = useState({});
+
+  useEffect(() => {
+    // axios
+    // .get(
+    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+    //     "restaurant"
+    //   )}`
+    // )
+    axios
+      .get(`http://localhost:3001/api/get-order?id=6286c456311fb901c1d4ca3d`)
+      .then((res) => {
+        setOrders(res.data);
+        console.log("orders: ", orders);
+        console.log("Result: ", res);
+      })
+      .catch((err) => console.log("ERROR", err));
+  }, []);
+
   return (
     <>
       <Typography variant="body1">Past Orders</Typography>
