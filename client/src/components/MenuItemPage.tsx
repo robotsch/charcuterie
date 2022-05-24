@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import FormHelperText from "@mui/material/FormHelperText";
+import Alert from "@mui/material/Alert";
 
 import ws from "../sockets/socket";
 
@@ -26,10 +27,13 @@ export default function MenuItemPage(props: any) {
   const [quantityError, setQuantityError] = useState<boolean>(false);
   const [helperText, setHelperText] = useState<string>("");
 
+  const [alertStatus, setAlertStatus] = useState<string>("");
+
   useEffect(() => {
     setQuantity(0);
     setQuantityError(false);
     setHelperText("");
+    setAlertStatus("");
   }, [props.menuItem]);
 
   return (
@@ -65,6 +69,7 @@ export default function MenuItemPage(props: any) {
               if (!event.target[0].value) {
                 setHelperText("Required");
                 setQuantityError(true);
+                setAlertStatus("");
                 return;
               }
 
@@ -72,12 +77,14 @@ export default function MenuItemPage(props: any) {
               if (quantity === 0 || quantity < 0) {
                 setHelperText("Quantity must be greater than 0");
                 setQuantityError(true);
+                setAlertStatus("");
                 return;
               }
 
-              if (quantity > 100) {
-                setHelperText("Quantity cannot be over 100");
+              if (quantity >= 50) {
+                setHelperText("Quantity cannot be over 50");
                 setQuantityError(true);
+                setAlertStatus("");
                 return;
               }
 
@@ -90,6 +97,8 @@ export default function MenuItemPage(props: any) {
                 restaurant: localStorage.getItem("restaurant"),
                 table: localStorage.getItem("table"),
               });
+
+              setAlertStatus(`${quantity} x ${name} added to order!`);
             }}
           >
             <TextField
@@ -137,6 +146,11 @@ export default function MenuItemPage(props: any) {
             </Button>
           </form>
           <FormHelperText>{helperText}</FormHelperText>
+          {alertStatus !== "" && (
+            <Alert sx={{ my: 3 }} severity="success">
+              {alertStatus}
+            </Alert>
+          )}
         </Box>
       </Box>
     </Drawer>
