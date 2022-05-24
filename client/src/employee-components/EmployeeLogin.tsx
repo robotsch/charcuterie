@@ -31,7 +31,10 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     const uname = data.get("username");
     const pw = data.get("password");
-    axios.post("/api/employee-login", { username: uname, password: pw });
+    axios.post("/api/employee-login", { username: uname, password: pw })
+      .then(() => {
+        window.location.reload()
+      });
   };
 
   return (
@@ -82,15 +85,13 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <Button
-              type="submit"
+            <Link
+              component="button"
               color="primary"
-              fullWidth
-              variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
-            </Button>
+            </Link>
           </Box>
         </Box>
       </Container>
