@@ -22,7 +22,17 @@ const rows = [
 ];
 
 export default function PastOrders() {
+  const orderTotalCalc = function (customerArr: Array) {
+    let total = 0;
+    for (const customer in customerArr) {
+      customer.sub_orders.map((item) => {
+        total += item.quantity * item.price;
+      });
+    }
+  };
+
   const [orders, setOrders] = useState({});
+  const [customers, setCustomers] = useState({});
 
   useEffect(() => {
     // axios
@@ -33,11 +43,11 @@ export default function PastOrders() {
     // )
     axios
       .get(
-        `http://localhost:3001/api/get-order?id=6283f6a703f54b7c82c5fffd&status=active`
+        `http://localhost:3001/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
       )
       .then((res) => {
         setOrders(res.data);
-
+        setCustomers(res.data.customers);
         console.log("Result: ", res);
         console.log("orders: ", orders);
       })
@@ -52,23 +62,24 @@ export default function PastOrders() {
           <TableHead>
             <TableRow>
               <TableCell>Order #</TableCell>
-              <TableCell align="right">Table</TableCell>
               <TableCell align="right">Total</TableCell>
+              <TableCell align="right">Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell align="right">{row.tableId}</TableCell>
-                <TableCell align="right">${row.total}</TableCell>
-              </TableRow>
-            ))}
+            {Array.isArray(orders) &&
+              orders.map((row) => (
+                <TableRow
+                  key={row._id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row._id}
+                  </TableCell>
+                  <TableCell align="right">{row.table_id}</TableCell>
+                  <TableCell align="right">{row.status}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

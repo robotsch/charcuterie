@@ -9,7 +9,7 @@ const router: Router = express.Router();
 
 router.get('/', (req: Request, res: Response) => {
   if (req.query && req.query.id) {
-    const restaurant = sanitize(req.query.restaurant);
+    const restaurant = sanitize(req.query.id);
 
     oQueries
       .getAllOrdersByRestaurantId(ObjectId(restaurant))

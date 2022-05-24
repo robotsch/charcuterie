@@ -31,7 +31,7 @@ export default function QrLoader() {
         //   parsedMenu[item.category].push(item);
         // });
         console.log("res: ", res);
-        //setQrCode(res.body);
+        setQrCode(res.data);
         //console.log("result: ", res);
       })
       .catch((err) => console.log("ERROR", err));
