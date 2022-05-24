@@ -122,12 +122,18 @@ export default function CurrentOrder() {
       >
         <Container sx={{ pb: 2, pt: 1 }}>
           <Box sx={{ textAlign: "center" }}>
-            <h1 className="mont">CURRENT ORDER</h1>
+            <span className="mont">CURRENT ORDER</span>
           </Box>
           <Divider />
 
           {orderState === "NO_ITEMS" && (
-            <Typography variant="body1">No items added to the list</Typography>
+            <List>
+              <ListItem>
+                <Typography variant="body1">
+                  No items added to the list
+                </Typography>
+              </ListItem>
+            </List>
           )}
 
           {orderState === "ITEMS" && (
@@ -154,8 +160,8 @@ export default function CurrentOrder() {
                 console.log("send", send);
 
                 axios
-                  // .post("http://localhost:3001/api/order", send)
-                  .post(`/api/order`, send)
+                  .post("http://localhost:3001/api/order", send)
+                  // .post(`/api/order`, send)
                   .then((res) => {
                     console.log("HERE", currentOrder);
                     ws.emit("SUBMIT_ORDER", {

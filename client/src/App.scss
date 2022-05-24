@@ -6,3 +6,13 @@
   letter-spacing: 0.15em;
   color: $orange-red;
 }
+
+span.mont {
+  font-size: 9vmin;
+}
+
+@media (min-width: 500px) {
+  span.mont {
+    font-size: 35px;
+  }
+}

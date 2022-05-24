@@ -22,7 +22,7 @@ export default function ToggleColorMode(props: any) {
         palette: {
           mode,
           primary: {
-            main: "#512da8",
+            main: "#5C3FA2",
           },
           secondary: {
             main: "#2589BD",

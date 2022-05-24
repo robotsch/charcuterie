@@ -11,9 +11,13 @@ import FormHelperText from "@mui/material/FormHelperText";
 
 import ws from "../sockets/socket";
 
+import { useTheme } from "@mui/material/styles";
+
 import "./MenuItemPage.scss";
 
 export default function MenuItemPage(props: any) {
+  const theme = useTheme();
+
   const { _id, name, price, image_url, description } = props.menuItem;
 
   const { isOpen, toggleDrawer } = useContext(toggleDrawerContext);
@@ -113,7 +117,11 @@ export default function MenuItemPage(props: any) {
                 setHelperText("");
                 setQuantityError(false);
               }}
-              sx={{ width: 180 }}
+              sx={
+                theme.palette.mode === "dark"
+                  ? { color: "#fff", width: 180 }
+                  : { color: "#000", width: 180 }
+              }
             ></TextField>
             <Button
               type="submit"

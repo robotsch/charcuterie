@@ -21,6 +21,7 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { useTheme } from "@mui/material/styles";
 
 import { ColorModeContext } from "../providers/ColorModeProvider";
+import { Palette } from "@mui/icons-material";
 
 type Anchor = "top";
 
@@ -47,14 +48,23 @@ export default function TemporaryDrawer() {
       <List>
         {[
           { text: "Menu", icon: <MenuBookIcon />, link: "/menu" },
-          {
-            text: "Current Order",
-            icon: <ListAltIcon />,
-            link: "/current-order",
-          },
+          // {
+          //   text: "Current Order",
+          //   icon: <ListAltIcon />,
+          //   link: "/current-order",
+          // },
           { text: "Bill / Pay Now", icon: <AttachMoneyIcon />, link: "/bill" },
         ].map((pair) => (
-          <ListItem key={pair.text} component={Link} href={pair.link}>
+          <ListItem
+            sx={
+              theme.palette.mode === "dark"
+                ? { color: "#fff" }
+                : { color: "#000" }
+            }
+            key={pair.text}
+            component={Link}
+            href={pair.link}
+          >
             <ListItemButton>
               <ListItemIcon>{pair.icon}</ListItemIcon>
               <ListItemText primary={pair.text} />
@@ -63,13 +73,19 @@ export default function TemporaryDrawer() {
         ))}
       </List>
       <Divider />
-      <List>
-        <ListItem key="logo" disablePadding>
-          <ListItemButton disabled>
-            <ListItemText primary="Logo" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 2,
+        }}
+      >
+        <img
+          src="https://cdn.discordapp.com/attachments/856696248111595541/978644697213980722/logo.png"
+          alt="Logo"
+        />
+      </Box>
     </Box>
   );
 
