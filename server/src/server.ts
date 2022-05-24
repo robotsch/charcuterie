@@ -140,6 +140,8 @@ const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
+const addTableRoute = require('./routes/add-table-router')
+const removeTableRoute = require('./routes/remove-table-router')
 const qrRoute = require('./routes/qr-code-router');
 
 app.use(express.static(path.resolve(__dirname, '../../client/dist')));
@@ -151,6 +153,8 @@ app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);
+app.use('/api/add-table', addTableRoute)
+app.use('/api/remove-table', removeTableRoute)
 app.use('/api/qr-generate', qrRoute);
 
 app.get('/api/session', (req, res) => {

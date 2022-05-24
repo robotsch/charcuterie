@@ -25,14 +25,8 @@ export default function TablesStatus() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
-      <Typography variant="body1">Menu</Typography>
-      <Typography variant="body1" align="right">
-        <button onClick={() => setModalVisible(true)}>Open Overlay</button>
-        <AddNewTable
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        />
-      </Typography>
+      <Typography variant="body1">Tables</Typography>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -56,6 +50,12 @@ export default function TablesStatus() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Typography variant="body1" align="right">
+        <AddNewTable
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+        />
+      </Typography>
     </>
   );
 }

@@ -7,8 +7,8 @@ const ObjectId = require('mongodb').ObjectId;
 const router: Router = express.Router();
 
 router.post('/', (req: Request, res: Response) => {
-  const restaurant = sanitize(req.body.restaurant);
-  const menuItem = sanitize(req.body.restaurant);
+  const restaurant = sanitize(req.session.employee_id);
+  const menuItem = sanitize(req.body.id);
 
   rQueries
     .deleteMenuItemByRestaurantId(ObjectId(restaurant), ObjectId(menuItem))

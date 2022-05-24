@@ -9,7 +9,10 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { List, Typography } from "@mui/material";
 import EditMenuItem from "./EditMenuItem";
+import DeleteMenuItem from "./DeleteMenuItem";
 import AddMenuItem from "./AddMenuItem";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 function createData(
   image: string,
@@ -42,6 +45,40 @@ const rows = [
 ];
 
 export default function EmployeeMenuItems() {
+  const [menu, setMenu] = useState({});
+
+  useEffect(() => {
+    // axios
+    // .get(
+    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+    //     "restaurant"
+    //   )}`
+    // )
+    axios
+      .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+      .then((res) => {
+        // const setCategories: Set<string> = new Set(
+        //   res.data.map((item: MenuItem) => item.category)
+        // );
+
+        // const categories: Array<string> = [...setCategories];
+
+        // const parsedMenu: Menu = {};
+        // categories.forEach((category: string) => {
+        //   parsedMenu[category] = [];
+        // });
+
+        // res.data.forEach((item: MenuItem) => {
+        //   parsedMenu[item.category].push(item);
+        // });
+
+        setMenu(res.data);
+        console.log("menu: ", menu);
+        console.log("Result: ", res);
+      })
+      .catch((err) => console.log("ERROR", err));
+  }, []);
+
   return (
     <>
       <Typography variant="body1">Menu</Typography>
@@ -60,19 +97,25 @@ export default function EmployeeMenuItems() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {menu.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  <img src={row.image} width={100} height={100} alt="food" />
+                  <img
+                    src={row.image_url}
+                    width={100}
+                    height={100}
+                    alt="food"
+                  />
                 </TableCell>
                 <TableCell align="center">{row.name}</TableCell>
                 <TableCell align="center">{row.category}</TableCell>
                 <TableCell align="center">${row.price}</TableCell>
                 <TableCell align="center">
                   <EditMenuItem />
+                  <DeleteMenuItem />
                 </TableCell>
               </TableRow>
             ))}

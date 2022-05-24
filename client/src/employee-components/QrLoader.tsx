@@ -12,8 +12,8 @@ export default function QrLoader() {
   useEffect(() => {
     axios
       .post(`/api/qr-generate`, {
-        restaurant: restaurant,
-        table: table,
+        // restaurant: restaurant,
+        // table: table,
       })
       .then((res) => {
         // const setCategories: Set<string> = new Set(
@@ -30,8 +30,8 @@ export default function QrLoader() {
         // res.data.forEach((item: MenuItem) => {
         //   parsedMenu[item.category].push(item);
         // });
-
-        setQrCode(res);
+        console.log("res: ", res);
+        //setQrCode(res.body);
         //console.log("result: ", res);
       })
       .catch((err) => console.log("ERROR", err));

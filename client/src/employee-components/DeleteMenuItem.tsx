@@ -1,9 +1,16 @@
-import React from "react";
+import * as React from "react";
 import { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
 import Modal from "react-overlays/Modal";
 import styled from "styled-components";
-import QrLoader from "./QrLoader";
-import Button from "@mui/material/Button";
+
+import ListItem from "@mui/material/ListItem";
+import TextField from "@mui/material/TextField";
+
+type Anchor = "right";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -28,20 +35,20 @@ const PositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
-const AddNewTable = (props) => {
+export default function DeleteMenuItem() {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props) => <Backdrop {...props} />;
 
   return (
     <div className="modal-example">
       <Button
-        color="success"
-        variant="outlined"
         type="button"
         className="btn btn-primary mb-4"
         onClick={() => setShow(true)}
+        color="error"
+        variant="outlined"
       >
-        Add Table
+        Delete
       </Button>
       <PositionedModal
         show={show}
@@ -50,12 +57,25 @@ const AddNewTable = (props) => {
         aria-labelledby="modal-label"
       >
         <div>
-          Insert QR Code Here:
-          {/* <QrLoader /> */}
+          Are you sure you want to delete this item?
+          <Button
+            type="button"
+            className="btn btn-primary mb-4"
+            color="success"
+            variant="outlined"
+          >
+            Accept
+          </Button>
+          <Button
+            type="button"
+            className="btn btn-primary mb-4"
+            color="error"
+            variant="outlined"
+          >
+            Decline
+          </Button>
         </div>
       </PositionedModal>
     </div>
   );
-};
-
-export default AddNewTable;
+}

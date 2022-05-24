@@ -108,7 +108,7 @@ const addMenuItemByRestaurantId = function (id, itemData) {
 //exports.addMenuItemByRestaurantId = addMenuItemByRestaurantId;
 
 const getEmployeeWithUsername = function (username) {
-  console.log(username)
+  console.log(username);
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
