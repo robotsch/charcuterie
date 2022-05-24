@@ -14,10 +14,10 @@ import { List, Typography } from "@mui/material";
 export default function PastOrders() {
   let counter = 1;
 
-  const orderTotalCalc = function (customerArr: Array) {
+  const orderTotalCalc = function (customerArr: any) {
     let total = 0;
     for (const customer of customerArr) {
-      customer.sub_orders.map((item) => {
+      customer.sub_orders.map((item: any) => {
         total += item.quantity * item.price;
       });
     }
@@ -40,7 +40,9 @@ export default function PastOrders() {
     //   )}`
     // )
     axios
-      .get("/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c")
+      .get(
+        "http://localhost:3001/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c"
+      )
       .then((res) => {
         setOrders(res.data);
 

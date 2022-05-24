@@ -9,7 +9,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { Server, Socket } from 'socket.io';
 
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 
 import { getAllRestaurants } from './db/queries/01_restaurants';
 
@@ -142,6 +142,7 @@ const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const addTableRoute = require('./routes/add-table-router');
+const getTableRoute = require('./routes/get-tables-router');
 const removeTableRoute = require('./routes/remove-table-router');
 const qrRoute = require('./routes/qr-code-router');
 
@@ -160,6 +161,7 @@ app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/add-table', addTableRoute);
 app.use('/api/remove-table', removeTableRoute);
 app.use('/api/qr-generate', qrRoute);
+app.use('/api/get-tables', getTableRoute);
 
 app.get('/api/session', (req, res) => {
   res.json({ restaurant: req.session.restaurant_id });
