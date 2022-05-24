@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 import Table from "@mui/material/Table";
@@ -10,6 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import AddNewTable from "./AddNewTable";
 import { List, Typography } from "@mui/material";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 function createData(id: string, status: string) {
   return { id, status };
@@ -23,6 +25,28 @@ const rows = [
 
 export default function TablesStatus() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [orders, setOrders] = useState({});
+
+  useEffect(() => {
+    // axios
+    // .get(
+    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+    //     "restaurant"
+    //   )}`
+    // )
+    axios
+      .get(
+        `http://localhost:3001/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
+      )
+      .then((res) => {
+        setOrders(res.data);
+
+        console.log("Result: ", res);
+        console.log("orders: ", orders);
+      })
+      .catch((err) => console.log("ERROR", err));
+  }, []);
+
   return (
     <>
       <Typography variant="body1">Tables</Typography>

@@ -133,14 +133,14 @@ io.on('connection', (socket) => {
 const namesRoute = require('./routes/readable-names-router');
 const menuRoute = require('./routes/menu-router');
 const insertOrderRoute = require('./routes/order-insert-router');
-const getOrderRoute = require('./routes/get-order-router')
-const getOrdersRestaurantRoute = require('./routes/get-orders-restaurant')
-const updateOrderStatusRoute = require('./routes/update-order-status-router')
+const getOrderRoute = require('./routes/get-order-router');
+const getOrdersRestaurantRoute = require('./routes/get-orders-restaurant');
+const updateOrderStatusRoute = require('./routes/update-order-status-router');
 const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
-const addTableRoute = require('./routes/add-table-router')
-const removeTableRoute = require('./routes/remove-table-router')
+const addTableRoute = require('./routes/add-table-router');
+const removeTableRoute = require('./routes/remove-table-router');
 const qrRoute = require('./routes/qr-code-router');
 
 app.use(express.static(path.resolve(__dirname, '../../client/dist')));
@@ -150,13 +150,13 @@ app.use('/api/names', namesRoute);
 app.use('/api/menu', menuRoute);
 app.use('/api/order', insertOrderRoute);
 app.use('/api/get-order', getOrderRoute);
-app.use('/api/get-orders-restaurant', getOrdersRestaurantRoute)
-app.use('/api/update-order-status', updateOrderStatusRoute)
+app.use('/api/get-orders-restaurant', getOrdersRestaurantRoute);
+app.use('/api/update-order-status', updateOrderStatusRoute);
 app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);
-app.use('/api/add-table', addTableRoute)
-app.use('/api/remove-table', removeTableRoute)
+app.use('/api/add-table', addTableRoute);
+app.use('/api/remove-table', removeTableRoute);
 app.use('/api/qr-generate', qrRoute);
 
 app.get('/api/session', (req, res) => {
