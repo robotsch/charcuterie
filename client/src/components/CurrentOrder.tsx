@@ -147,7 +147,11 @@ export default function CurrentOrder() {
                   parsedCurrentOrder[name] = Object.values(
                     currentOrder[name]
                   ).map((item) => {
-                    return { id: item._id, quantity: item.quantity };
+                    return {
+                      id: item._id,
+                      quantity: item.quantity,
+                      totalPrice: item.price * item.quantity,
+                    };
                   });
                 }
 

@@ -99,6 +99,7 @@ export default function MenuItemPage(props: any) {
               });
 
               setAlertStatus(`${quantity} x ${name} added to order!`);
+              toggleDrawer(false)(event);
             }}
           >
             <TextField
