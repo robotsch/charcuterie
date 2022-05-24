@@ -9,6 +9,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import { Server, Socket } from 'socket.io';
 
+import bcrypt from 'bcrypt'
+
 import { getAllRestaurants } from './db/queries/01_restaurants';
 
 const clientPromise = require('./db/db');
