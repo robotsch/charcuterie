@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import AddNewTable from "./AddNewTable";
+import CreateQrCode from "./CreateQrCode";
 import { List, Typography } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
@@ -25,7 +26,7 @@ const rows = [
 
 export default function TablesStatus() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [orders, setOrders] = useState({});
+  const [tables, setTables] = useState({});
 
   useEffect(() => {
     // axios
@@ -35,14 +36,15 @@ export default function TablesStatus() {
     //   )}`
     // )
     axios
-      .get(
-        `/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
-      )
+      .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      // .get(
+      //   `/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
+      // )
       .then((res) => {
-        setOrders(res.data);
+        setTables(res.data);
 
         console.log("Result: ", res);
-        console.log("orders: ", orders);
+        console.log("tables: ", tables);
       })
       .catch((err) => console.log("ERROR", err));
   }, []);
@@ -56,21 +58,28 @@ export default function TablesStatus() {
           <TableHead>
             <TableRow>
               <TableCell>Table</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="right">QR Code Generator</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-              </TableRow>
-            ))}
+            {Array.isArray(tables) &&
+              tables.map((row) => (
+                <TableRow
+                  key={row._id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.readable_name}
+                  </TableCell>
+                  <TableCell align="right">
+                    <CreateQrCode
+                      modalVisible={modalVisible}
+                      setModalVisible={setModalVisible}
+                      table={row._id}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

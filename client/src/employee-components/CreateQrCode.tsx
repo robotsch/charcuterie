@@ -29,18 +29,18 @@ const PositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
-const AddNewTable = (props: any) => {
+const CreateQrCode = (props: any) => {
   const [qrCode, setQrCode] = useState({});
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
+  const table = props.table;
+  // const createQrCode = function () {};
 
-  const createTable = function () {};
-
-  const generateQrCode = function () {
+  const generateQrCode = function (table_id) {
     axios
-      .get(`http://localhost:3001/api/qr-generate`, {
+      .post(`http://localhost:3001/api/qr-generate`, {
         // restaurant: restaurant,
-        // table: table,
+        table: table_id,
       })
       .then((res) => {
         console.log("qr: ", res.data);
@@ -52,16 +52,18 @@ const AddNewTable = (props: any) => {
   return (
     <div className="modal-example">
       <Button
-        color="success"
+        color="primary"
         variant="outlined"
         type="button"
         className="btn btn-primary mb-4"
         onClick={() => {
           setShow(true);
-          generateQrCode();
+          {
+            generateQrCode(table);
+          }
         }}
       >
-        Add Table
+        Generate QR code
       </Button>
       <PositionedModal
         show={show}
@@ -75,4 +77,4 @@ const AddNewTable = (props: any) => {
   );
 };
 
-export default AddNewTable;
+export default CreateQrCode;
