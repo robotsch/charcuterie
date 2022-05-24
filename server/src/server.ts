@@ -136,7 +136,9 @@ io.on('connection', (socket) => {
 // Router imports
 const namesRoute = require('./routes/readable-names-router');
 const menuRoute = require('./routes/menu-router');
-const orderRoute = require('./routes/order-insert-router');
+const insertOrderRoute = require('./routes/order-insert-router');
+const getOrderRoute = require('./routes/get-order-router')
+const updateOrderStatusRoute = require('./routes/update-order-status-router')
 const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
@@ -149,7 +151,9 @@ app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 // Resource routes
 app.use('/api/names', namesRoute);
 app.use('/api/menu', menuRoute);
-app.use('/api/order', orderRoute);
+app.use('/api/order', insertOrderRoute);
+app.use('/api/get-order', getOrderRoute);
+app.use('/api/update-order-status', updateOrderStatusRoute)
 app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);

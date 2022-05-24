@@ -22,7 +22,7 @@ MongoClient.connect(url, function (err, db) {
           ],
         },
       ],
-      status: 'closed',
+      status: 'completed',
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffd'),
@@ -43,7 +43,7 @@ MongoClient.connect(url, function (err, db) {
           ],
         },
       ],
-      status: 'active',
+      status: 'pending',
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffe'),
@@ -102,7 +102,7 @@ MongoClient.connect(url, function (err, db) {
           ],
         },
       ],
-      status: 'closed',
+      status: 'completed',
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffd'),
@@ -156,7 +156,7 @@ MongoClient.connect(url, function (err, db) {
           ],
         },
       ],
-      status: 'active',
+      status: 'pending',
     },
   ];
 

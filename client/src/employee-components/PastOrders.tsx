@@ -6,6 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
 
 import { List, Typography } from "@mui/material";
 
@@ -20,6 +22,25 @@ const rows = [
 ];
 
 export default function PastOrders() {
+  const [orders, setOrders] = useState({});
+
+  useEffect(() => {
+    // axios
+    // .get(
+    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+    //     "restaurant"
+    //   )}`
+    // )
+    axios
+      .get(`http://localhost:3001/api/get-order?id=6286c456311fb901c1d4ca3d`)
+      .then((res) => {
+        setOrders(res.data);
+        console.log("orders: ", orders);
+        console.log("Result: ", res);
+      })
+      .catch((err) => console.log("ERROR", err));
+  }, []);
+
   return (
     <>
       <Typography variant="body1">Past Orders</Typography>
