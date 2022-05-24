@@ -56,40 +56,40 @@ const rows = [
   ),
 ];
 
-const [menuItem, setMenuItem] = useState({});
-
-const [menu, setMenu] = useState({});
-
-useEffect(() => {
-  axios
-    // .get(
-    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
-    //     "restaurant"
-    //   )}`
-    // )
-    .get(`/api/menu?id=6283f1d9804b848eb5e4560d`)
-    .then((res) => {
-      const setCategories: Set<string> = new Set(
-        res.data.map((item: MenuItem) => item.category)
-      );
-
-      const categories: Array<string> = [...setCategories];
-
-      const parsedMenu: Menu = {};
-      categories.forEach((category: string) => {
-        parsedMenu[category] = [];
-      });
-
-      res.data.forEach((item: MenuItem) => {
-        parsedMenu[item.category].push(item);
-      });
-
-      setMenu(parsedMenu);
-    })
-    .catch((err) => console.log("ERROR", err));
-}, []);
-
 export default function EmployeeMenuItems() {
+  const [menuItem, setMenuItem] = useState({});
+
+  const [menu, setMenu] = useState({});
+
+  useEffect(() => {
+    axios
+      // .get(
+      //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+      //     "restaurant"
+      //   )}`
+      // )
+      .get(`/api/menu?id=6283f1d9804b848eb5e4560d`)
+      .then((res) => {
+        const setCategories: Set<string> = new Set(
+          res.data.map((item: MenuItem) => item.category)
+        );
+
+        const categories: Array<string> = [...setCategories];
+
+        const parsedMenu: Menu = {};
+        categories.forEach((category: string) => {
+          parsedMenu[category] = [];
+        });
+
+        res.data.forEach((item: MenuItem) => {
+          parsedMenu[item.category].push(item);
+        });
+
+        setMenu(parsedMenu);
+      })
+      .catch((err) => console.log("ERROR", err));
+  }, []);
+
   return (
     <>
       <Typography variant="body1">Menu</Typography>

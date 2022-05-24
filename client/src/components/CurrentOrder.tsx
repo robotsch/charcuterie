@@ -48,6 +48,7 @@ export default function CurrentOrder() {
     // console.log("orderState in useEffect [currentOrder]", orderState);
     console.log("currentOrder", currentOrder);
     localStorage.setItem("currentOrder", JSON.stringify(currentOrder));
+
     if (Object.keys(currentOrder).length === 0) {
       setOrderState("NO_ITEMS");
     } else {
@@ -109,82 +110,84 @@ export default function CurrentOrder() {
   };
 
   return (
-    <>
-      <Drawer
-        anchor={"bottom"}
-        open={isOpenCurrentOrder}
-        onClose={toggleCurrentOrderDrawer(false)}
+    <Drawer
+      anchor={"bottom"}
+      open={isOpenCurrentOrder}
+      onClose={toggleCurrentOrderDrawer(false)}
+    >
+      <Box
+        sx={{ width: "100vw" }}
+        role="presentation"
+        onKeyDown={toggleCurrentOrderDrawer(false)}
       >
-        <Box
-          sx={{ width: "100vw" }}
-          role="presentation"
-          onKeyDown={toggleCurrentOrderDrawer(false)}
-        >
-          <Container sx={{ backgroundColor: "orange" }} disableGutters>
+        <Container sx={{ pb: 2, pt: 1 }}>
+          <Box sx={{ textAlign: "center" }}>
             <h1 className="mont">CURRENT ORDER</h1>
-            <Divider />
+          </Box>
+          <Divider />
 
-            {orderState === "NO_ITEMS" && (
-              <Typography variant="body1">
-                No items added to the list
-              </Typography>
-            )}
+          {orderState === "NO_ITEMS" && (
+            <Typography variant="body1">No items added to the list</Typography>
+          )}
 
-            {orderState === "ITEMS" && (
-              <form
-                onSubmit={(event: any) => {
-                  event.preventDefault();
-                  console.log("submit order", currentOrder);
+          {orderState === "ITEMS" && (
+            <form
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                console.log("submit order", currentOrder);
 
-                  const parsedCurrentOrder: { [key: string]: any } = {};
-                  for (const name in currentOrder) {
-                    parsedCurrentOrder[name] = Object.values(
-                      currentOrder[name]
-                    ).map((item) => {
-                      return { id: item._id, quantity: item.quantity };
+                const parsedCurrentOrder: { [key: string]: any } = {};
+                for (const name in currentOrder) {
+                  parsedCurrentOrder[name] = Object.values(
+                    currentOrder[name]
+                  ).map((item) => {
+                    return { id: item._id, quantity: item.quantity };
+                  });
+                }
+
+                const send = {
+                  restaurant: localStorage.getItem("restaurant"),
+                  table: localStorage.getItem("table"),
+                  order: parsedCurrentOrder,
+                };
+
+                console.log("send", send);
+
+                axios
+                  // .post("http://localhost:3001/api/order", send)
+                  .post(`/api/order`, send)
+                  .then((res) => {
+                    console.log("HERE", currentOrder);
+                    ws.emit("SUBMIT_ORDER", {
+                      restaurant: localStorage.getItem("restaurant"),
+                      currentOrder,
                     });
-                  }
-
-                  const send = {
-                    restaurant: localStorage.getItem("restaurant"),
-                    table: localStorage.getItem("table"),
-                    order: parsedCurrentOrder,
-                  };
-
-                  console.log("send", send);
-
-                  axios
-                    // .post("http://localhost:3001/api/order", send)
-                    .post(`/api/order`, send)
-                    .then((res) => {
-                      console.log("HERE", currentOrder);
-                      ws.emit("SUBMIT_ORDER", {
-                        restaurant: localStorage.getItem("restaurant"),
-                        currentOrder,
-                      });
-                      console.log(res);
-                      console.log(res.data);
-                    })
-                    .catch((error) => console.log(error));
-                }}
+                    console.log(res);
+                    console.log(res.data);
+                  })
+                  .catch((error) => console.log(error));
+              }}
+            >
+              {Object.keys(currentOrder).map((name) => {
+                return getItemsForName(name);
+              })}
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ width: "100%", textAlign: "center" }}
               >
-                {Object.keys(currentOrder).map((name) => {
-                  return getItemsForName(name);
-                })}
-                <Button type="submit" variant="contained">
-                  Submit Order
-                </Button>
-              </form>
-            )}
+                Submit Order
+              </Button>
+            </form>
+          )}
 
-            {orderState === "SUBMITTED" && (
-              <Typography variant="body1">
-                Your order has been submitted!
-              </Typography>
-            )}
-          </Container>
-        </Box>
-      </Drawer>
-    </>
+          {orderState === "SUBMITTED" && (
+            <Typography variant="body1">
+              Your order has been submitted!
+            </Typography>
+          )}
+        </Container>
+      </Box>
+    </Drawer>
   );
 }

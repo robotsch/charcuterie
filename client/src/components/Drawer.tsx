@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -10,15 +10,27 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Link from "@mui/material/Link";
 
+import IconButton from "@mui/material/IconButton";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+
+import { useTheme } from "@mui/material/styles";
+
+import { ColorModeContext } from "../providers/ColorModeProvider";
+
 type Anchor = "top";
 
 export default function TemporaryDrawer() {
-  const [state, setState] = React.useState({
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
+
+  const restaurantName = localStorage.getItem("restaurantName");
+
+  const [state, setState] = useState({
     top: false,
   });
 
@@ -40,14 +52,9 @@ export default function TemporaryDrawer() {
             icon: <ListAltIcon />,
             link: "/current-order",
           },
-          { text: "Table", icon: <TableRestaurantIcon />, link: "/table" },
           { text: "Bill / Pay Now", icon: <AttachMoneyIcon />, link: "/bill" },
         ].map((pair) => (
-          <ListItem
-            key={pair.text}
-            component={Link}
-            href={pair.link}
-          >
+          <ListItem key={pair.text} component={Link} href={pair.link}>
             <ListItemButton>
               <ListItemIcon>{pair.icon}</ListItemIcon>
               <ListItemText primary={pair.text} />
@@ -67,22 +74,35 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div id="drawer">
-      <React.Fragment key="top">
-        <Button onClick={toggleDrawer("top", true)}>
-          <MenuIcon />
-        </Button>
-        <span id="restaurant-name">
-          <span>Red</span> <span>Blossom</span>
-        </span>
-        <Drawer
-          anchor={"top"}
-          open={state["top"]}
-          onClose={toggleDrawer("top", false)}
-        >
-          {list("top")}
-        </Drawer>
-      </React.Fragment>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      <Button onClick={toggleDrawer("top", true)}>
+        <MenuIcon />
+      </Button>
+      <span id="restaurant-name">{restaurantName}</span>
+      <IconButton
+        sx={{ ml: 1 }}
+        onClick={colorMode.toggleColorMode}
+        color="inherit"
+      >
+        {theme.palette.mode === "dark" ? (
+          <Brightness7Icon />
+        ) : (
+          <Brightness4Icon />
+        )}
+      </IconButton>
+      <Drawer
+        anchor={"top"}
+        open={state["top"]}
+        onClose={toggleDrawer("top", false)}
+      >
+        {list("top")}
+      </Drawer>
+    </Box>
   );
 }

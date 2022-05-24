@@ -13,7 +13,7 @@ export default function OrderHistory() {
       >
         <PastOrders />
       </Box>
-      <LiveOrderList />
+      {/* <LiveOrderList /> */}
     </Box>
   );
 }

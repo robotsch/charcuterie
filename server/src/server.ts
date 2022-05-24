@@ -7,19 +7,10 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import { Server, Socket } from 'socket.io';
 
-import {
-  getAllRestaurants,
-  getRestaurantWithId,
-  createRestaurant,
-  deleteRestaurantById,
-  addMenuItemByRestaurantId,
-  getEmployeeWithUsername,
-  getMenuByRestaurantId,
-  deleteMenuItemByRestaurantId,
-} from './db/queries/01_restaurants';
+import { getAllRestaurants } from './db/queries/01_restaurants';
 
 const clientPromise = require('./db/db');
 
@@ -30,6 +21,7 @@ const clientAddr = process.env.CLIENT_ORIGIN!;
 
 app.use(cors({ origin: [clientAddr], credentials: true }));
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 /**
  * ============================================================
@@ -93,7 +85,7 @@ io.on('connection', (socket) => {
 
   socket.on('CONNECT_TO_ROOM', ({ restaurant, table }) => {
     room = `rst${restaurant}.tbl${table}`;
-    console.log(socket.id, 'connected to room', room);
+    // console.log(socket.id, 'connected to room', room);
     io.in(socket.id).socketsJoin(room);
   });
 
@@ -131,7 +123,6 @@ io.on('connection', (socket) => {
     // insert order into database
     console.log('SUBMIT_ORDER', restaurant, currentOrder);
     io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
-    
   });
 
   socket.on('disconnect', () => {
@@ -143,34 +134,32 @@ io.on('connection', (socket) => {
 //======================================
 
 // Router imports
-const namesRoute = require('./routes/readable-names-router')
+const namesRoute = require('./routes/readable-names-router');
 const menuRoute = require('./routes/menu-router');
 const orderRoute = require('./routes/order-insert-router');
 const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
+const addTableRoute = require('./routes/add-table-router')
+const removeTableRoute = require('./routes/remove-table-router')
 const qrRoute = require('./routes/qr-code-router');
 
 app.use(express.static(path.resolve(__dirname, '../../client/dist')));
 
 // Resource routes
-app.use('/api/names', namesRoute)
+app.use('/api/names', namesRoute);
 app.use('/api/menu', menuRoute);
 app.use('/api/order', orderRoute);
 app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);
+app.use('/api/add-table', addTableRoute)
+app.use('/api/remove-table', removeTableRoute)
 app.use('/api/qr-generate', qrRoute);
 
-app.get('/test', (req, res) => {
-  req.session.restaurant_id = '1'
-  req.session.employee_id = '1'
-  res.send('send it bro')
-})
-
 app.get('/api/session', (req, res) => {
-  res.json({isLoggedIn: !!req.session.employee_id})
-})
+  res.json({ restaurant: req.session.restaurant_id });
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../client/dist', 'index.html'));

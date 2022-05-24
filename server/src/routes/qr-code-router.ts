@@ -5,18 +5,25 @@ import qrcode from 'qrcode';
 const router: Router = express.Router();
 
 router.post('/', apiAuthCheck, (req: Request, res: Response) => {
-  // const [restaurant, table] = req.body
-
-  // qrcode.toDataURL(`${process.env.CLIENT_ORIGIN}/landing?id1=${restaurant}&id2=${table}`, (err, url) => {
-  //   res.send(`<img src=${url}></img>`)
-  // })
+  const { table } = req.body;
 
   qrcode.toDataURL(
-    `http://localhost:3001/landing?id1=6283f1d9804b848eb5e4560d&id2=6283f6a703f54b7c82c5fffc`,
+    `${process.env.CLIENT_ORIGIN}/landing?id1=${req.session.restaurant_id}&id2=${table}`,
     (err, url) => {
       res.send(`<img src=${url}></img>`);
     }
   );
 });
+
+// qrcode.toDataURL(`${process.env.CLIENT_ORIGIN}/landing?id1=${restaurant}&id2=${table}`, (err, url) => {
+//   res.send(`<img src=${url}></img>`)
+// })
+
+qrcode.toDataURL(
+  `http://localhost:3001/landing?id1=6283f1d9804b848eb5e4560d&id2=6283f6a703f54b7c82c5fffc`,
+  (err, url) => {
+    res.send(`<img src=${url}></img>`);
+  }
+);
 
 module.exports = router;

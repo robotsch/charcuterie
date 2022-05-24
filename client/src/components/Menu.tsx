@@ -7,6 +7,10 @@ import MenuFooter from "./MenuFooter";
 
 import axios from "axios";
 
+import { useTheme } from "@mui/material/styles";
+
+import { ColorModeContext } from "../providers/ColorModeProvider";
+
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
 import CurrentOrderDrawerProvider from "../providers/CurrentOrderDrawerProvider";
 
@@ -23,6 +27,9 @@ interface Menu {
 }
 
 export default function Menu() {
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
+
   const [menuItem, setMenuItem] = useState({});
 
   const [menu, setMenu] = useState({});
