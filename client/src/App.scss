@@ -7,12 +7,14 @@
   color: $orange-red;
 }
 
-span.mont {
+span.mont.header {
   font-size: 7vmin;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 @media (min-width: 500px) {
-  span.mont {
+  span.mont.header {
     font-size: 35px;
   }
 }

@@ -122,7 +122,7 @@ export default function CurrentOrder() {
       >
         <Container sx={{ pb: 2, pt: 1 }}>
           <Box sx={{ textAlign: "center" }}>
-            <span className="mont">CURRENT ORDER</span>
+            <span className="mont header">CURRENT ORDER</span>
           </Box>
           <Divider />
 
