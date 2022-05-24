@@ -30,7 +30,7 @@ const PositionedModal = styled(Modal)`
 `;
 
 const AddNewTable = (props: any) => {
-  const [qrCode, setQrCode] = useState({});
+  const [qrCode, setQrCode] = useState('');
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
 
