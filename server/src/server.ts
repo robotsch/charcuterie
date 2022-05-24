@@ -138,6 +138,7 @@ const namesRoute = require('./routes/readable-names-router');
 const menuRoute = require('./routes/menu-router');
 const insertOrderRoute = require('./routes/order-insert-router');
 const getOrderRoute = require('./routes/get-order-router')
+const getOrdersRestaurantRoute = require('./routes/get-orders-restaurant')
 const updateOrderStatusRoute = require('./routes/update-order-status-router')
 const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
@@ -153,6 +154,7 @@ app.use('/api/names', namesRoute);
 app.use('/api/menu', menuRoute);
 app.use('/api/order', insertOrderRoute);
 app.use('/api/get-order', getOrderRoute);
+app.use('/api/get-orders-restaurant', getOrdersRestaurantRoute)
 app.use('/api/update-order-status', updateOrderStatusRoute)
 app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);
