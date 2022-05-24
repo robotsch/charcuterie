@@ -20,6 +20,7 @@ router.post('/', (req: Request, res: Response) => {
     })
     .catch((err) => {
       console.log('Authentication action failed: ', err);
+      res.status(500).send(`Authentication action failed: ${err}`)
     });
 });
 

@@ -7,17 +7,19 @@ const ObjectId = require('mongodb').ObjectId;
 const router: Router = express.Router();
 
 router.post('/', (req: Request, res: Response) => {
-  // if (req.query.id) {
-  //   const table = sanitize(req.query.id);
-  //   oQueries
-  //     .getOrdersByTableId(ObjectId(table))
-  //     .then((data) => {
-  //       res.send(data);
-  //     })
-  //     .catch((err) => {
-  //       res.status(500).send(`Failed to get order: ${err}`);
-  //     });
-  // }
+  if(req.body.id) {
+    const order = sanitize(req.body.id)
+    oQueries.setOrderStatusCompleteById(ObjectId(order))
+      .then(() => {
+        res.send('Success')
+      })
+      .catch((err) => {
+        console.log('Failed to update order status: ', err)
+        res.status(500).send(`Failed to update order status: ${err}`)
+      })
+  } else {
+    res.send('Invalid query')
+  }
 });
 
 module.exports = router;

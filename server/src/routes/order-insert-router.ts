@@ -18,8 +18,10 @@ router.post('/', (req: Request, res: Response) => {
     orders[name].forEach((item: any) => {
       sub_orders.push({
         menu_item_id: ObjectId(item.id),
+        name: item.name,
         quantity: item.quantity,
         totalPrice: item.totalPrice,
+        restaurant: item.restaurant_id
       });
     });
 
@@ -38,6 +40,7 @@ router.post('/', (req: Request, res: Response) => {
       res.send('Success');
     })
     .catch((err) => {
+      console.log('Failed to submit order: ', err)
       res.status(500).send(`Failed to submit order: ${err}`);
     });
 });

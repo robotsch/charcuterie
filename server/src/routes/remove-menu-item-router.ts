@@ -14,6 +14,10 @@ router.post('/', (req: Request, res: Response) => {
     .deleteMenuItemByRestaurantId(ObjectId(restaurant), ObjectId(menuItem))
     .then((res) => {
       res.send(res);
+    })
+    .catch((err) => {
+      console.log('Failed to remove menu item: ', err)
+      res.status(500).send(`Failed to remove menu item: ${err}`)
     });
 });
 

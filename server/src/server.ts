@@ -7,7 +7,6 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
-import bcrypt from 'bcrypt';
 import { Server, Socket } from 'socket.io';
 
 import { getAllRestaurants } from './db/queries/01_restaurants';
@@ -73,9 +72,7 @@ const getAllNames = (sockets: any) => {
   return names;
 };
 
-let interval: any;
 io.on('connection', (socket) => {
-  let sockets: any;
   let room: string;
   let orderNum = 1;
 
@@ -85,7 +82,6 @@ io.on('connection', (socket) => {
 
   socket.on('CONNECT_TO_ROOM', ({ restaurant, table }) => {
     room = `rst${restaurant}.tbl${table}`;
-    // console.log(socket.id, 'connected to room', room);
     io.in(socket.id).socketsJoin(room);
   });
 
@@ -138,6 +134,7 @@ const namesRoute = require('./routes/readable-names-router');
 const menuRoute = require('./routes/menu-router');
 const insertOrderRoute = require('./routes/order-insert-router');
 const getOrderRoute = require('./routes/get-order-router')
+const getOrdersRestaurantRoute = require('./routes/get-orders-restaurant')
 const updateOrderStatusRoute = require('./routes/update-order-status-router')
 const employeeLoginRoute = require('./routes/login-router');
 const addMenuItemRoute = require('./routes/add-menu-item-router');
@@ -153,6 +150,7 @@ app.use('/api/names', namesRoute);
 app.use('/api/menu', menuRoute);
 app.use('/api/order', insertOrderRoute);
 app.use('/api/get-order', getOrderRoute);
+app.use('/api/get-orders-restaurant', getOrdersRestaurantRoute)
 app.use('/api/update-order-status', updateOrderStatusRoute)
 app.use('/api/employee-login', employeeLoginRoute);
 app.use('/api/add-menu-item', addMenuItemRoute);

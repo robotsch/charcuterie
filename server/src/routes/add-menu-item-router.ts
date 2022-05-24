@@ -19,7 +19,11 @@ router.post('/', apiAuthCheck, (req: Request, res: Response) => {
 
   rQueries.addMenuItemByRestaurantId(ObjectId(id), data).then((res) => {
     res.send(res);
-  });
+  })
+  .catch((err) => {
+    console.log('Failed to add menu item: ', err)
+    res.status(500).send(`Failed to add menu item`)
+  })
 });
 
 module.exports = router;
