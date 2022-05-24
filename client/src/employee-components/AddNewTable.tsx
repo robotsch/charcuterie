@@ -38,7 +38,7 @@ const AddNewTable = (props: any) => {
 
   const generateQrCode = function () {
     axios
-      .get(`http://localhost:3001/api/qr-generate`, {
+      .get(`/api/qr-generate`, {
         // restaurant: restaurant,
         // table: table,
       })

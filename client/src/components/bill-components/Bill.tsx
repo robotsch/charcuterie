@@ -255,7 +255,7 @@ export default function Bill() {
             .all(
               orderIDList.map((orderID) => {
                 return axios.post(
-                  "http://localhost:3001/api/update-order-status",
+                  "/api/update-order-status",
                   {
                     id: orderID,
                   }

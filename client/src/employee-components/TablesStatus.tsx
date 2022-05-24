@@ -36,7 +36,7 @@ export default function TablesStatus() {
     //   )}`
     // )
     axios
-      .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      .get(`/api/get-tables?id=6283f1d9804b848eb5e4560c`)
       // .get(
       //   `/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
       // )

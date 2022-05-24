@@ -38,7 +38,7 @@ const CreateQrCode = (props: any) => {
 
   const generateQrCode = function (table_id) {
     axios
-      .post(`http://localhost:3001/api/qr-generate`, {
+      .post(`/api/qr-generate`, {
         // restaurant: restaurant,
         table: table_id,
       })
