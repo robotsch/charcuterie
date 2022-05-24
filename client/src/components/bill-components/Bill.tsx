@@ -47,6 +47,8 @@ export default function Bill() {
   const [bill, setBill] = useState<BillInterface>({});
   const [subTotal, setSubTotal] = useState<number>(0);
 
+  const [orderID, setOrderID] = useState<string>("");
+
   useEffect(() => {
     if (tipType === "PERCENT") {
       setTipAmount((subTotal * percent) / 100);
@@ -68,6 +70,7 @@ export default function Bill() {
         let newSubTotal = 0;
 
         res.data.forEach((order: OrderForTable) => {
+          setOrderID(order._id);
           order.customers.forEach((customer: Customer) => {
             customer.sub_orders.forEach((subOrder: SubOrder) => {
               if (parsedBill[subOrder.menu_item_id] === undefined) {
@@ -108,29 +111,31 @@ export default function Bill() {
       <Divider sx={{ width: "90%", mb: 1.5 }} />
       <span className="mont bill-subheader">Items</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
-      <TableContainer sx={{ width: "95%", margin: "auto" }}>
+      {/* <TableContainer sx={{ width: "95%", margin: "auto" }}>
         <Table>
           <TableBody>
-            {Object.entries(bill).map(([id, item]) => (
-              <TableRow
-                key={id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="right">{item.quantity}</TableCell>
-                <TableCell component="th" scope="row">
-                  {item.name}
-                </TableCell>
-                <TableCell align="right">
-                  ${(item.totalPrice / item.quantity / 100).toFixed(2)}
-                </TableCell>
-                <TableCell align="right">
-                  ${(item.totalPrice / 100).toFixed(2)}
-                </TableCell>
-              </TableRow>
-            ))}
+            {Object.keys(bill).length !== 0 &&
+              Object.entries(bill).map(([id, item]) => (
+                <TableRow
+                  key={id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="right">{item.quantity}</TableCell>
+                  <TableCell component="th" scope="row">
+                    {item.name}
+                  </TableCell>
+                  <TableCell align="right">
+                    ${(item.totalPrice / item.quantity / 100).toFixed(2)}
+                  </TableCell>
+                  <TableCell align="right">
+                    ${(item.totalPrice / 100).toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            {Object.keys(bill).length === 0 && <Box>No items</Box>}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
       <span className="mont bill-subheader">Tips</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
       <RadioGroup
@@ -221,9 +226,16 @@ export default function Bill() {
       <span className="mont bill-subheader">Totals</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
       <Totals tipAmount={tipAmount} subTotal={subTotal} />
-      <Button variant="contained" color="secondary" sx={{ mt: 2, mb: 3 }} onClick={() => {
-        alert("PAID")
-      }}>
+      <Button
+        variant="contained"
+        color="secondary"
+        sx={{ mt: 2, mb: 3 }}
+        onClick={() => {
+          alert("PAID");
+          console.log("order id", orderID);
+          // axios.post("http://localhost:3001/api/update-order-status", {id: })
+        }}
+      >
         Pay Now With Card
       </Button>
     </Box>
