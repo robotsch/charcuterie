@@ -12,13 +12,21 @@ MongoClient.connect(url, function (err, db) {
         {
           name: 'Christian',
           sub_orders: [
-            { menu_item_id: ObjectId('6283f1d9804b848eb5e45600'), quantity: 2 },
+            {
+              menu_item_id: ObjectId('6283f1d9804b848eb5e45600'),
+              quantity: 2,
+              price: 2000,
+            },
           ],
         },
         {
           name: 'Jack',
           sub_orders: [
-            { menu_item_id: ObjectId('6283f1d9804b848eb5e45601'), quantity: 1 },
+            {
+              menu_item_id: ObjectId('6283f1d9804b848eb5e45601'),
+              quantity: 1,
+              price: 2000,
+            },
           ],
         },
       ],
@@ -30,7 +38,11 @@ MongoClient.connect(url, function (err, db) {
         {
           name: 'Francesca',
           sub_orders: [
-            { menu_item_id: ObjectId('6283f1d9804b848eb5e45602'), quantity: 2 },
+            {
+              menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
+              quantity: 2,
+              price: 2000,
+            },
           ],
         },
         {
@@ -39,6 +51,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 2,
+              price: 2000,
             },
           ],
         },
@@ -55,14 +68,17 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 2,
+              price: 2000,
             },
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45603'),
               quantity: 3,
+              price: 2000,
             },
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45603'),
               quantity: 10,
+              price: 2000,
             },
           ],
         },
@@ -73,6 +89,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 15,
+              price: 2000,
             },
           ],
         },
@@ -89,6 +106,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45600'),
               quantity: 8,
+              price: 2000,
             },
           ],
         },
@@ -98,6 +116,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45601'),
               quantity: 7,
+              price: 2000,
             },
           ],
         },
@@ -113,6 +132,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 9,
+              price: 2000,
             },
           ],
         },
@@ -122,6 +142,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 12,
+              price: 2000,
             },
           ],
         },
@@ -138,10 +159,12 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 2,
+              price: 2000,
             },
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45603'),
               quantity: 30,
+              price: 2000,
             },
           ],
         },
@@ -152,6 +175,7 @@ MongoClient.connect(url, function (err, db) {
             {
               menu_item_id: ObjectId('6283f1d9804b848eb5e45602'),
               quantity: 1,
+              price: 2000,
             },
           ],
         },
