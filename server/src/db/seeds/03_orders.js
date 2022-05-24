@@ -31,6 +31,7 @@ MongoClient.connect(url, function (err, db) {
         },
       ],
       status: 'completed',
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffd'),
@@ -57,6 +58,7 @@ MongoClient.connect(url, function (err, db) {
         },
       ],
       status: 'pending',
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffe'),
@@ -95,6 +97,7 @@ MongoClient.connect(url, function (err, db) {
         },
       ],
       status: 'pending',
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffc'),
@@ -122,6 +125,7 @@ MongoClient.connect(url, function (err, db) {
         },
       ],
       status: 'completed',
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffd'),
@@ -148,6 +152,7 @@ MongoClient.connect(url, function (err, db) {
         },
       ],
       status: 'pending',
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
       table_id: ObjectId('6283f6a703f54b7c82c5fffe'),
@@ -181,6 +186,7 @@ MongoClient.connect(url, function (err, db) {
         },
       ],
       status: 'pending',
+      restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
   ];
 
