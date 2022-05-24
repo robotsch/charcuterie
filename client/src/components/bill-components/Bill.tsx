@@ -176,13 +176,13 @@ export default function Bill() {
           }}
         >
           <FormControl>
-            <InputLabel id="percent-amount-select">Age</InputLabel>
+            <InputLabel id="percent-amount-select">Tip</InputLabel>
             <Select
               labelId="percent-amount-select"
               id="demo-simple-select"
               value={percent}
               defaultValue={10}
-              label="Age"
+              label="Tip"
               onChange={(event) => {
                 const percentPicked =
                   typeof event.target.value === "string"
