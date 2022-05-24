@@ -14,10 +14,10 @@ import { List, Typography } from "@mui/material";
 export default function PastOrders() {
   let counter = 1;
 
-  const orderTotalCalc = function (customerArr: Array) {
+  const orderTotalCalc = function (customerArr: any) {
     let total = 0;
     for (const customer of customerArr) {
-      customer.sub_orders.map((item) => {
+      customer.sub_orders.map((item: any) => {
         total += item.quantity * item.price;
       });
     }
