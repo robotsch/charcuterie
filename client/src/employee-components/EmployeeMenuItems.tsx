@@ -9,7 +9,22 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { List, Typography } from "@mui/material";
 import EditMenuItem from "./EditMenuItem";
+import DeleteMenuItem from "./DeleteMenuItem";
 import AddMenuItem from "./AddMenuItem";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
+
+interface MenuItem {
+  id: string;
+  category: string;
+  description: string;
+  image_url: string;
+  price: number;
+}
+
+interface Menu {
+  [key: string]: Array<MenuItem>;
+}
 
 function createData(
   image: string,
@@ -40,6 +55,39 @@ const rows = [
     "9.99"
   ),
 ];
+
+const [menuItem, setMenuItem] = useState({});
+
+const [menu, setMenu] = useState({});
+
+useEffect(() => {
+  axios
+    // .get(
+    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+    //     "restaurant"
+    //   )}`
+    // )
+    .get(`/api/menu?id=6283f1d9804b848eb5e4560d`)
+    .then((res) => {
+      const setCategories: Set<string> = new Set(
+        res.data.map((item: MenuItem) => item.category)
+      );
+
+      const categories: Array<string> = [...setCategories];
+
+      const parsedMenu: Menu = {};
+      categories.forEach((category: string) => {
+        parsedMenu[category] = [];
+      });
+
+      res.data.forEach((item: MenuItem) => {
+        parsedMenu[item.category].push(item);
+      });
+
+      setMenu(parsedMenu);
+    })
+    .catch((err) => console.log("ERROR", err));
+}, []);
 
 export default function EmployeeMenuItems() {
   return (
@@ -73,6 +121,7 @@ export default function EmployeeMenuItems() {
                 <TableCell align="center">${row.price}</TableCell>
                 <TableCell align="center">
                   <EditMenuItem />
+                  <DeleteMenuItem />
                 </TableCell>
               </TableRow>
             ))}

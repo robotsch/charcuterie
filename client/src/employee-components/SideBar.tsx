@@ -1,10 +1,10 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -15,10 +15,26 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import axios from "axios";
 
 const drawerWidth = 240;
 
 export default function SideBar(props: any) {
+  let navigate = useNavigate();
+
+  const toHome = () => {
+    let path = `/employee/testing`;
+    navigate(path);
+  };
+  const toMenu = () => {
+    let path = `/employee/menu`;
+    navigate(path);
+  };
+  const toHistory = () => {
+    let path = `/employee/history`;
+    navigate(path);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <Drawer
@@ -37,7 +53,7 @@ export default function SideBar(props: any) {
         <Divider />
         <List>
           <ListItem key="Home" disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={toHome}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -45,7 +61,7 @@ export default function SideBar(props: any) {
             </ListItemButton>
           </ListItem>
           <ListItem key="Order History" disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={toHistory}>
               <ListItemIcon>
                 <AccessAlarmIcon />
               </ListItemIcon>
@@ -53,7 +69,7 @@ export default function SideBar(props: any) {
             </ListItemButton>
           </ListItem>
           <ListItem key="Menu" disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={toMenu}>
               <ListItemIcon>
                 <MenuBookIcon />
               </ListItemIcon>
