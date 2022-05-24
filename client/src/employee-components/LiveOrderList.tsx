@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import ws from "../sockets/socket";
+import axios from 'axios'
 
 import Card from "@mui/material/Card";
 import { List, Typography } from "@mui/material";
@@ -27,11 +28,15 @@ interface Order {
   [key: string]: ItemsByID;
 }
 
-export default function LiveOrderList(props: { restaurant: string }) {
+export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-    ws.emit("EMPLOYEE", { restaurant: props.restaurant });
+
+    axios.get('/api/session')
+      .then((data) => {
+        ws.emit("EMPLOYEE", {restaurant: data.data.restaurant});
+      })
 
     ws.on("SUBMIT_ORDER", (order) => {
       console.log("SUBMIT_ORDER", order);
@@ -39,13 +44,8 @@ export default function LiveOrderList(props: { restaurant: string }) {
       console.log("orders", orders);
     });
 
-    ws.on("DB_TEST", (res) => {
-      console.log("result: ", res);
-    });
-
     return () => {
       ws.off("SUBMIT_ORDER");
-      ws.off("DB_TEST");
     };
   }, []);
 

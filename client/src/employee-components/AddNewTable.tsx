@@ -28,9 +28,9 @@ const PositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
-const AddNewTable = (props) => {
+const AddNewTable = (props: any) => {
   const [show, setShow] = useState(false);
-  const renderBackdrop = (props) => <Backdrop {...props} />;
+  const renderBackdrop = (props: any) => <Backdrop {...props} />;
 
   return (
     <div className="modal-example">
