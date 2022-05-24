@@ -8,8 +8,8 @@ import { useTheme } from "@mui/material/styles";
 export default function UserList(props: any) {
   const theme = useTheme();
 
-  console.log(props);
-  const generate = props.users && props.users !== null;
+  const generate = props.users && typeof props.users !== 'string';
+  
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
       {generate &&

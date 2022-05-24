@@ -37,7 +37,6 @@ export default function Landing() {
   const [user, setUser] = useState<string | null>(localStorage.getItem("user"));
   const [users, setUsers] = useState<any>(localStorage.getItem("users"));
 
-  console.log(user, users);
   const [searchParms, getSearchParams] = useSearchParams();
 
   const [restaurant, setRestaurant] = useState<string>("");
@@ -85,7 +84,6 @@ export default function Landing() {
         `/api/names?restaurant=${restaurant}&table=${table}`
       )
       .then((res) => {
-        console.log(res.data);
         setRestaurantName(res.data.restaurant);
         localStorage.setItem("restaurantName", res.data.restaurant);
         setTableName(res.data.table);
@@ -97,7 +95,6 @@ export default function Landing() {
   useEffect(() => {
     if (user && users) {
       setMode("NAME_ENTERED");
-      console.log("in useEffect for [user, users]", user, users);
       localStorage.setItem("user", user);
       localStorage.setItem("users", users);
     }
