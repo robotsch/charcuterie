@@ -18,6 +18,9 @@ router.get('/', (req: Request, res: Response) => {
     ]).then((data) => {
       const names = { restaurant: data[0].name, table: data[1] };
       res.send(names);
+    })
+    .catch((err) => {
+      console.log('Failed to get readable names: ', err)
     });
   } else {
     res.status(500).send('Invalid query')

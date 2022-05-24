@@ -15,6 +15,7 @@ router.post('/', (req: Request, res: Response) => {
       })
       .catch((err) => {
         console.log('Failed to update order status: ', err)
+        res.status(500).send(`Failed to update order status: ${err}`)
       })
   } else {
     res.send('Invalid query')

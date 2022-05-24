@@ -11,7 +11,11 @@ router.post('/', (req: Request, res: Response) => {
 
   tQueries.deleteTableById(ObjectId(table)).then((res) => {
     res.send(res);
-  });
+  })
+  .catch((err) => {
+    console.log('Failed to remove table: ', err)
+    res.status(500).send(`Failed to remove table: ${err}`)
+  })
 });
 
 module.exports = router;

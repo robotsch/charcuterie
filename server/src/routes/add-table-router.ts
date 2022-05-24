@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import { apiAuthCheck } from '../middleware/auth-redirects';
-import * as rQueries from '../db/queries/01_restaurants';
+import * as tQueries from '../db/queries/02_tables';
 
 const sanitize = require('mongo-sanitize');
 const ObjectId = require('mongodb').ObjectId;
@@ -8,20 +8,18 @@ const ObjectId = require('mongodb').ObjectId;
 const router: Router = express.Router();
 
 router.post('/', apiAuthCheck ,(req: Request, res: Response) => {
-  const data = {
-    price: sanitize(req.body.price),
-    name: sanitize(req.body.name),
-    description: sanitize(req.body.description),
-    image_url: sanitize(req.body.image_url),
-    category: sanitize(req.body.category),
-  };
+  
   const restaurant = sanitize(req.session.restaurant_id)
 
-  rQueries
-    .addMenuItemByRestaurantId(ObjectId(restaurant), data)
+  tQueries
+    .createTableForRestoById(ObjectId(restaurant))
     .then((res) => {
       res.send(res);
-    });
+    })
+    .catch((err) => {
+      console.log('Failed to create table: ', err)
+      res.status(500).send(`Failed to add table: ${err}`)
+    })
 });
 
 module.exports = router;

@@ -38,6 +38,7 @@ router.post('/', (req: Request, res: Response) => {
       res.send('Success');
     })
     .catch((err) => {
+      console.log('Failed to submit order: ', err)
       res.status(500).send(`Failed to submit order: ${err}`);
     });
 });
