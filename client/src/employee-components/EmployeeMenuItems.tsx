@@ -72,6 +72,8 @@ export default function EmployeeMenuItems() {
         //   parsedMenu[item.category].push(item);
         // });
 
+        console.log("HERE")
+        console.log(res.data)
         setMenu(res.data);
         console.log("menu: ", menu);
         console.log("Result: ", res);
@@ -97,7 +99,7 @@ export default function EmployeeMenuItems() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {menu.map((row) => (
+            {Array.isArray(menu) && menu.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
