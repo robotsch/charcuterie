@@ -10,7 +10,7 @@ router.post('/', apiAuthCheck, (req: Request, res: Response) => {
   qrcode.toDataURL(
     `${process.env.CLIENT_ORIGIN}/landing?id1=${req.session.restaurant_id}&id2=${table}`,
     (err, url) => {
-      res.send(`<img src=${url}></img>`);
+      res.send(url);
     }
   );
 });
