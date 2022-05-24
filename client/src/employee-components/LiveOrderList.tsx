@@ -33,9 +33,12 @@ export default function LiveOrderList() {
 
   useEffect(() => {
 
-    axios.get('/api/session')
+    axios.get('/api/session', {withCredentials: true})
       .then((data) => {
         ws.emit("EMPLOYEE", {restaurant: data.data.restaurant});
+      })
+      .catch((err) => {
+        console.log('Failed to grab employee room')
       })
 
     ws.on("SUBMIT_ORDER", (order) => {
