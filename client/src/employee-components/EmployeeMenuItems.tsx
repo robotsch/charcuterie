@@ -57,21 +57,6 @@ export default function EmployeeMenuItems() {
     axios
       .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
       .then((res) => {
-        // const setCategories: Set<string> = new Set(
-        //   res.data.map((item: MenuItem) => item.category)
-        // );
-
-        // const categories: Array<string> = [...setCategories];
-
-        // const parsedMenu: Menu = {};
-        // categories.forEach((category: string) => {
-        //   parsedMenu[category] = [];
-        // });
-
-        // res.data.forEach((item: MenuItem) => {
-        //   parsedMenu[item.category].push(item);
-        // });
-
         setMenu(res.data);
         console.log("menu: ", menu);
         console.log("Result: ", res);
