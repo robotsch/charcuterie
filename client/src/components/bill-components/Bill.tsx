@@ -21,6 +21,7 @@ import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
 import FormHelperText from "@mui/material/FormHelperText";
 import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 
 import Totals from "./Totals";
 // import Items from "./Items";
@@ -38,6 +39,7 @@ import {
   Customer,
   SubOrder,
 } from "./bill_interface";
+import { setDefaultResultOrder } from "dns";
 
 export default function Bill() {
   const [tipType, setTipType] = useState<TipType>("PERCENT");
@@ -47,7 +49,9 @@ export default function Bill() {
   const [bill, setBill] = useState<BillInterface>({});
   const [subTotal, setSubTotal] = useState<number>(0);
 
-  const [orderID, setOrderID] = useState<string>("");
+  const [orderIDList, setOrderIDList] = useState<Array<string>>([]);
+
+  const [errorText, setErrorText] = useState<string>("");
 
   useEffect(() => {
     if (tipType === "PERCENT") {
@@ -69,8 +73,10 @@ export default function Bill() {
         const parsedBill: BillInterface = {};
         let newSubTotal = 0;
 
+        console.log(res.data);
         res.data.forEach((order: OrderForTable) => {
-          setOrderID(order._id);
+          console.log(order._id);
+          setOrderIDList((prev) => [...prev, order._id]);
           order.customers.forEach((customer: Customer) => {
             customer.sub_orders.forEach((subOrder: SubOrder) => {
               if (parsedBill[subOrder.menu_item_id] === undefined) {
@@ -111,35 +117,34 @@ export default function Bill() {
       <Divider sx={{ width: "90%", mb: 1.5 }} />
       <span className="mont bill-subheader">Items</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
-      <TableContainer sx={{ width: "95%", margin: "auto" }}>
-        <Table>
-          <TableBody>
-            {Object.keys(bill).length !== 0 &&
-              Object.entries(bill).map(([id, item]) => (
-                <TableRow
-                  key={id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell align="right">{item.quantity}</TableCell>
-                  <TableCell component="th" scope="row">
-                    {item.name}
-                  </TableCell>
-                  <TableCell align="right">
-                    ${(item.totalPrice / item.quantity / 100).toFixed(2)}
-                  </TableCell>
-                  <TableCell align="right">
-                    ${(item.totalPrice / 100).toFixed(2)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            {Object.keys(bill).length === 0 && (
-              <TableRow>
-                <TableCell>No items</TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {Object.keys(bill).length !== 0 && (
+        <TableContainer sx={{ width: "95%", margin: "auto" }}>
+          <Table>
+            <TableBody>
+              {Object.entries(bill).map(([id, item]) => {
+                return (
+                  <TableRow
+                    key={id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="right">{item.quantity}</TableCell>
+                    <TableCell component="th" scope="row">
+                      {item.name}
+                    </TableCell>
+                    <TableCell align="right">
+                      ${(item.totalPrice / item.quantity / 100).toFixed(2)}
+                    </TableCell>
+                    <TableCell align="right">
+                      ${(item.totalPrice / 100).toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      {Object.keys(bill).length === 0 && <Box sx={{ mb: 2 }}>No items</Box>}
       <span className="mont bill-subheader">Tips</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
       <RadioGroup
@@ -230,14 +235,37 @@ export default function Bill() {
       <span className="mont bill-subheader">Totals</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
       <Totals tipAmount={tipAmount} subTotal={subTotal} />
+      {errorText !== "" && (
+        <Alert sx={{ mt: 1.5 }} severity="error">
+          {errorText}
+        </Alert>
+      )}
       <Button
         variant="contained"
         color="secondary"
         sx={{ mt: 2, mb: 3 }}
         onClick={() => {
+          if (Object.keys(bill).length === 0) {
+            setErrorText("Cannot checkout with no items ordered");
+            return;
+          }
           alert("PAID");
-          console.log("order id", orderID);
-          // axios.post("http://localhost:3001/api/update-order-status", {id: })
+          console.log("order id list", orderIDList);
+          axios
+            .all(
+              orderIDList.map((orderID) => {
+                return axios.post(
+                  "http://localhost:3001/api/update-order-status",
+                  {
+                    id: orderID,
+                  }
+                );
+              })
+            )
+            .then(() => {
+              console.log("ahahaha all done completing these");
+              setBill({});
+            });
         }}
       >
         Pay Now With Card
