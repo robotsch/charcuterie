@@ -22,13 +22,13 @@ const rows = [
 ];
 
 export default function PastOrders() {
-  const orderTotalCalc = function (customerArr: Array) {
-    let total = 0;
-    for (const customer in customerArr) {
-      customer.sub_orders.map((item) => {
-        total += item.quantity * item.price;
-      });
-    }
+  const orderTotalCalc = function (customerArr: any) {
+    // let total = 0;
+    // for (const customer in customerArr) {
+    //   customer.sub_orders.map((item: any) => {
+    //     total += item.quantity * item.price;
+    //   });
+    // }
   };
 
   const [orders, setOrders] = useState({});
@@ -42,9 +42,7 @@ export default function PastOrders() {
     //   )}`
     // )
     axios
-      .get(
-        `http://localhost:3001/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
-      )
+      .get("/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c")
       .then((res) => {
         setOrders(res.data);
         setCustomers(res.data.customers);

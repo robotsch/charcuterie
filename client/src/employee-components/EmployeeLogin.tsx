@@ -4,7 +4,7 @@ export default function EmployeeLogin() {
     <div className="container-md">
       <h3>Login</h3>
       {/* <form action="/api/employee-login" method="POST"> */}
-      <form action="http://localhost:3001/api/employee-login" method="POST">
+      <form action="/api/employee-login" method="POST">
         <div className="form-group mb-3">
           <label for="email" className="form-label">
             Username
