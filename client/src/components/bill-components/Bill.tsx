@@ -16,8 +16,11 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+import Input from "@mui/material/Input";
 import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
+import FormHelperText from "@mui/material/FormHelperText";
+import Typography from "@mui/material/Typography";
 
 import Totals from "./Totals";
 // import Items from "./Items";
@@ -25,6 +28,8 @@ import Totals from "./Totals";
 import { useState, useEffect } from "react";
 
 import axios from "axios";
+
+import "./Bill.scss";
 
 import {
   TipType,
@@ -40,10 +45,17 @@ export default function Bill() {
   const [percent, setPercent] = useState<number>(10);
   const [helperText, setHelperText] = useState<string>("");
   const [bill, setBill] = useState<BillInterface>({});
+  const [subTotal, setSubTotal] = useState<number>(0);
 
   useEffect(() => {
-    setTipAmount(10 * (percent / 100));
+    if (tipType === "PERCENT") {
+      setTipAmount((subTotal * percent) / 100);
+    } else {
+      setTipAmount(0);
+    }
+  }, [tipType]);
 
+  useEffect(() => {
     axios
       // .get(`/api/get-order?id=${localStorage.getItem("table")}&status=pending`)
       .get(
@@ -53,6 +65,7 @@ export default function Bill() {
       )
       .then((res) => {
         const parsedBill: BillInterface = {};
+        let newSubTotal = 0;
 
         res.data.forEach((order: OrderForTable) => {
           order.customers.forEach((customer: Customer) => {
@@ -61,18 +74,21 @@ export default function Bill() {
                 parsedBill[subOrder.menu_item_id] = {
                   menu_item_id: subOrder.menu_item_id,
                   name: subOrder.name,
-                  quantity: subOrder.quantity,
-                  totalPrice: subOrder.totalPrice,
+                  quantity: 0,
+                  totalPrice: 0,
                 };
               }
               parsedBill[subOrder.menu_item_id].quantity += subOrder.quantity;
+              newSubTotal += subOrder.totalPrice;
               parsedBill[subOrder.menu_item_id].totalPrice +=
                 subOrder.totalPrice;
             });
           });
         });
 
-        console.log(parsedBill);
+        setSubTotal(newSubTotal);
+        setTipAmount((newSubTotal * percent) / 100);
+        // console.log(parsedBill);
         setBill(parsedBill);
       });
   }, []);
@@ -87,22 +103,12 @@ export default function Bill() {
       }}
     >
       <Box sx={{ textAlign: "center", pt: 1 }}>
-        <span className="mont">Bill</span>
+        <span className="mont header">Your Bill</span>
       </Box>
-      <Divider sx={{ width: "90%" }} />
-      Items
-      <Divider sx={{ width: "80%" }} />
-      {/* <List>
-        {Object.entries(bill).map(([id, item]) => {
-          return (
-            <ListItem key={id}>
-              {item.name} x {item.quantity} = $
-              {(item.totalPrice / 100).toFixed(2)}
-            </ListItem>
-          );
-        })}
-      </List> */}
-      <TableContainer component={Paper} sx={{ width: "80%", margin: "auto" }}>
+      <Divider sx={{ width: "90%", mb: 1.5 }} />
+      <span className="mont bill-subheader">Items</span>
+      <Divider sx={{ width: "85%", mb: 1.5 }} />
+      <TableContainer sx={{ width: "95%", margin: "auto" }}>
         <Table>
           <TableBody>
             {Object.entries(bill).map(([id, item]) => (
@@ -110,8 +116,12 @@ export default function Bill() {
                 key={id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                <TableCell align="right">{item.quantity}</TableCell>
                 <TableCell component="th" scope="row">
                   {item.name}
+                </TableCell>
+                <TableCell align="right">
+                  ${(item.totalPrice / item.quantity / 100).toFixed(2)}
                 </TableCell>
                 <TableCell align="right">
                   ${(item.totalPrice / 100).toFixed(2)}
@@ -121,8 +131,8 @@ export default function Bill() {
           </TableBody>
         </Table>
       </TableContainer>
-      Tips
-      <Divider sx={{ width: "80%" }} />
+      <span className="mont bill-subheader">Tips</span>
+      <Divider sx={{ width: "85%", mb: 1.5 }} />
       <RadioGroup
         defaultValue="percent"
         sx={{ display: "flex", flexDirection: "row" }}
@@ -136,7 +146,7 @@ export default function Bill() {
         <FormControlLabel
           value="amount"
           control={<Radio />}
-          label="Amount"
+          label="Custom Amount"
           onClick={() => setTipType("AMOUNT")}
         />
       </RadioGroup>
@@ -148,6 +158,7 @@ export default function Bill() {
             justifyContent: "center",
             alignItems: "center",
             gap: 2,
+            mb: 2,
           }}
         >
           <FormControl>
@@ -164,7 +175,7 @@ export default function Bill() {
                     ? 0
                     : event.target.value;
                 setPercent(percentPicked);
-                setTipAmount(10 * (percentPicked / 100));
+                setTipAmount(subTotal * (percentPicked / 100));
               }}
             >
               <MenuItem value={10}>10%</MenuItem>
@@ -172,35 +183,47 @@ export default function Bill() {
               <MenuItem value={20}>20%</MenuItem>
             </Select>
           </FormControl>
-          <Box> x total = ${(10 * (percent / 100)).toFixed(2)}</Box>
+          <Box>
+            {" "}
+            x total = ${((subTotal * (percent / 100)) / 100).toFixed(2)}
+          </Box>
         </Box>
       )}
       {tipType === "AMOUNT" && (
         <Box>
           <TextField
+            sx={{ width: "100%", mb: 2 }}
             required
             type="number"
             variant="outlined"
             placeholder="$"
-            helperText={helperText}
             onChange={(event) => {
-              console.log(event.target.value);
-              const amount = parseInt(event.target.value);
+              if (event.target.value === "") {
+                setTipAmount(0);
+                return;
+              }
+
+              const amount = parseFloat(event.target.value) * 100;
 
               console.log(amount);
-              if (amount === NaN) {
-                setHelperText("Tip amount must be a number");
+              if (amount < 0) {
+                setHelperText("Tip amount must be greater or equal to zero");
                 return;
               }
 
               setTipAmount(amount);
+              setHelperText("");
             }}
           ></TextField>
+          <FormHelperText>{helperText}</FormHelperText>
         </Box>
       )}
-      Totals
-      <Totals tipAmount={tipAmount} />
-      <Button variant="contained" color="secondary">
+      <span className="mont bill-subheader">Totals</span>
+      <Divider sx={{ width: "85%", mb: 1.5 }} />
+      <Totals tipAmount={tipAmount} subTotal={subTotal} />
+      <Button variant="contained" color="secondary" sx={{ mt: 2, mb: 3 }} onClick={() => {
+        alert("PAID")
+      }}>
         Pay Now With Card
       </Button>
     </Box>

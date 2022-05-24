@@ -8,17 +8,17 @@ import {
 } from "@mui/material";
 
 export default function Totals(props: any) {
-  const { tipAmount } = props;
+  const { tipAmount, subTotal } = props;
 
   return (
     <TableContainer component={Paper} sx={{ width: "80%", margin: "auto" }}>
       <Table>
         <TableBody>
           {[
-            { type: "Subtotal", amount: 2 },
-            { type: "Tax", amount: 2 },
+            { type: "Subtotal", amount: subTotal },
+            { type: "Tax", amount: subTotal * 0.13 },
             { type: "Tips", amount: tipAmount },
-            { type: "Total", amount: 2 },
+            { type: "Total", amount: tipAmount + subTotal * 1.13 },
           ].map((row) => (
             <TableRow
               key={row.type}
@@ -27,7 +27,7 @@ export default function Totals(props: any) {
               <TableCell component="th" scope="row">
                 {row.type}
               </TableCell>
-              <TableCell align="right">${row.amount.toFixed(2)}</TableCell>
+              <TableCell align="right">${(row.amount / 100).toFixed(2)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
