@@ -21,6 +21,7 @@ router.post('/', (req: Request, res: Response) => {
         name: item.name,
         quantity: item.quantity,
         totalPrice: item.totalPrice,
+        restaurant: item.restaurant_id
       });
     });
 

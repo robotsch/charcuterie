@@ -7,7 +7,6 @@ import MongoStore from 'connect-mongo';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
-import bcrypt from 'bcrypt';
 import { Server, Socket } from 'socket.io';
 
 import { getAllRestaurants } from './db/queries/01_restaurants';
@@ -73,9 +72,7 @@ const getAllNames = (sockets: any) => {
   return names;
 };
 
-let interval: any;
 io.on('connection', (socket) => {
-  let sockets: any;
   let room: string;
   let orderNum = 1;
 
@@ -85,7 +82,6 @@ io.on('connection', (socket) => {
 
   socket.on('CONNECT_TO_ROOM', ({ restaurant, table }) => {
     room = `rst${restaurant}.tbl${table}`;
-    // console.log(socket.id, 'connected to room', room);
     io.in(socket.id).socketsJoin(room);
   });
 
