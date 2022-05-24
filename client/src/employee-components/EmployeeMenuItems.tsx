@@ -57,23 +57,6 @@ export default function EmployeeMenuItems() {
     axios
       .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
       .then((res) => {
-        // const setCategories: Set<string> = new Set(
-        //   res.data.map((item: MenuItem) => item.category)
-        // );
-
-        // const categories: Array<string> = [...setCategories];
-
-        // const parsedMenu: Menu = {};
-        // categories.forEach((category: string) => {
-        //   parsedMenu[category] = [];
-        // });
-
-        // res.data.forEach((item: MenuItem) => {
-        //   parsedMenu[item.category].push(item);
-        // });
-
-        console.log("HERE")
-        console.log(res.data)
         setMenu(res.data);
         console.log("menu: ", menu);
         console.log("Result: ", res);
@@ -99,28 +82,29 @@ export default function EmployeeMenuItems() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Array.isArray(menu) && menu.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <img
-                    src={row.image_url}
-                    width={100}
-                    height={100}
-                    alt="food"
-                  />
-                </TableCell>
-                <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.category}</TableCell>
-                <TableCell align="center">${row.price}</TableCell>
-                <TableCell align="center">
-                  <EditMenuItem />
-                  <DeleteMenuItem />
-                </TableCell>
-              </TableRow>
-            ))}
+            {Array.isArray(menu) &&
+              menu.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <img
+                      src={row.image_url}
+                      width={100}
+                      height={100}
+                      alt="food"
+                    />
+                  </TableCell>
+                  <TableCell align="center">{row.name}</TableCell>
+                  <TableCell align="center">{row.category}</TableCell>
+                  <TableCell align="center">${row.price}</TableCell>
+                  <TableCell align="center">
+                    <EditMenuItem />
+                    <DeleteMenuItem />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

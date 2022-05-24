@@ -1,6 +1,7 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
 let url = process.env.DB_URL;
+//let url = 'mongodb://localhost:27017/';
 
 const getOrdersByTableId = function (id) {
   return new Promise((resolve, reject) => {
@@ -60,11 +61,38 @@ const createOrderByTableId = function (table_id, customersArr) {
   });
 };
 
-exports.createOrderByTableId = createOrderByTableId;
+//exports.createOrderByTableId = createOrderByTableId;
 
-export { getOrdersByTableId, getOrderById, createOrderByTableId };
+const setOrderStatusCompleteById = function (orderId) {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { _id: orderId };
+
+      let insertVal = { $set: { status: 'completed' } };
+      return dbo
+        .collection('orders')
+        .updateOne(query, insertVal, function (err, res) {
+          if (err) throw err;
+
+          db.close();
+          resolve(res);
+        });
+    });
+  });
+};
+
+export {
+  getOrdersByTableId,
+  getOrderById,
+  createOrderByTableId,
+  setOrderStatusCompleteById,
+};
 
 //test
+
+//setOrderStatusCompleteById(ObjectId('6286c456311fb901c1d4ca3d'));
 //getOrderById(ObjectId('6286c456311fb901c1d4ca3d'));
 //getOrdersByTableId(ObjectId('6283f6a703f54b7c82c5fffc'));
 
