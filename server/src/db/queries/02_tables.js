@@ -1,6 +1,6 @@
 let MongoClient = require('mongodb').MongoClient;
 let ObjectId = require('mongodb').ObjectId;
-//let url = 'mongodb://localhost:27017/';
+// let url = 'mongodb://localhost:27017/';
 let url = process.env.DB_URL;
 
 //gets all tables from a provided restaurant id
@@ -23,12 +23,12 @@ const getAllTablesByRestaurantId = function (id) {
   });
 };
 
-const createTableForRestoById = function (id) {
+const createTableForRestoById = function (id, readable) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       let dbo = db.db('mydb');
-      let myobj = { restaurant_id: id };
+      let myobj = { restaurant_id: id, readable_name: readable };
       return dbo.collection('tables').insertOne(myobj, function (err, res) {
         if (err) throw err;
 
@@ -82,6 +82,7 @@ export {
 };
 
 //tests
+//createTableForRestoById(ObjectId('6283f1d9804b848eb5e4560c'), 4);
 
 // getAllTablesByRestaurantId(ObjectId('6283f1d9804b848eb5e4560c'));
 

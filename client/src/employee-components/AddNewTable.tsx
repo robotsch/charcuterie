@@ -30,24 +30,36 @@ const PositionedModal = styled(Modal)`
 `;
 
 const AddNewTable = (props: any) => {
-  const [qrCode, setQrCode] = useState({});
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
+  const setTables = props.setTables;
 
-  const createTable = function () {};
-
-  const generateQrCode = function () {
+  const createTable = function () {
     axios
-      .get(`http://localhost:3001/api/qr-generate`, {
+      .post(`http://localhost:3001/api/add-table`, {
         // restaurant: restaurant,
         // table: table,
       })
       .then((res) => {
-        console.log("qr: ", res.data);
-        setQrCode(res.data);
+        console.log("add table res: ", res.data);
+
+        // setTables((prev) => [...prev, ])
       })
       .catch((err) => console.log("ERROR", err));
   };
+
+  // const generateQrCode = function () {
+  //   axios
+  //     .get(`http://localhost:3001/api/qr-generate`, {
+  //       // restaurant: restaurant,
+  //       // table: table,
+  //     })
+  //     .then((res) => {
+  //       console.log("qr: ", res.data);
+  //       setQrCode(res.data);
+  //     })
+  //     .catch((err) => console.log("ERROR", err));
+  // };
 
   return (
     <div className="modal-example">
@@ -58,7 +70,9 @@ const AddNewTable = (props: any) => {
         className="btn btn-primary mb-4"
         onClick={() => {
           setShow(true);
-          generateQrCode();
+          {
+            createTable();
+          }
         }}
       >
         Add Table
@@ -69,7 +83,7 @@ const AddNewTable = (props: any) => {
         renderBackdrop={renderBackdrop}
         aria-labelledby="modal-label"
       >
-        <img src={qrCode}></img>
+        <div>Table Added!</div>
       </PositionedModal>
     </div>
   );

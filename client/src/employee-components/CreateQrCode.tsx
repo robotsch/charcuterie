@@ -34,7 +34,6 @@ const CreateQrCode = (props: any) => {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
   const table = props.table;
-  // const createQrCode = function () {};
 
   const generateQrCode = function (table_id) {
     axios

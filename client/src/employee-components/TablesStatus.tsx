@@ -87,6 +87,8 @@ export default function TablesStatus() {
         <AddNewTable
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          setTables={setTables}
+          tables={tables}
         />
       </Typography>
     </>
