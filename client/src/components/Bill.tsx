@@ -19,6 +19,8 @@ import TextField from "@mui/material/TextField";
 
 import { useState, useEffect } from "react";
 
+import axios from "axios";
+
 type TipType = "PERCENT" | "AMOUNT";
 
 export default function Bill() {
@@ -26,10 +28,22 @@ export default function Bill() {
   const [tipAmount, setTipAmount] = useState<number>(0);
   const [percent, setPercent] = useState<number>(10);
   const [helperText, setHelperText] = useState<string>("");
-  // /api/get-order?id=tableid
+  const [orders, setOrders] = useState<Array<any>>([]);
 
   useEffect(() => {
     setTipAmount(10 * (percent / 100));
+
+    axios
+      // .get(`/api/get-order?id=${localStorage.getItem("table")}&status=active`)
+      .get(
+        `http://localhost:3001/api/get-order?id=${localStorage.getItem(
+          "table"
+        )}&status=active`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setOrders(res.data);
+      });
   }, []);
 
   return (
@@ -147,7 +161,7 @@ export default function Bill() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="secondary">
+      <Button variant="contained" color="secondary" >
         Pay Now With Card
       </Button>
     </Box>
