@@ -11,7 +11,7 @@ router.post('/', (req: Request, res: Response) => {
   authenticateUser(username, password)
     .then((userData) => {
       console.log('authenticateUser pass')
-      console.log(userData?.employeeId)
+      console.log(userData)
       if (userData && userData.employeeId) {
         console.log('if check passed')
 
