@@ -84,20 +84,22 @@ const setOrderStatusCompleteById = function (orderId) {
 };
 
 const getAllOrdersByRestaurantId = function (restoId) {
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    let dbo = db.db('mydb');
-    let query = { restaurant_id: restoId };
-    return dbo
-      .collection('orders')
-      .find(query)
-      .toArray(function (err, result) {
-        if (err) throw err;
-        console.log('result: ', result);
-        db.close();
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      let dbo = db.db('mydb');
+      let query = { restaurant_id: restoId };
+      return dbo
+        .collection('orders')
+        .find(query)
+        .toArray(function (err, result) {
+          if (err) throw err;
+          console.log('result: ', result);
+          db.close();
 
-        return result;
-      });
+          resolve(result);
+        });
+    });
   });
 };
 
