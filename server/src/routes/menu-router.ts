@@ -17,6 +17,8 @@ router.get('/', (req: Request, res: Response) => {
       .catch((err) => {
         res.status(500).send(`Failed to get menu items: ${err}`);
       });
+  } else {
+    res.status(500).send('Invalid query')
   }
 });
 

@@ -18,6 +18,8 @@ router.get('/', (req: Request, res: Response) => {
       .catch((err) => {
         res.status(500).send(`Failed to get order: ${err}`);
       });
+  } else {
+    res.status(500).send('Invalid query')
   }
 });
 

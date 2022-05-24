@@ -18,6 +18,8 @@ router.get('/', apiAuthCheck, (req: Request, res: Response) => {
       .catch((err) => {
         res.status(500).send(`Failed to get tables: ${err}`);
       });
+  } else {
+    res.status(500).send('Invalid query')
   }
 });
 
