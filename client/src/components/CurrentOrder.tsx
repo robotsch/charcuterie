@@ -147,7 +147,11 @@ export default function CurrentOrder() {
                   parsedCurrentOrder[name] = Object.values(
                     currentOrder[name]
                   ).map((item) => {
-                    return { id: item._id, quantity: item.quantity };
+                    return {
+                      id: item._id,
+                      quantity: item.quantity,
+                      totalPrice: item.price * item.quantity,
+                    };
                   });
                 }
 
@@ -160,8 +164,8 @@ export default function CurrentOrder() {
                 console.log("send", send);
 
                 axios
-                  // .post("http://localhost:3001/api/order", send)
-                  .post(`/api/order`, send)
+                  .post("http://localhost:3001/api/order", send)
+                  // .post(`/api/order`, send)
                   .then((res) => {
                     console.log("HERE", currentOrder);
                     ws.emit("SUBMIT_ORDER", {

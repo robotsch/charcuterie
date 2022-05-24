@@ -19,6 +19,7 @@ router.post('/', (req: Request, res: Response) => {
       sub_orders.push({
         menu_item_id: ObjectId(item.id),
         quantity: item.quantity,
+        totalPrice: item.totalPrice,
       });
     });
 
