@@ -18,6 +18,7 @@ router.post('/', (req: Request, res: Response) => {
     orders[name].forEach((item: any) => {
       sub_orders.push({
         menu_item_id: ObjectId(item.id),
+        name: item.name,
         quantity: item.quantity,
         totalPrice: item.totalPrice,
       });
