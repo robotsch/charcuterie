@@ -25,7 +25,7 @@ export default function EmployeeMenuItems() {
     //   )}`
     // )
     axios
-      .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+      .get(`/api/menu?id=6283f1d9804b848eb5e4560c`)
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);

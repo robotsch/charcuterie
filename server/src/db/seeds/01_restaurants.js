@@ -53,14 +53,14 @@ MongoClient.connect(url, function (err, db) {
           fname: 'Joe',
           lname: 'Joes',
           username: 'jojo',
-          password: 'password123',
+          password: '$2b$10$/Ra4bajZQP7LOY2nadS0TOkwqcOAwuz095wjMZIvF9XnkSHdXQJpu',
         },
         {
           _id: ObjectId('6283f1d9804b848eb5e45605'),
           fname: 'Jane',
           lname: 'Doe',
           username: 'jado',
-          password: 'password123',
+          password: '$2b$10$NpZzMj.0vjH3HCTX0V35pOK43eBQLtKfItCnqQopEPFxUm9GI2I9m',
         },
       ],
     },
@@ -114,7 +114,7 @@ MongoClient.connect(url, function (err, db) {
           lname: 'Depp',
           username: 'captainjack',
           password:
-            '$2y$10$bPR.Rk.G7EpzXBrnP4CDvO6uk3P1TrsLBs0YAUvHZ8fhKldkGFuT6',
+            '$2b$10$vjSqa3U51P9woTvgyEEeUOWykQm/Pk3sUMTx/XJ1c/mIsWKUcJQaW',
         },
         {
           _id: ObjectId('6283f1d9804b848eb5e4560b'),
@@ -122,7 +122,7 @@ MongoClient.connect(url, function (err, db) {
           lname: 'Heard',
           username: 'mera',
           password:
-            '$2y$10$R0i.BbZCKB.9HNvYz7f3xu8XjHs3FlwdiR8k7jyK29CnNnCDCjzRG',
+            '$2b$10$z5b4v6g4spVYyrY7vdtn1uTfnvW6oh95FhsA1xyZD4ZBO53GKB9/m',
         },
       ],
     },

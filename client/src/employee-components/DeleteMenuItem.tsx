@@ -37,7 +37,7 @@ const PositionedModal = styled(Modal)`
 
 export default function DeleteMenuItem() {
   const [show, setShow] = useState(false);
-  const renderBackdrop = (props) => <Backdrop {...props} />;
+  const renderBackdrop = (props: any) => <Backdrop {...props} />;
 
   return (
     <div className="modal-example">

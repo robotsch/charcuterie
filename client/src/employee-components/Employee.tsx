@@ -10,8 +10,8 @@ import { CircularProgress } from "@mui/material";
 export default function Employee() {
   const [status, setStatus] = useState("loading");
   useEffect(() => {
-    // const origin = "/api/session";
-    const origin = "http://localhost:3001/api/session";
+    const origin = "/api/session";
+    // const origin = "http://localhost:3001/api/session";
     setStatus("loading");
 
     axios
@@ -44,7 +44,7 @@ export default function Employee() {
           <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
             <TablesStatus />
           </Box>
-          <LiveOrderList restaurant={status} />
+          <LiveOrderList />
         </SideBar>
       )}
     </div>

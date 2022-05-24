@@ -26,6 +26,7 @@ export const authenticateUser = function (username: string, password: string) {
   return rQueries.getEmployeeWithUsername(username).then((userData) => {
     if (userData.employee) {
       if (bcrypt.compareSync(password, userData.employee.password)) {
+
         return {
           restaurantId: userData.restoId,
           employeeId: userData.employee._id,
