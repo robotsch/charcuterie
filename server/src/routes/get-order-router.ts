@@ -7,9 +7,9 @@ const ObjectId = require('mongodb').ObjectId;
 const router: Router = express.Router();
 
 router.get('/', (req: Request, res: Response) => {
-  if (req.query.id && req.query.status) {
+  if (req.query && req.query.id && req.query.status) {
     const table = sanitize(req.query.id);
-    const status = sanitize(req.query.status)
+    const status = sanitize(req.query.status);
     oQueries
       .getOrdersByTableId(ObjectId(table), status)
       .then((data) => {
