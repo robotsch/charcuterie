@@ -6,6 +6,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import EmployeeLogin from "./EmployeeLogin";
 import { CircularProgress } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#242F36', // charcoal grey complement
+    },
+  },
+});
 
 export default function Employee() {
   const [status, setStatus] = useState("loading");
@@ -27,26 +36,28 @@ export default function Employee() {
   }, []);
 
   return (
-    <div>
-      {status === "loading" ? (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="300vh"
-        >
-          <CircularProgress />
-        </Box>
-      ) : status === "authcheck" ? (
-        <EmployeeLogin />
-      ) : (
-        <SideBar>
-          <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-            <TablesStatus />
+    <ThemeProvider theme={theme}>
+      <div>
+        {status === "loading" ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="300vh"
+          >
+            <CircularProgress />
           </Box>
-          <LiveOrderList />
-        </SideBar>
-      )}
-    </div>
+        ) : status === "authcheck" ? (
+          <EmployeeLogin />
+        ) : (
+          <SideBar>
+            <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+              <TablesStatus />
+            </Box>
+            <LiveOrderList />
+          </SideBar>
+        )}
+      </div>
+    </ThemeProvider>
   );
 }
