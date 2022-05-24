@@ -81,8 +81,8 @@ export default function Landing() {
   useEffect(() => {
     axios
       .get(
-        // `http://localhost:3001/api/names?restaurant=${restaurant}&table=${table}`
-        `/api/names?restaurant=${restaurant}&table=${table}`
+        `http://localhost:3001/api/names?restaurant=${restaurant}&table=${table}`
+        // `/api/names?restaurant=${restaurant}&table=${table}`
       )
       .then((res) => {
         console.log(res.data);
