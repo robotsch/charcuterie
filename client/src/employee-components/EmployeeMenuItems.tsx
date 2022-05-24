@@ -82,28 +82,29 @@ export default function EmployeeMenuItems() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {menu.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <img
-                    src={row.image_url}
-                    width={100}
-                    height={100}
-                    alt="food"
-                  />
-                </TableCell>
-                <TableCell align="center">{row.name}</TableCell>
-                <TableCell align="center">{row.category}</TableCell>
-                <TableCell align="center">${row.price}</TableCell>
-                <TableCell align="center">
-                  <EditMenuItem />
-                  <DeleteMenuItem />
-                </TableCell>
-              </TableRow>
-            ))}
+            {Array.isArray(menu) &&
+              menu.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    <img
+                      src={row.image_url}
+                      width={100}
+                      height={100}
+                      alt="food"
+                    />
+                  </TableCell>
+                  <TableCell align="center">{row.name}</TableCell>
+                  <TableCell align="center">{row.category}</TableCell>
+                  <TableCell align="center">${row.price}</TableCell>
+                  <TableCell align="center">
+                    <EditMenuItem />
+                    <DeleteMenuItem />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
