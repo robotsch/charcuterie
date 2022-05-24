@@ -16,38 +16,24 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+import ListItem from "@mui/material/ListItem";
+import List from "@mui/material/List";
+
+import Totals from "./Totals";
+import Items from "./Items";
 
 import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-type TipType = "PERCENT" | "AMOUNT";
-
-interface SubOrder {
-  menu_item_id: string;
-  quantity: number;
-  totalPrice: number;
-}
-interface Customer {
-  name: string;
-  sub_orders: Array<Order>;
-}
-interface OrderForTable {
-  _id: string;
-  table_id: string;
-  customers: Array<Customer>;
-}
-
-interface BillItems {
-  menu_item_id: string;
-}
+import { TipType, Bill, OrderForTable, Customer, SubOrder } from "./bill_interface";
 
 export default function Bill() {
   const [tipType, setTipType] = useState<TipType>("PERCENT");
   const [tipAmount, setTipAmount] = useState<number>(0);
   const [percent, setPercent] = useState<number>(10);
   const [helperText, setHelperText] = useState<string>("");
-  const [orders, setOrders] = useState<Array<any>>([]);
+  const [bill, setBill] = useState<Bill>({});
 
   useEffect(() => {
     setTipAmount(10 * (percent / 100));
@@ -60,23 +46,28 @@ export default function Bill() {
         )}&status=pending`
       )
       .then((res) => {
-        const bill: Array<BillItems> = [];
-        // console.log(res.data);
+        const parsedBill: Bill = {};
+
         res.data.forEach((order: OrderForTable) => {
-          // console.log(order.customers);
           order.customers.forEach((customer: Customer) => {
-            // console.log(customer);
             customer.sub_orders.forEach((subOrder: SubOrder) => {
-              console.log(subOrder);
-              if (menuItems[subOrder.menu_item_id] === undefined) {
-                menuItems[subOrder.menu_item_id] = {};
+              if (parsedBill[subOrder.menu_item_id] === undefined) {
+                parsedBill[subOrder.menu_item_id] = {
+                  menu_item_id: subOrder.menu_item_id,
+                  name: subOrder.name,
+                  quantity: subOrder.quantity,
+                  totalPrice: subOrder.totalPrice,
+                };
               }
-              // menuItems{subOrder.menu_item_id} =
+              parsedBill[subOrder.menu_item_id].quantity += subOrder.quantity;
+              parsedBill[subOrder.menu_item_id].totalPrice +=
+                subOrder.totalPrice;
             });
           });
         });
-        // console.log(res.data[0].customers);
-        // setOrders(res.data.customers);
+
+        console.log(parsedBill);
+        setBill(parsedBill);
       });
   }, []);
 
@@ -95,6 +86,7 @@ export default function Bill() {
       <Divider sx={{ width: "90%" }} />
       Items
       <Divider sx={{ width: "80%" }} />
+      <Items bill={bill} />
       Tips
       <Divider sx={{ width: "80%" }} />
       <RadioGroup
@@ -173,28 +165,7 @@ export default function Bill() {
         </Box>
       )}
       Totals
-      <TableContainer component={Paper}>
-        <Table sx={{ width: "80%", margin: "auto" }}>
-          <TableBody>
-            {[
-              { type: "Subtotal", amount: 2 },
-              { type: "Tax", amount: 2 },
-              { type: "Tips", amount: tipAmount },
-              { type: "Total", amount: 2 },
-            ].map((row) => (
-              <TableRow
-                key={row.type}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.type}
-                </TableCell>
-                <TableCell align="right">${row.amount.toFixed(2)}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Totals tipAmount={tipAmount} />
       <Button variant="contained" color="secondary">
         Pay Now With Card
       </Button>

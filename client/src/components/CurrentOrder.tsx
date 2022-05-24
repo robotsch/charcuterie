@@ -152,6 +152,7 @@ export default function CurrentOrder() {
                       quantity: item.quantity,
                       name: item.name,
                       totalPrice: item.price * item.quantity,
+                      restaurant_id: localStorage.getItem("restaurant"),
                     };
                   });
                 }
