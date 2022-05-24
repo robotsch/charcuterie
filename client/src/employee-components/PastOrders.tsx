@@ -32,7 +32,9 @@ export default function PastOrders() {
     //   )}`
     // )
     axios
-      .get(`http://localhost:3001/api/get-order?id=6286c456311fb901c1d4ca3d`)
+      .get(
+        `http://localhost:3001/api/get-order?id=6283f6a703f54b7c82c5fffd&status=active`
+      )
       .then((res) => {
         setOrders(res.data);
         console.log("orders: ", orders);
