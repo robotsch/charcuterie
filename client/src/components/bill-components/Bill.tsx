@@ -111,7 +111,7 @@ export default function Bill() {
       <Divider sx={{ width: "90%", mb: 1.5 }} />
       <span className="mont bill-subheader">Items</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
-      {/* <TableContainer sx={{ width: "95%", margin: "auto" }}>
+      <TableContainer sx={{ width: "95%", margin: "auto" }}>
         <Table>
           <TableBody>
             {Object.keys(bill).length !== 0 &&
@@ -132,10 +132,14 @@ export default function Bill() {
                   </TableCell>
                 </TableRow>
               ))}
-            {Object.keys(bill).length === 0 && <Box>No items</Box>}
+            {Object.keys(bill).length === 0 && (
+              <TableRow>
+                <TableCell>No items</TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
-      </TableContainer> */}
+      </TableContainer>
       <span className="mont bill-subheader">Tips</span>
       <Divider sx={{ width: "85%", mb: 1.5 }} />
       <RadioGroup
