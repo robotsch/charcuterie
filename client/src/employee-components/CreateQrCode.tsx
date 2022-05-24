@@ -30,13 +30,13 @@ const PositionedModal = styled(Modal)`
 `;
 
 const CreateQrCode = (props: any) => {
-  const [qrCode, setQrCode] = useState({});
+  const [qrCode, setQrCode] = useState('');
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
   const table = props.table;
   // const createQrCode = function () {};
 
-  const generateQrCode = function (table_id) {
+  const generateQrCode = function (table_id: string) {
     axios
       .post(`/api/qr-generate`, {
         // restaurant: restaurant,
