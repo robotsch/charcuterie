@@ -23,6 +23,25 @@ import axios from "axios";
 
 type TipType = "PERCENT" | "AMOUNT";
 
+interface SubOrder {
+  menu_item_id: string;
+  quantity: number;
+  totalPrice: number;
+}
+interface Customer {
+  name: string;
+  sub_orders: Array<Order>;
+}
+interface OrderForTable {
+  _id: string;
+  table_id: string;
+  customers: Array<Customer>;
+}
+
+interface BillItems {
+  menu_item_id: string;
+}
+
 export default function Bill() {
   const [tipType, setTipType] = useState<TipType>("PERCENT");
   const [tipAmount, setTipAmount] = useState<number>(0);
@@ -34,15 +53,30 @@ export default function Bill() {
     setTipAmount(10 * (percent / 100));
 
     axios
-      // .get(`/api/get-order?id=${localStorage.getItem("table")}&status=active`)
+      // .get(`/api/get-order?id=${localStorage.getItem("table")}&status=pending`)
       .get(
         `http://localhost:3001/api/get-order?id=${localStorage.getItem(
           "table"
-        )}&status=active`
+        )}&status=pending`
       )
       .then((res) => {
-        console.log(res.data);
-        setOrders(res.data);
+        const bill: Array<BillItems> = [];
+        // console.log(res.data);
+        res.data.forEach((order: OrderForTable) => {
+          // console.log(order.customers);
+          order.customers.forEach((customer: Customer) => {
+            // console.log(customer);
+            customer.sub_orders.forEach((subOrder: SubOrder) => {
+              console.log(subOrder);
+              if (menuItems[subOrder.menu_item_id] === undefined) {
+                menuItems[subOrder.menu_item_id] = {};
+              }
+              // menuItems{subOrder.menu_item_id} =
+            });
+          });
+        });
+        // console.log(res.data[0].customers);
+        // setOrders(res.data.customers);
       });
   }, []);
 
@@ -161,7 +195,7 @@ export default function Bill() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" color="secondary" >
+      <Button variant="contained" color="secondary">
         Pay Now With Card
       </Button>
     </Box>
