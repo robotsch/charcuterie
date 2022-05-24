@@ -11,28 +11,26 @@ import axios from "axios";
 
 import { List, Typography } from "@mui/material";
 
-function createData(id: string, tableId: string, total: string) {
-  return { id, tableId, total };
-}
-
-const rows = [
-  createData("1", "2", "39.00"),
-  createData("2", "1", "21.34"),
-  createData("3", "3", "123.45"),
-];
-
 export default function PastOrders() {
-  const orderTotalCalc = function (customerArr: any) {
-    // let total = 0;
-    // for (const customer in customerArr) {
-    //   customer.sub_orders.map((item: any) => {
-    //     total += item.quantity * item.price;
-    //   });
-    // }
+  let counter = 1;
+
+  const orderTotalCalc = function (customerArr: Array) {
+    let total = 0;
+    for (const customer of customerArr) {
+      customer.sub_orders.map((item) => {
+        total += item.quantity * item.price;
+      });
+    }
+
+    counterAdd();
+    return (total / 100).toFixed(2);
+  };
+
+  const counterAdd = function () {
+    counter++;
   };
 
   const [orders, setOrders] = useState({});
-  const [customers, setCustomers] = useState({});
 
   useEffect(() => {
     // axios
@@ -45,7 +43,7 @@ export default function PastOrders() {
       .get("/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c")
       .then((res) => {
         setOrders(res.data);
-        setCustomers(res.data.customers);
+
         console.log("Result: ", res);
         console.log("orders: ", orders);
       })
@@ -72,9 +70,11 @@ export default function PastOrders() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row._id}
+                    {counter}
                   </TableCell>
-                  <TableCell align="right">{row.table_id}</TableCell>
+                  <TableCell align="right">
+                    ${orderTotalCalc(row.customers)}
+                  </TableCell>
                   <TableCell align="right">{row.status}</TableCell>
                 </TableRow>
               ))}
