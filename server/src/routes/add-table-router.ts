@@ -13,8 +13,8 @@ router.post('/', apiAuthCheck ,(req: Request, res: Response) => {
 
   tQueries
     .createTableForRestoById(ObjectId(restaurant))
-    .then((res) => {
-      res.send(res);
+    .then((data) => {
+      res.send(data);
     })
     .catch((err) => {
       console.log('Failed to create table: ', err)
