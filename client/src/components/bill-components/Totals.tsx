@@ -9,10 +9,10 @@ import {
 
 export default function Totals(props: any) {
   const { tipAmount } = props;
-  
+
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ width: "80%", margin: "auto" }}>
+    <TableContainer component={Paper} sx={{ width: "80%", margin: "auto" }}>
+      <Table>
         <TableBody>
           {[
             { type: "Subtotal", amount: 2 },

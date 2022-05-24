@@ -20,20 +20,26 @@ import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
 
 import Totals from "./Totals";
-import Items from "./Items";
+// import Items from "./Items";
 
 import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-import { TipType, Bill, OrderForTable, Customer, SubOrder } from "./bill_interface";
+import {
+  TipType,
+  Bill as BillInterface,
+  OrderForTable,
+  Customer,
+  SubOrder,
+} from "./bill_interface";
 
 export default function Bill() {
   const [tipType, setTipType] = useState<TipType>("PERCENT");
   const [tipAmount, setTipAmount] = useState<number>(0);
   const [percent, setPercent] = useState<number>(10);
   const [helperText, setHelperText] = useState<string>("");
-  const [bill, setBill] = useState<Bill>({});
+  const [bill, setBill] = useState<BillInterface>({});
 
   useEffect(() => {
     setTipAmount(10 * (percent / 100));
@@ -46,7 +52,7 @@ export default function Bill() {
         )}&status=pending`
       )
       .then((res) => {
-        const parsedBill: Bill = {};
+        const parsedBill: BillInterface = {};
 
         res.data.forEach((order: OrderForTable) => {
           order.customers.forEach((customer: Customer) => {
@@ -86,7 +92,35 @@ export default function Bill() {
       <Divider sx={{ width: "90%" }} />
       Items
       <Divider sx={{ width: "80%" }} />
-      <Items bill={bill} />
+      {/* <List>
+        {Object.entries(bill).map(([id, item]) => {
+          return (
+            <ListItem key={id}>
+              {item.name} x {item.quantity} = $
+              {(item.totalPrice / 100).toFixed(2)}
+            </ListItem>
+          );
+        })}
+      </List> */}
+      <TableContainer component={Paper} sx={{ width: "80%", margin: "auto" }}>
+        <Table>
+          <TableBody>
+            {Object.entries(bill).map(([id, item]) => (
+              <TableRow
+                key={id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {item.name}
+                </TableCell>
+                <TableCell align="right">
+                  ${(item.totalPrice / 100).toFixed(2)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       Tips
       <Divider sx={{ width: "80%" }} />
       <RadioGroup
