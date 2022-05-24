@@ -49,7 +49,13 @@ export default function SideBar(props: any) {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar>LOGO</Toolbar>
+        <Toolbar sx={{ width: "100%" }}>
+          <img
+            src="https://cdn.discordapp.com/attachments/856696248111595541/978644697213980722/logo.png"
+            alt="Logo"
+            id="employee-logo"
+          />
+        </Toolbar>
         <Divider />
         <List>
           <ListItem key="Home" disablePadding>
