@@ -83,14 +83,34 @@ const setOrderStatusCompleteById = function (orderId) {
   });
 };
 
+const getAllOrdersByRestaurantId = function (restoId) {
+  MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    let dbo = db.db('mydb');
+    let query = { restaurant_id: restoId };
+    return dbo
+      .collection('orders')
+      .find(query)
+      .toArray(function (err, result) {
+        if (err) throw err;
+        console.log('result: ', result);
+        db.close();
+
+        return result;
+      });
+  });
+};
+
 export {
   getOrdersByTableId,
   getOrderById,
   createOrderByTableId,
   setOrderStatusCompleteById,
+  getAllOrdersByRestaurantId,
 };
 
 //test
+//getAllOrdersByRestaurantId(ObjectId('6283f1d9804b848eb5e4560c'));
 //etOrdersByTableId(ObjectId('6283f6a703f54b7c82c5fffc'), 'pending');
 //setOrderStatusCompleteById(ObjectId('6286c456311fb901c1d4ca3d'));
 //getOrderById(ObjectId('6286c456311fb901c1d4ca3d'));

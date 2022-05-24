@@ -12,7 +12,7 @@ router.get('/', (req: Request, res: Response) => {
     const restaurant = sanitize(req.query.restaurant);
 
     oQueries
-      .getOrdersByTableId(ObjectId(restaurant))
+      .getAllOrdersByRestaurantId(ObjectId(restaurant))
       .then((data) => {
         res.send(data);
       })

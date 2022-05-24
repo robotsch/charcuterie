@@ -37,8 +37,9 @@ export default function PastOrders() {
       )
       .then((res) => {
         setOrders(res.data);
-        console.log("orders: ", orders);
+
         console.log("Result: ", res);
+        console.log("orders: ", orders);
       })
       .catch((err) => console.log("ERROR", err));
   }, []);
