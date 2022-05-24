@@ -19,11 +19,11 @@ router.post('/', apiAuthCheck, (req: Request, res: Response) => {
 //   res.send(`<img src=${url}></img>`)
 // })
 
-qrcode.toDataURL(
-  `http://localhost:3001/landing?id1=6283f1d9804b848eb5e4560d&id2=6283f6a703f54b7c82c5fffc`,
-  (err, url) => {
-    res.send(`<img src=${url}></img>`);
-  }
-);
+// qrcode.toDataURL(
+//   `http://localhost:3001/landing?id1=6283f1d9804b848eb5e4560d&id2=6283f6a703f54b7c82c5fffc`,
+//   (err, url) => {
+//     res.send(`<img src=${url}></img>`);
+//   }
+// );
 
 module.exports = router;
