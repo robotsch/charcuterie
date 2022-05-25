@@ -1,13 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import CircleIcon from "@mui/icons-material/Circle";
 import Modal from "react-overlays/Modal";
 import styled from "styled-components";
 //import QrLoader from "./QrLoader";
 import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
+import { Divider } from "@mui/material";
 import axios from "axios";
-import Divider from "@mui/material/Divider";
+
+import CircleIcon from "@mui/icons-material/Circle";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -33,7 +34,7 @@ const PositionedModal = styled(Modal)`
 `;
 
 const CreateQrCode = (props: any) => {
-  const [qrCode, setQrCode] = useState('');
+  const [qrCode, setQrCode] = useState("");
   const [show, setShow] = useState(false);
   const [tableName, setTableName] = useState('')
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
@@ -41,22 +42,22 @@ const CreateQrCode = (props: any) => {
 
   const generateQrCode = function (table_id: string) {
     axios
-      .post(`/api/qr-generate`, {
-        // restaurant: restaurant,
-        table: table_id,
-      })
+      .get(
+        `/api/names?restaurant=${localStorage.getItem("restaurant")}&table=${table}`
+      )
       .then((res) => {
-        console.log("qr: ", res.data);
-        setQrCode(res.data);
-      })
-      .catch((err) => console.log("Failed to generate qr code: ", err));
-    axios.get(`/api/namesrestaurant=${localStorage.getItem('restaurant')}&table=${table}`)
-      .then((res) => {
-        setTableName(res.data.table)
-      })
-      .catch((err) => {
-        console.log("Failed to get names: ", err)
-      })
+        setTableName(res.data)
+        axios
+          .post(`/api/qr-generate`, {
+            // restaurant: restaurant,
+            table: table_id,
+          })
+          .then((data) => {
+            console.log("qr: ", data.data);
+            setQrCode(data.data);
+          })
+          .catch((err) => console.log("ERROR", err));
+      });
   };
 
   return (
@@ -81,16 +82,18 @@ const CreateQrCode = (props: any) => {
         renderBackdrop={renderBackdrop}
         aria-labelledby="modal-label"
       >
-        <Box
-          sx={{
-            mb: 2,
-          }}
-        >
-          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont subheader">{`Table ${tableName}`}</span>
+        <Box>
+          <Box
+            sx={{
+              mb: 2,
+            }}
+          >
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont subheader">{`Table ${tableName}`}</span>
+          </Box>
+          <Divider sx={{ width: "95%", mx: "auto" }} />
+          <img src={qrCode}></img>
         </Box>
-        <Divider sx={{ width: "95%", mx: "auto" }} />
-        <img src={qrCode}></img>
       </PositionedModal>
     </div>
   );
