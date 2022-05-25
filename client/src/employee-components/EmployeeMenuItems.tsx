@@ -17,6 +17,10 @@ import axios from "axios";
 export default function EmployeeMenuItems() {
   const [menu, setMenu] = useState({});
 
+  const price = function (price) {
+    return (price / 100).toFixed(2);
+  };
+
   useEffect(() => {
     // axios
     // .get(
@@ -38,7 +42,7 @@ export default function EmployeeMenuItems() {
     <>
       <Typography variant="body1">Menu</Typography>
       <Typography variant="body1" align="right">
-        <AddMenuItem />
+        <AddMenuItem menu={menu} setMenu={setMenu} />
       </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -68,9 +72,13 @@ export default function EmployeeMenuItems() {
                   </TableCell>
                   <TableCell align="center">{row.name}</TableCell>
                   <TableCell align="center">{row.category}</TableCell>
-                  <TableCell align="center">${row.price}</TableCell>
+                  <TableCell align="center">${price(row.price)}</TableCell>
                   <TableCell align="center">
-                    <DeleteMenuItem />
+                    <DeleteMenuItem
+                      menu={menu}
+                      setMenu={setMenu}
+                      id={row._id}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
