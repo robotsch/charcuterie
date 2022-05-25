@@ -57,11 +57,12 @@ export default function LiveOrderList(props: any) {
         console.log("table: ", data.table);
         console.log("order: ", data.order);
         // console.log("time", data.time);
-        console.log("order_id", data.order_id);
+        console.log("order_id:", data.order_id);
         // return [...prev, { ...data }];
         return [
           ...prev,
           {
+            order_id: data.order_id,
             table: data.table,
             order: data.order,
             time: new Date().toLocaleString(),
@@ -75,6 +76,26 @@ export default function LiveOrderList(props: any) {
       ws.off("SUBMIT_ORDER");
     };
   }, []);
+
+  const completeOrder = function (orderId: string) {
+    console.log("orderId: ", orderId);
+
+    axios
+      .post(`http://localhost:3001/api/update-order-status`, {
+        id: orderId,
+      })
+      .then((res) => {
+        console.log("complete order res: ", res.data);
+
+        // axios
+        //   .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
+        //   .then((res) => {
+        //     setMenu(res.data);
+        //   })
+        //   .catch((err) => console.log("ERROR", err));
+      })
+      .catch((err) => console.log("ERROR", err));
+  };
 
   const renderedOrders = orders.map((order: Big, index) => {
     return (
@@ -112,7 +133,10 @@ export default function LiveOrderList(props: any) {
               <Button
                 color="success"
                 variant="outlined"
-                // onClick={() => deleteItem(order._id)}
+                onClick={() => {
+                  console.log(order);
+                  completeOrder(order.order_id);
+                }}
               >
                 Order Complete
               </Button>
