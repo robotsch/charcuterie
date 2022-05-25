@@ -54,7 +54,7 @@ const createOrderByTableId = function (
       let myobj = {
         table_id: table_id,
         customers: customersArr,
-        status: 'pending',
+        status: 'Pending',
         restaurant_id: restaurant,
         time: time,
       };
@@ -76,7 +76,7 @@ const setOrderStatusCompleteById = function (orderId) {
       let dbo = db.db('mydb');
       let query = { _id: orderId };
 
-      let insertVal = { $set: { status: 'completed' } };
+      let insertVal = { $set: { status: 'Completed' } };
       return dbo
         .collection('orders')
         .updateOne(query, insertVal, function (err, res) {
