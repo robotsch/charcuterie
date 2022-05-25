@@ -42,6 +42,7 @@ interface Big {
   order: Order;
   table: string;
   time: string;
+  order_id: string;
 }
 
 export default function LiveOrderList(props: any) {
@@ -53,9 +54,6 @@ export default function LiveOrderList(props: any) {
 
     ws.on("SUBMIT_ORDER", (data) => {
       setOrders((prev) => {
-<<<<<<< HEAD
-        return [...prev, { table: data.table, order: data.order }];
-=======
         console.log(prev);
         console.log("data: ", data);
         console.log("table: ", data.table);
@@ -72,7 +70,6 @@ export default function LiveOrderList(props: any) {
             time: new Date().toLocaleString(),
           },
         ];
->>>>>>> refactor/employee
       });
     });
 
@@ -85,7 +82,7 @@ export default function LiveOrderList(props: any) {
     console.log("orderId: ", orderId);
 
     axios
-      .post(`http://localhost:3001/api/update-order-status`, {
+      .post(`/api/update-order-status`, {
         id: orderId,
       })
       .then((res) => {

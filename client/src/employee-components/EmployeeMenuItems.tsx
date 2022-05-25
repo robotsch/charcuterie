@@ -25,12 +25,12 @@ export default function EmployeeMenuItems() {
 
   useEffect(() => {
     axios
-      // .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
-      .get(
-        `http://localhost:3001/api/menu?id=${localStorage.getItem(
-          "restaurant"
-        )}`
-      )
+      .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
+      // .get(
+      //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+      //     "restaurant"
+      //   )}`
+      // )
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);

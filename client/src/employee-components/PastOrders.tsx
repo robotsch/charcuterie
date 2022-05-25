@@ -192,10 +192,10 @@ export default function PastOrders() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3001/api/get-orders-restaurant?id=${localStorage.getItem(
-          "restaurant"
-        )}`
-        // `/api/get-orders-restaurant?id=${localStorage.getItem("restaurant")}`
+        // `http://localhost:3001/api/get-orders-restaurant?id=${localStorage.getItem(
+        //   "restaurant"
+        // )}`
+        `/api/get-orders-restaurant?id=${localStorage.getItem("restaurant")}`
       )
       .then((res) => {
         setOrders(res.data);
@@ -238,10 +238,12 @@ export default function PastOrders() {
               onClick={() => {
                 axios
                   .get(
-                    `http://localhost:3001/api/get-orders-restaurant?id=${localStorage.getItem(
+                    // `http://localhost:3001/api/get-orders-restaurant?id=${localStorage.getItem(
+                    //   "restaurant"
+                    // )}`
+                    `/api/get-orders-restaurant?id=${localStorage.getItem(
                       "restaurant"
                     )}`
-                    // `/api/get-orders-restaurant?id=${localStorage.getItem("restaurant")}`
                   )
                   .then((res) => {
                     setOrders(res.data);
