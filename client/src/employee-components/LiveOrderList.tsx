@@ -12,6 +12,12 @@ import Toolbar from "@mui/material/Toolbar";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import CircleIcon from "@mui/icons-material/Circle";
+import Drawer from "@mui/material/Drawer";
+import Divider from "@mui/material/Divider";
+
+import { useTheme } from "@mui/material/styles";
+
+const drawerWidth = 240;
 
 interface Item {
   _id: string;
@@ -29,8 +35,9 @@ interface Order {
   [key: string]: ItemsByID;
 }
 
-export default function LiveOrderList() {
+export default function LiveOrderList(props: any) {
   const [orders, setOrders] = useState<any[]>([]);
+  const theme = useTheme();
 
   useEffect(() => {
     ws.emit("EMPLOYEE", { restaurant: localStorage.getItem("restaurant") });
@@ -80,8 +87,11 @@ export default function LiveOrderList() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        bgcolor: "background.default",
+        // bgcolor: "background.default",
+        bgcolor: theme.palette.secondary.main,
         p: 3,
+        ml: 2,
+        minWidth: 400,
       }}
     >
       <Box
@@ -90,7 +100,6 @@ export default function LiveOrderList() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 1,
         }}
       >
         <Box>

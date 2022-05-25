@@ -1,4 +1,4 @@
- import * as React from "react";
+import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -37,7 +37,7 @@ export default function PastOrders() {
   useEffect(() => {
     axios
       .get(
-        `/api/get-orders-restaurant?id=${localStorage.getItem('restaurant')}`
+        `/api/get-orders-restaurant?id=${localStorage.getItem("restaurant")}`
       )
       .then((res) => {
         setOrders(res.data);
@@ -50,22 +50,25 @@ export default function PastOrders() {
 
   return (
     <Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
+      <TableContainer
+        sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
+        component={Paper}
       >
-        <Box>
-          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont header">Past Orders</span>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
+          }}
+        >
+          <Box>
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont header">Past Orders</span>
+          </Box>
         </Box>
-      </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Order #</TableCell>

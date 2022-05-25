@@ -31,10 +31,10 @@ export default function TablesStatus() {
 
   useEffect(() => {
     axios
-      // .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
-      .get(
-        `/api/get-tables?id=${localStorage.getItem('restaurant')}`
-      )
+      .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      // .get(
+      //   `/api/get-tables?id=${localStorage.getItem('restaurant')}`
+      // )
       .then((res) => {
         setTables(res.data);
         setCounter(res.data.length + 1);
@@ -46,29 +46,33 @@ export default function TablesStatus() {
   }, []);
 
   return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
+    <Box>
+      <TableContainer
+        sx={{ width: "40vw", maxWidth: 800, minWidth: 500, px: 2, py: 1 }}
+        // sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
+        component={Paper}
       >
-        <Box>
-          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont header">Tables</span>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
+          }}
+        >
+          <Box>
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont header">Tables</span>
+          </Box>
+          <AddNewTable
+            setTables={setTables}
+            counter={counter}
+            setCounter={setCounter}
+            setShowAlert={setShowAlert}
+          />
         </Box>
-        <AddNewTable
-          setTables={setTables}
-          counter={counter}
-          setCounter={setCounter}
-          setShowAlert={setShowAlert}
-        />
-      </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Table</TableCell>
@@ -101,6 +105,6 @@ export default function TablesStatus() {
           New Table Added!
         </Alert>
       )}
-    </>
+    </Box>
   );
 }

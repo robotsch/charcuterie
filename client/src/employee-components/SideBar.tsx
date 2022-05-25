@@ -120,7 +120,14 @@ export default function SideBar(props: any) {
       </Drawer>
       <Box
         component="main"
-        sx={{ display: "flex", bgcolor: "background.default", p: 3 }}
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          alignItems: "space-between",
+          bgcolor: "background.default",
+          p: 3,
+        }}
       >
         {props.children}
       </Box>

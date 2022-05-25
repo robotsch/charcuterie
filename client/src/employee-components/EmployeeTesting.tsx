@@ -37,16 +37,22 @@ export default function Employee() {
       {!loggedIn && <EmployeeLogin />}
       {loggedIn && (
         <SideBar setPage={setPage}>
-          <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+          <Box
+            component="main"
+            sx={{
+              bgcolor: "background.default",
+              // bgcolor: "blue",
+              p: 3,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             {page === "HOME" && <TablesStatus />}
-            {page === "ORDER_HISTORY" && (
-              <Box sx={{ display: "flex" }}>
-                <PastOrders />
-                <LiveOrderList />
-              </Box>
-            )}
+            {page === "ORDER_HISTORY" && <PastOrders />}
             {page === "MENU" && <EmployeeMenuItems />}
           </Box>
+          <LiveOrderList />
         </SideBar>
       )}
     </div>
