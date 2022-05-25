@@ -37,7 +37,7 @@ export default function PastOrders() {
   useEffect(() => {
     axios
       .get(
-        "/api/get-orders-restaurant?id=${localStorage.getItem('restaurant')}"
+        `/api/get-orders-restaurant?id=${localStorage.getItem('restaurant')}`
       )
       .then((res) => {
         setOrders(res.data);
