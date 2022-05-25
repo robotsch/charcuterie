@@ -69,7 +69,7 @@ export default function LiveOrderList(props: any) {
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
         <Box>
-          <span>{order.table}</span>
+          <span class="mont">Table #{order.table}</span>
         </Box>
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {
@@ -81,7 +81,7 @@ export default function LiveOrderList(props: any) {
                   return (
                     <ListItem key={item._id}>
                       <Typography variant="body2">
-                      {item.quantity} x {item.name}
+                        {item.quantity} x {item.name}
                       </Typography>
                     </ListItem>
                   );
