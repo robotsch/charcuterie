@@ -127,12 +127,13 @@ export default function SideBar(props: any) {
                 // setLoggedIn(false);
                 axios
                   .post(`/api/employee-logout`)
-                  .then(() => {
+                  .then((res) => {
                     window.location.reload();
                   })
                   .catch((err) => {
                     console.log("Couldn't reach logout route: ", err);
                   });
+                  window.location.reload();
               }}
             >
               <LogoutIcon />
