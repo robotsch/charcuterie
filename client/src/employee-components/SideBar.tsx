@@ -30,9 +30,7 @@ export default function SideBar(props: any) {
   useEffect(() => {
     axios
       .get(
-        `/api/names/restaurant?restaurant=${localStorage.getItem(
-          "restaurant"
-        )}`
+        `/api/names/restaurant?restaurant=${localStorage.getItem("restaurant")}`
         // `http://localhost:3001/api/names/restaurant?restaurant=${localStorage.getItem(
         //   "restaurant"
         // )}`
@@ -127,7 +125,15 @@ export default function SideBar(props: any) {
               }}
               onClick={() => {
                 // setLoggedIn(false);
-                setLoggedIn("authcheck");
+                axios
+                  .post(`/api/employee-logout`)
+                  .then((res) => {
+                    window.location.reload();
+                  })
+                  .catch((err) => {
+                    console.log("Couldn't reach logout route: ", err);
+                  });
+                window.location.reload();
               }}
             >
               <LogoutIcon />

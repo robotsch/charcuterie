@@ -168,7 +168,6 @@ export default function CurrentOrder() {
                   // .post("http://localhost:3001/api/order", send)
                   .post(`/api/order`, send)
                   .then((res) => {
-                    console.log("HERE", currentOrder);
                     ws.emit("SUBMIT_ORDER", {
                       restaurant: localStorage.getItem("restaurant"),
                       currentOrder,
