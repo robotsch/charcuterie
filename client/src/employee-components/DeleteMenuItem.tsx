@@ -40,13 +40,13 @@ const DeleteMenuItem = (props: any) => {
   const menu = props.menu;
   const id = props.id;
 
-  const deleteItem = function (menuItemId) {
+  const deleteItem = function (menuItemId: string) {
     console.log("menuitemid: ", menuItemId);
 
     axios
-      .post(`http://localhost:3001/api/remove-menu-item`, {
+      .post(`/api/remove-menu-item`, {
         id: menuItemId,
-        restaurant_id: "6283f1d9804b848eb5e4560c",
+        restaurant_id: localStorage.getItem('restaurant'),
       })
       .then((res) => {
         console.log("delete item res: ", res.data);
@@ -54,7 +54,7 @@ const DeleteMenuItem = (props: any) => {
         // setTables((prev) => [...prev, ])
 
         axios
-          .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+          .get(`/api/menu?id=${localStorage.getItem('restaurant')}`)
           .then((res) => {
             setMenu(res.data);
           })

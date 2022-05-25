@@ -28,4 +28,21 @@ router.get('/', (req: Request, res: Response) => {
   }
 });
 
+router.get('/restaurant', (req: Request, res: Response) => {
+  if (req.query.restaurant) {
+    const restaurant = sanitize(req.query.restaurant);
+
+    rQueries
+      .getRestaurantWithId(ObjectId(restaurant))
+      .then((data) => {
+        res.send({ restaurant: data.name });
+      })
+      .catch((err) => {
+        console.log('Failed to get readable names: ', err);
+      });
+  } else {
+    res.status(500).send('Invalid query');
+  }
+});
+
 module.exports = router;

@@ -143,7 +143,7 @@ export default function MenuItemPage(props: any) {
               }}
             >
               <div>Add to Order</div>
-              <div>${((price || 0) * (quantity || 1)).toFixed(2)}</div>
+              <div>${((price || 0) * (quantity || 1) / 100).toFixed(2)}</div>
             </Button>
           </form>
           <FormHelperText>{helperText}</FormHelperText>

@@ -61,7 +61,6 @@ const createOrderByTableId = function (table_id, customersArr, restaurant) {
     });
   });
 };
-
 //exports.createOrderByTableId = createOrderByTableId;
 
 const setOrderStatusCompleteById = function (orderId) {

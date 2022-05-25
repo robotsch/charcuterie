@@ -19,7 +19,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 export default function EmployeeMenuItems() {
   const [menu, setMenu] = useState({});
 
-  const price = function (price) {
+  const price = function (price: number) {
     return (price / 100).toFixed(2);
   };
 
