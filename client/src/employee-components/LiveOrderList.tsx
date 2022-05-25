@@ -37,9 +37,7 @@ export default function LiveOrderList() {
     ws.emit("EMPLOYEE", { restaurant: localStorage.getItem("restaurant") });
 
     ws.on("SUBMIT_ORDER", (order) => {
-      console.log("SUBMIT_ORDER", order.currentOrder);
-      setOrders((prev) => [...prev, order.currentOrder]);
-      console.log("orders", orders);
+      setOrders((prev) => [...prev, {table: order.table, order: order.currentOrder}]);
     });
 
     return () => {
@@ -48,13 +46,10 @@ export default function LiveOrderList() {
   }, []);
 
   const renderedOrders = orders.map((order: Order, index) => {
-    console.log("ORDER", order);
-    console.log(orders.length);
-    console.log("HERE");
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
-        <CardHeader>Testheader</CardHeader>
-          {Object.entries(order).map(([name, items]) => {
+        <CardHeader>Table {order.table}</CardHeader>
+          {Object.entries(order.currentOrder).map(([name, items]) => {
             return (
               <div key={name}>
                 <Typography variant="body1">{name}</Typography>
