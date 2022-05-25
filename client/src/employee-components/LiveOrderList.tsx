@@ -4,7 +4,7 @@ import ws from "../sockets/socket";
 import axios from "axios";
 
 import Card from "@mui/material/Card";
-import { List, Typography } from "@mui/material";
+import { List, Paper, Typography } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 
 import Box from "@mui/material/Box";
@@ -14,10 +14,11 @@ import Button from "@mui/material/Button";
 import CircleIcon from "@mui/icons-material/Circle";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
+import AppBar from "@mui/material/AppBar";
 
 import { useTheme } from "@mui/material/styles";
 
-const drawerWidth = 240;
+const drawerWidth = 400;
 
 interface Item {
   _id: string;
@@ -82,32 +83,30 @@ export default function LiveOrderList(props: any) {
   });
 
   return (
-    <Box
-      component="main"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        // bgcolor: "background.default",
-        bgcolor: theme.palette.secondary.main,
-        p: 3,
-        ml: 2,
-        minWidth: 400,
-      }}
-    >
-      <Box
+    <Box>
+      <Drawer
         sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            bgcolor: "primary.main",
+          },
+          height: "100%",
         }}
+        variant="permanent"
+        anchor="right"
       >
-        <Box>
+        <Box sx={{ p: 2, textAlign: "center" }}>
           <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont header">Live Order Feed</span>
+          <span className="mont" id="live-feed-header">
+            Live Order Feed
+          </span>
         </Box>
-      </Box>
-      {renderedOrders}
+        <Divider sx={{ width: "90%", mx: "auto" }} />
+        {renderedOrders}
+      </Drawer>
     </Box>
   );
 }

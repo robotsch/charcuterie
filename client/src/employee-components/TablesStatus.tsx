@@ -94,12 +94,19 @@ export default function TablesStatus() {
                   </TableCell>
                 </TableRow>
               ))}
+            {tables.length === 0 && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  No tables
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
       {showAlert && (
         <Alert
-          sx={{ position: "fixed", width: 300, bottom: "5vh", right: "7vw" }}
+          sx={{ position: "fixed", width: 300, bottom: "5vh", left: 300 }}
           severity="success"
         >
           New Table Added!

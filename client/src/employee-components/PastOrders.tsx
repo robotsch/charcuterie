@@ -32,7 +32,7 @@ export default function PastOrders() {
     counter++;
   };
 
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     axios
@@ -92,6 +92,13 @@ export default function PastOrders() {
                   <TableCell align="right">{row.status}</TableCell>
                 </TableRow>
               ))}
+            {orders.length === 0 && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  No past orders
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
