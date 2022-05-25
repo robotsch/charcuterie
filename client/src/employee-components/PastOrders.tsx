@@ -78,7 +78,7 @@ export default function PastOrders() {
           </TableHead>
           <TableBody>
             {Array.isArray(orders) &&
-              orders.map((row) => (
+              orders.map((row: any) => (
                 <TableRow
                   key={row._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

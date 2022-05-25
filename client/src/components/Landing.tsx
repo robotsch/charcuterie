@@ -6,8 +6,6 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
 
-import { restaurantContext } from "../providers/RestaurantProvider";
-import { tableContext } from "../providers/TableProvider";
 import { ConnectedTvTwoTone } from "@mui/icons-material";
 
 import UserList from "./UserList";
