@@ -20,7 +20,7 @@ export default function MenuItemPage(props: any) {
 
   const { _id, name, price, image_url, description } = props.menuItem;
 
-  const { setAlertStatus } = props;
+  const { setAlertStatus, alertStatus } = props;
 
   const { isOpen, toggleDrawer } = useContext(toggleDrawerContext);
 
@@ -93,7 +93,9 @@ export default function MenuItemPage(props: any) {
                 table: localStorage.getItem("table"),
               });
 
+              console.log(alertStatus);
               setAlertStatus(`${quantity} x ${name} added to order!`);
+              console.log(alertStatus);
               toggleDrawer(false)(event);
             }}
           >
