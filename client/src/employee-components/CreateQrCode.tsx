@@ -36,17 +36,19 @@ const PositionedModal = styled(Modal)`
 const CreateQrCode = (props: any) => {
   const [qrCode, setQrCode] = useState("");
   const [show, setShow] = useState(false);
-  const [tableName, setTableName] = useState('')
+  const [tableName, setTableName] = useState("");
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
   const table = props.table;
 
   const generateQrCode = function (table_id: string) {
     axios
       .get(
-        `/api/names?restaurant=${localStorage.getItem("restaurant")}&table=${table}`
+        `/api/names?restaurant=${localStorage.getItem(
+          "restaurant"
+        )}&table=${table}`
       )
       .then((res) => {
-        setTableName(res.data.table)
+        setTableName(res.data.table);
         axios
           .post(`/api/qr-generate`, {
             // restaurant: restaurant,
@@ -92,7 +94,16 @@ const CreateQrCode = (props: any) => {
             <span className="mont subheader">{`Table ${tableName}`}</span>
           </Box>
           <Divider sx={{ width: "95%", mx: "auto" }} />
-          <img src={qrCode}></img>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <img src={qrCode}></img>
+          </Box>
         </Box>
       </PositionedModal>
     </div>

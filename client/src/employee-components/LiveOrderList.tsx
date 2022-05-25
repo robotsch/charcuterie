@@ -53,7 +53,6 @@ export default function LiveOrderList(props: any) {
       setOrders((prev) => {
         return [...prev, { table: data.table, order: data.order }];
       });
-      console.log("after setOrders: ", orders);
     });
 
     return () => {
