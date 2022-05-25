@@ -86,6 +86,7 @@ export default function LiveOrderList(props: any) {
       })
       .then((res) => {
         console.log("complete order res: ", res.data);
+        console.log(orders);
       })
       .catch((err) => console.log("ERROR", err));
 
@@ -116,7 +117,7 @@ export default function LiveOrderList(props: any) {
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {
           return (
-            <Box sx={{ pt: 1.5, px: 1.5 }}>
+            <Box sx={{ pt: 1.5, px: 1.5 }} key={name}>
               <Typography variant="body1">{name}</Typography>
               <List>
                 {Object.values(items).map((item: Item) => {
@@ -129,19 +130,21 @@ export default function LiveOrderList(props: any) {
                   );
                 })}
               </List>
-              <Button
-                color="success"
-                variant="outlined"
-                onClick={() => {
-                  console.log(order);
-                  completeOrder(order.order_id);
-                }}
-              >
-                Order Complete
-              </Button>
             </Box>
           );
         })}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+          <Button
+            color="success"
+            variant="outlined"
+            onClick={() => {
+              console.log(order);
+              completeOrder(order.order_id);
+            }}
+          >
+            Order Complete
+          </Button>
+        </Box>
       </Card>
     );
   });

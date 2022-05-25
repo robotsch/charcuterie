@@ -10,6 +10,7 @@ import axios from "axios";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -62,7 +63,12 @@ export default function DeleteMenuItem(props: any) {
 
   return (
     <div className="modal-example">
-      <Button onClick={() => setShow(true)} color="error" variant="contained">
+      <Button
+        onClick={() => setShow(true)}
+        color="error"
+        variant="contained"
+        startIcon={<DeleteIcon />}
+      >
         Delete
       </Button>
       <PositionedModal
@@ -96,15 +102,16 @@ export default function DeleteMenuItem(props: any) {
             }}
           >
             <Button
-              color="error"
+              color="warning"
               onClick={() => setShow(false)}
-              variant="outlined"
+              variant="contained"
             >
               Cancel
             </Button>
             <Button
-              color="success"
-              variant="outlined"
+              color="error"
+              variant="contained"
+              startIcon={<DeleteIcon />}
               onClick={() => deleteItem(id)}
             >
               Yes Delete This Item

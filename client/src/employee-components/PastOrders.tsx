@@ -14,8 +14,9 @@ import CircleIcon from "@mui/icons-material/Circle";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import IconButton from "@mui/material/IconButton";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
-import { List, Typography } from "@mui/material";
+import { List, Typography, Button } from "@mui/material";
 
 import { Bill as BillInterface } from "../components/bill-components/bill_interface";
 
@@ -94,7 +95,18 @@ function Row(props: any) {
           {index + 1}
         </TableCell>
         <TableCell align="right">${orderTotalCalc(order.customers)}</TableCell>
-        <TableCell align="right">{order.status}</TableCell>
+        <TableCell align="center">
+          {order.status === "pending" && (
+            <Button variant="contained" color="warning">
+              Pending
+            </Button>
+          )}
+          {order.status === "completed" && (
+            <Button variant="contained" color="success">
+              Completed
+            </Button>
+          )}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell sx={{ py: 0 }} colSpan={6}>
@@ -206,9 +218,39 @@ export default function PastOrders() {
             mb: 1,
           }}
         >
-          <Box>
-            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-            <span className="mont header">Past Orders</span>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+              <span className="mont header">Past Orders</span>
+            </Box>
+            <Button
+              startIcon={<RefreshIcon />}
+              color="info"
+              variant="contained"
+              sx={{ height: 40 }}
+              onClick={() => {
+                axios
+                  .get(
+                    `http://localhost:3001/api/get-orders-restaurant?id=${localStorage.getItem(
+                      "restaurant"
+                    )}`
+                    // `/api/get-orders-restaurant?id=${localStorage.getItem("restaurant")}`
+                  )
+                  .then((res) => {
+                    setOrders(res.data);
+                  })
+                  .catch((err) => console.log("ERROR", err));
+              }}
+            >
+              Refresh
+            </Button>
           </Box>
         </Box>
         <Table>
@@ -217,7 +259,7 @@ export default function PastOrders() {
               <TableCell />
               <TableCell>Order #</TableCell>
               <TableCell align="right">Total</TableCell>
-              <TableCell align="right">Status</TableCell>
+              <TableCell align="center">Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

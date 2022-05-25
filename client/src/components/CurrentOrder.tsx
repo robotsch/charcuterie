@@ -14,7 +14,8 @@ import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
-import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 import ws from "../sockets/socket";
 
@@ -115,7 +116,6 @@ export default function CurrentOrder() {
       <List key={name}>
         <Typography>{name}</Typography>
         {Object.values(currentOrder[name]).map((item) => {
-          // console.log(item);
           return (
             <Box sx={{ display: "flex" }}>
               <ListItem key={item._id}>
@@ -136,7 +136,7 @@ export default function CurrentOrder() {
                     });
                   }}
                 >
-                  <DoDisturbOnIcon />
+                  <DeleteIcon />
                 </IconButton>
               )}
             </Box>

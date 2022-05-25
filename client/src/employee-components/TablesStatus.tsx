@@ -102,7 +102,7 @@ export default function TablesStatus() {
       </TableContainer>
       {showAlert && (
         <Alert
-          sx={{ position: "fixed", width: 300, bottom: "5vh", left: 300 }}
+          sx={{ position: "fixed", width: 300, bottom: "10vh", left: 300 }}
           severity="success"
         >
           New Table Added!
