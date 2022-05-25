@@ -55,11 +55,10 @@ export default function LiveOrderList() {
   const renderedOrders = orders.map((order: Order, index) => {
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
-        <CardHeader>Table {order.table}</CardHeader>
           {Object.entries(order.order).map(([name, items]) => {
             return (
               <div key={name}>
-                <Typography variant="body1">{name}</Typography>
+                <Typography variant="body1">{order.table}{name}</Typography>
                 <List>
                   {Object.values(items).map((item: Item) => {
                     return (
