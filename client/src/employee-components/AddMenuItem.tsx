@@ -43,19 +43,19 @@ const AddMenuItem = (props: any) => {
   const setMenu = props.setMenu;
   const menu = props.menu;
 
-  const handleName = (e) => {
+  const handleName = (e: any) => {
     setName(e.target.value);
   };
-  const handleCategory = (e) => {
+  const handleCategory = (e: any) => {
     setCategory(e.target.value);
   };
-  const handlePrice = (e) => {
+  const handlePrice = (e: any) => {
     setPrice(e.target.value);
   };
-  const handleImage = (e) => {
+  const handleImage = (e: any) => {
     setImage(e.target.value);
   };
-  const handleDescription = (e) => {
+  const handleDescription = (e: any) => {
     setDescription(e.target.value);
   };
 
@@ -69,13 +69,13 @@ const AddMenuItem = (props: any) => {
     category: any
   ) {
     axios
-      .post(`http://localhost:3001/api/add-menu-item`, {
+      .post(`/api/add-menu-item`, {
         price: price,
         name: name,
         description: description,
         image_url: image,
         category: category,
-        restaurant_id: "6283f1d9804b848eb5e4560c",
+        restaurant_id: localStorage.getItem('restaurant'),
       })
       .then((res) => {
         console.log("add item res: ", res.data);
@@ -83,7 +83,7 @@ const AddMenuItem = (props: any) => {
         // setTables((prev) => [...prev, ])
 
         axios
-          .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+          .get(`/api/menu?id=${localStorage.getItem('restaurant')}`)
           .then((res) => {
             setMenu(res.data);
           })
