@@ -82,7 +82,7 @@ MongoClient.connect(url, function (err, db) {
           description: 'Udon with beef + mushrooms + scallions',
           image_url:
             'https://d1ralsognjng37.cloudfront.net/30cc0ae6-0189-48d6-816c-7ed7659a49f9.jpeg',
-          category: 'Sashimi',
+          category: 'Noodles',
         },
         {
           _id: ObjectId(),
