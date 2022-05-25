@@ -101,9 +101,9 @@ export default function LiveOrderList(props: any) {
   const renderedOrders = orders.map((order: Big, index) => {
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
-        <Box>
+        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
           <span className="mont">Table #{order.table}</span>
-          <span className="mont">Orderd At: {order.time.split(", ")[1]}</span>
+          <span className="mont">Ordered At: {order.time.split(", ")[1]}</span>
         </Box>
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {
