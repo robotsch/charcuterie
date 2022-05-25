@@ -13,21 +13,21 @@ import EmployeeMenuItems from "./EmployeeMenuItems";
 
 type Page = "HOME" | "ORDER_HISTORY" | "MENU";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#242F36", // charcoal grey complement
-    },
-  },
-});
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: "#242F36", // charcoal grey complement
+//     },
+//   },
+// });
 
 export default function Employee() {
   const [status, setStatus] = useState("loading");
   const [page, setPage] = useState<Page>("HOME");
 
   useEffect(() => {
-    const origin = "/api/session";
-    // const origin = "http://localhost:3001/api/session";
+    // const origin = "/api/session";
+    const origin = "http://localhost:3001/api/session";
     setStatus("loading");
 
     axios
@@ -43,7 +43,8 @@ export default function Employee() {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
+    <div>
       {status === "loading" ? (
         <Box
           display="flex"
@@ -57,18 +58,24 @@ export default function Employee() {
         <EmployeeLogin />
       ) : (
         <SideBar setPage={setPage} setLoggedIn={setStatus}>
-          <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+          <Box
+            component="main"
+            sx={{
+              bgcolor: "background.default",
+              p: 3,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             {page === "HOME" && <TablesStatus />}
-            {page === "ORDER_HISTORY" && (
-              <Box sx={{ display: "flex" }}>
-                <PastOrders />
-                <LiveOrderList />
-              </Box>
-            )}
+            {page === "ORDER_HISTORY" && <PastOrders />}
             {page === "MENU" && <EmployeeMenuItems />}
           </Box>
+          <LiveOrderList />
         </SideBar>
       )}
-    </ThemeProvider>
+    </div>
+    // </ThemeProvider>
   );
 }

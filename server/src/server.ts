@@ -118,7 +118,10 @@ io.on('connection', (socket) => {
 
   socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder, tableName }) => {
     io.to(room).emit('SUBMIT_ORDER');
-    io.to(restaurant).emit('SUBMIT_ORDER', {order: currentOrder, table: tableName});
+    io.to(restaurant).emit('SUBMIT_ORDER', {
+      order: currentOrder,
+      table: tableName,
+    });
   });
 
   socket.on('disconnect', () => {
