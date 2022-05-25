@@ -6,11 +6,9 @@ import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Modal from "react-overlays/Modal";
 import styled from "styled-components";
-
+import axios from "axios";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
-
-type Anchor = "right";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -35,9 +33,35 @@ const PositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
-export default function DeleteMenuItem() {
+const DeleteMenuItem = (props: any) => {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
+  const setMenu = props.setMenu;
+  const menu = props.menu;
+  const id = props.id;
+
+  const deleteItem = function (menuItemId) {
+    console.log("menuitemid: ", menuItemId);
+
+    axios
+      .post(`http://localhost:3001/api/remove-menu-item`, {
+        id: menuItemId,
+        restaurant_id: "6283f1d9804b848eb5e4560c",
+      })
+      .then((res) => {
+        console.log("delete item res: ", res.data);
+
+        // setTables((prev) => [...prev, ])
+
+        axios
+          .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+          .then((res) => {
+            setMenu(res.data);
+          })
+          .catch((err) => console.log("ERROR", err));
+      })
+      .catch((err) => console.log("ERROR", err));
+  };
 
   return (
     <div className="modal-example">
@@ -63,6 +87,7 @@ export default function DeleteMenuItem() {
             className="btn btn-primary mb-4"
             color="success"
             variant="outlined"
+            onClick={() => deleteItem(id)}
           >
             Accept
           </Button>
@@ -70,6 +95,7 @@ export default function DeleteMenuItem() {
             type="button"
             className="btn btn-primary mb-4"
             color="error"
+            onClick={() => setShow(false)}
             variant="outlined"
           >
             Decline
@@ -78,4 +104,6 @@ export default function DeleteMenuItem() {
       </PositionedModal>
     </div>
   );
-}
+};
+
+export default DeleteMenuItem;
