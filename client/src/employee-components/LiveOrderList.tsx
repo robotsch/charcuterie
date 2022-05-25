@@ -16,6 +16,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
+import CheckIcon from '@mui/icons-material/Check';
 
 import { useTheme } from "@mui/material/styles";
 
@@ -136,7 +137,8 @@ export default function LiveOrderList(props: any) {
         <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
           <Button
             color="success"
-            variant="outlined"
+            variant="contained"
+            startIcon={<CheckIcon />}
             onClick={() => {
               console.log(order);
               completeOrder(order.order_id);
