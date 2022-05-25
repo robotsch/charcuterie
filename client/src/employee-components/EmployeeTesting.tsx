@@ -10,6 +10,7 @@ import EmployeeMenuItems from "./EmployeeMenuItems";
 import PastOrders from "./PastOrders";
 
 type Page = "HOME" | "ORDER_HISTORY" | "MENU";
+
 export default function Employee() {
   const [page, setPage] = useState<Page>("HOME");
   // const [loggedIn, setLoggedIn] = useState(false);

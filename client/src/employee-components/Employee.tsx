@@ -1,4 +1,3 @@
-import LiveOrderList from "./LiveOrderList";
 import SideBar from "./SideBar";
 import Box from "@mui/material/Box";
 import TablesStatus from "./TablesStatus";
@@ -7,6 +6,12 @@ import { useEffect, useState } from "react";
 import EmployeeLogin from "./EmployeeLogin";
 import { CircularProgress } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+import LiveOrderList from "./LiveOrderList";
+import PastOrders from "./PastOrders";
+import EmployeeMenuItems from "./EmployeeMenuItems";
+
+type Page = "HOME" | "ORDER_HISTORY" | "MENU";
 
 const theme = createTheme({
   palette: {
@@ -18,6 +23,8 @@ const theme = createTheme({
 
 export default function Employee() {
   const [status, setStatus] = useState("loading");
+  const [page, setPage] = useState<Page>("HOME");
+
   useEffect(() => {
     // const origin = "/api/session";
     const origin = "http://localhost:3001/api/session";
@@ -49,11 +56,17 @@ export default function Employee() {
       ) : status === "authcheck" ? (
         <EmployeeLogin />
       ) : (
-        <SideBar>
+        <SideBar setPage={setPage}>
           <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-            <TablesStatus />
+            {page === "HOME" && <TablesStatus />}
+            {page === "ORDER_HISTORY" && (
+              <Box sx={{ display: "flex" }}>
+                <PastOrders />
+                <LiveOrderList />
+              </Box>
+            )}
+            {page === "MENU" && <EmployeeMenuItems />}
           </Box>
-          <LiveOrderList />
         </SideBar>
       )}
     </ThemeProvider>
