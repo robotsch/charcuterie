@@ -18,7 +18,6 @@ export default function AddNewTable(props: any) {
         readable_id: counter,
       })
       .then((res) => {
-        console.log("add table res: ", res.data);
 
         axios
           .get(

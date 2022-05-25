@@ -20,20 +20,21 @@ import axios from "axios";
 const drawerWidth = 240;
 
 export default function SideBar(props: any) {
-  let navigate = useNavigate();
+  const { setPage } = props;
+  // let navigate = useNavigate();
 
-  const toHome = () => {
-    let path = `/employee/testing`;
-    navigate(path);
-  };
-  const toMenu = () => {
-    let path = `/employee/menu`;
-    navigate(path);
-  };
-  const toHistory = () => {
-    let path = `/employee/history`;
-    navigate(path);
-  };
+  // const toHome = () => {
+  //   let path = `/employee/testing`;
+  //   navigate(path);
+  // };
+  // const toMenu = () => {
+  //   let path = `/employee/menu`;
+  //   navigate(path);
+  // };
+  // const toHistory = () => {
+  //   let path = `/employee/history`;
+  //   navigate(path);
+  // };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -59,7 +60,7 @@ export default function SideBar(props: any) {
         <Divider />
         <List>
           <ListItem key="Home" disablePadding>
-            <ListItemButton onClick={toHome}>
+            <ListItemButton onClick={() => setPage("HOME")}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -67,7 +68,7 @@ export default function SideBar(props: any) {
             </ListItemButton>
           </ListItem>
           <ListItem key="Order History" disablePadding>
-            <ListItemButton onClick={toHistory}>
+            <ListItemButton onClick={() => setPage("ORDER_HISTORY")}>
               <ListItemIcon>
                 <AccessAlarmIcon />
               </ListItemIcon>
@@ -75,7 +76,7 @@ export default function SideBar(props: any) {
             </ListItemButton>
           </ListItem>
           <ListItem key="Menu" disablePadding>
-            <ListItemButton onClick={toMenu}>
+            <ListItemButton onClick={() => setPage("MENU")}>
               <ListItemIcon>
                 <MenuBookIcon />
               </ListItemIcon>

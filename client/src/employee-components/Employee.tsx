@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#242F36', // charcoal grey complement
+      main: "#242F36", // charcoal grey complement
     },
   },
 });
@@ -37,27 +37,25 @@ export default function Employee() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        {status === "loading" ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="300vh"
-          >
-            <CircularProgress />
+      {status === "loading" ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          minHeight="300vh"
+        >
+          <CircularProgress />
+        </Box>
+      ) : status === "authcheck" ? (
+        <EmployeeLogin />
+      ) : (
+        <SideBar>
+          <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
+            <TablesStatus />
           </Box>
-        ) : status === "authcheck" ? (
-          <EmployeeLogin />
-        ) : (
-          <SideBar>
-            <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-              <TablesStatus />
-            </Box>
-            <LiveOrderList />
-          </SideBar>
-        )}
-      </div>
+          <LiveOrderList />
+        </SideBar>
+      )}
     </ThemeProvider>
   );
 }
