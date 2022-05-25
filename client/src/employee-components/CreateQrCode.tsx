@@ -99,6 +99,7 @@ const CreateQrCode = (props: any) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
               width: "100%",
             }}
           >
