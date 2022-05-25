@@ -7,7 +7,7 @@ MongoClient.connect(url, function (err, db) {
   let dbo = db.db('mydb');
   let myobj = [
     {
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       table_id: ObjectId('6283f6a703f54b7c82c5fffc'),
       customers: [
         {
@@ -35,7 +35,7 @@ MongoClient.connect(url, function (err, db) {
       restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       table_id: ObjectId('6283f6a703f54b7c82c5fffd'),
       customers: [
         {
@@ -63,7 +63,7 @@ MongoClient.connect(url, function (err, db) {
       restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       table_id: ObjectId('6283f6a703f54b7c82c5fffe'),
 
       customers: [
@@ -103,7 +103,7 @@ MongoClient.connect(url, function (err, db) {
       restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       table_id: ObjectId('6283f6a703f54b7c82c5fffc'),
 
       customers: [
@@ -132,7 +132,7 @@ MongoClient.connect(url, function (err, db) {
       restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       table_id: ObjectId('6283f6a703f54b7c82c5fffd'),
       customers: [
         {
@@ -160,7 +160,7 @@ MongoClient.connect(url, function (err, db) {
       restaurant_id: ObjectId('6283f1d9804b848eb5e4560c'),
     },
     {
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleString(),
       table_id: ObjectId('6283f6a703f54b7c82c5fffe'),
 
       customers: [

@@ -12,72 +12,76 @@ MongoClient.connect(url, function (err, db) {
       menu_items: [
         {
           _id: ObjectId(),
-          name: 'Lobster Miso Soup',
-          price: 900,
-          description: 'Lobster miso soup w/ bonito broth',
-          image_url: 'http://www.oksfood.com/image/iseebimisoshiru.jpg',
-          category: 'Appetizer',
-        },
-        {
-          _id: ObjectId(),
-          name: 'Ochamame',
-          price: 800,
+          name: 'Edamame',
+          price: 600,
           description: 'Roasted green tea infused edamame',
           image_url:
-            'https://makeyourmeals.com/wp-content/uploads/2020/02/featured-edamame-480x480.jpg',
+            'https://d1ralsognjng37.cloudfront.net/6c94eb50-ba25-41c9-aaaa-63e602127720.jpeg',
           category: 'Appetizer',
         },
         {
           _id: ObjectId(),
-          name: 'Hokkaido Salad',
+          name: 'Crispy Vegetarian Gyoza',
+          price: 800,
+          description: '5pc Vegetarian Gyoza',
+          image_url:
+            'https://tb-static.uber.com/prod/image-proc/processed_images/1a52870aebaf25a8d3988e7bfd2a237c/b4facf495c22df52f3ca635379ebe613.jpeg',
+          category: 'Appetizer',
+        },
+        {
+          _id: ObjectId(),
+          name: 'Takoyaki',
           price: 1500,
-          description: 'Salt cured salmon, ikura, snow crab, greens',
+          description: '10pc Takoyaki',
           image_url:
-            'https://pbs.twimg.com/media/DZJVlD-U8AEn7Ga?format=jpg&name=small',
+            'https://tb-static.uber.com/prod/image-proc/processed_images/e73a2951074ab10acbdff81316a3e367/b4facf495c22df52f3ca635379ebe613.jpeg',
           category: 'Appetizer',
         },
         {
           _id: ObjectId(),
-          name: 'Green Salad',
-          price: 1000,
-          description: 'Mixed greens, cucumber',
+          name: 'Okonomiyaki',
+          price: 1300,
+          description: 'Savory pancake made with vegetables, meat, and seafood',
           image_url:
-            'https://www.blogto.com/listings/restaurants/upload/2012/11/20121119-jabistro590-09.jpg',
+            'https://tb-static.uber.com/prod/image-proc/processed_images/3d84ae26ad5a383e307d8f210bb40d4c/b4facf495c22df52f3ca635379ebe613.jpeg',
           category: 'Appetizer',
         },
         {
           _id: ObjectId(),
-          name: 'Hotate Carpaccio',
+          name: 'Chicken Karaage',
           price: 1800,
-          description: 'Scallop sashimi, ponzu dressing',
+          description: '10pc Fried Chicken',
           image_url:
-            'https://cdn.shopify.com/s/files/1/0396/7313/5266/products/ZensaiArtboard1copy5-1_480x.jpg?v=1621472184',
+            'https://tb-static.uber.com/prod/image-proc/processed_images/78d6ae1dbd05b4775b57829e7c2b4584/b4facf495c22df52f3ca635379ebe613.jpeg',
           category: 'Appetizer',
         },
         {
           _id: ObjectId(),
-          name: 'Wagyu Carpaccio',
-          price: 2600,
-          description: 'Wagyu beef sashimi, ponzu dressing',
+          name: 'Chicken Tempura',
+          price: 1400,
+          description:
+            'Chicken Tempura with House made Tartar and Sweet Soy Vinegar',
           image_url:
-            'https://images.getbento.com/accounts/25fd617895d952103480e78213c748cf/media/images/1578492947560.jpeg?w=1000&fit=max&auto=compress,format&h=1000',
+            'https://tb-static.uber.com/prod/image-proc/processed_images/a79a12c276f7b6ec11d5ace9e9d3abfd/b4facf495c22df52f3ca635379ebe613.jpeg',
           category: 'Appetizer',
         },
         {
           _id: ObjectId(),
-          name: 'Sashimi Appetizer',
-          price: 2100,
-          description: "Chef's selection of assorted sashimi",
+          name: 'Okonomiyaki Fries',
+          price: 900,
+          description:
+            'Fries topped with ingredients traditionally used for our Okonomiyaki',
           image_url:
-            'https://sushi-ato.com/wp-content/uploads/2021/05/Photo-Oct-02-3-04-29-PM.jpg',
+            'https://tb-static.uber.com/prod/image-proc/processed_images/4bf13182b59a75b955337ed4c7f57a1a/b4facf495c22df52f3ca635379ebe613.jpeg',
           category: 'Appetizer',
         },
         {
           _id: ObjectId(),
-          name: 'Sashimi Platter',
-          price: 13900,
-          description: 'Selection of assorted sashimi',
-          image_url: 'https://images.otstatic.com/prod/27876883/2/huge.jpg',
+          name: 'House Udon',
+          price: 1900,
+          description: 'Udon with beef + mushrooms + scallions',
+          image_url:
+            'https://d1ralsognjng37.cloudfront.net/30cc0ae6-0189-48d6-816c-7ed7659a49f9.jpeg',
           category: 'Sashimi',
         },
         {
