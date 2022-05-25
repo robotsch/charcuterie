@@ -31,10 +31,10 @@ export default function TablesStatus() {
 
   useEffect(() => {
     axios
-      // .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
-      .get(
-        `/api/get-tables?id=${localStorage.getItem('restaurant')}`
-      )
+      .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      // .get(
+      //   `/api/get-tables?id=${localStorage.getItem('restaurant')}`
+      // )
       .then((res) => {
         setTables(res.data);
         setCounter(res.data.length + 1);
@@ -102,7 +102,7 @@ export default function TablesStatus() {
       </TableContainer>
       {showAlert && (
         <Alert
-          sx={{ position: "fixed", width: 300, bottom: "5vh", left: 300 }}
+          sx={{ position: "fixed", width: 300, bottom: "10vh", left: 300 }}
           severity="success"
         >
           New Table Added!

@@ -11,6 +11,7 @@ import Modal from "react-overlays/Modal";
 import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
 import Divider from "@mui/material/Divider";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -101,6 +102,7 @@ const AddMenuItem = (props: any) => {
         color="success"
         variant="contained"
         onClick={() => setShow(true)}
+        startIcon={<AddCircleIcon />}
       >
         Add Item
       </Button>

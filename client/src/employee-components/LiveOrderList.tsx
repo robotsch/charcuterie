@@ -16,6 +16,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
+import CheckIcon from '@mui/icons-material/Check';
 
 import { useTheme } from "@mui/material/styles";
 
@@ -40,6 +41,7 @@ interface Order {
 interface Big {
   order: Order;
   table: string;
+  time: string;
 }
 
 export default function LiveOrderList(props: any) {
@@ -51,7 +53,26 @@ export default function LiveOrderList(props: any) {
 
     ws.on("SUBMIT_ORDER", (data) => {
       setOrders((prev) => {
+<<<<<<< HEAD
         return [...prev, { table: data.table, order: data.order }];
+=======
+        console.log(prev);
+        console.log("data: ", data);
+        console.log("table: ", data.table);
+        console.log("order: ", data.order);
+        // console.log("time", data.time);
+        console.log("order_id:", data.order_id);
+        // return [...prev, { ...data }];
+        return [
+          ...prev,
+          {
+            order_id: data.order_id,
+            table: data.table,
+            order: data.order,
+            time: new Date().toLocaleString(),
+          },
+        ];
+>>>>>>> refactor/employee
       });
     });
 
@@ -59,6 +80,26 @@ export default function LiveOrderList(props: any) {
       ws.off("SUBMIT_ORDER");
     };
   }, []);
+
+  const completeOrder = function (orderId: string) {
+    console.log("orderId: ", orderId);
+
+    axios
+      .post(`http://localhost:3001/api/update-order-status`, {
+        id: orderId,
+      })
+      .then((res) => {
+        console.log("complete order res: ", res.data);
+        console.log(orders);
+      })
+      .catch((err) => console.log("ERROR", err));
+
+    let array = orders.filter(function (obj) {
+      return obj.order_id !== orderId;
+    });
+
+    setOrders(array);
+  };
 
   const renderedOrders = orders.map((order: Big, index) => {
     return (
@@ -69,7 +110,7 @@ export default function LiveOrderList(props: any) {
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {
           return (
-            <>
+            <Box sx={{ pt: 1.5, px: 1.5 }} key={name}>
               <Typography variant="body1">{name}</Typography>
               <List>
                 {Object.values(items).map((item: Item) => {
@@ -82,9 +123,22 @@ export default function LiveOrderList(props: any) {
                   );
                 })}
               </List>
-            </>
+            </Box>
           );
         })}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+          <Button
+            color="success"
+            variant="contained"
+            startIcon={<CheckIcon />}
+            onClick={() => {
+              console.log(order);
+              completeOrder(order.order_id);
+            }}
+          >
+            Order Complete
+          </Button>
+        </Box>
       </Card>
     );
   });
@@ -98,7 +152,7 @@ export default function LiveOrderList(props: any) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            bgcolor: "primary.main",
+            bgcolor: "info.main",
           },
           height: "100%",
         }}

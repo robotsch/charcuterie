@@ -37,11 +37,12 @@ router.post('/', (req: Request, res: Response) => {
   oQueries
     .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant))
     .then((dbRes) => {
-      console.log(dbRes);
-      res.send('Success');
+      console.log("dbRes", dbRes);
+      console.log("dbRes.insertedId", dbRes.insertedId);
+      res.send(dbRes.insertedId);
     })
     .catch((err) => {
-      console.log('Failed to submit order: ', err)
+      console.log('Failed to submit order: ', err);
       res.status(500).send(`Failed to submit order: ${err}`);
     });
 });
