@@ -37,8 +37,13 @@ export default function LiveOrderList() {
     ws.emit("EMPLOYEE", { restaurant: localStorage.getItem("restaurant") });
 
     ws.on("SUBMIT_ORDER", (data) => {
-      console.log('on order: ', data)
-      setOrders((prev) => [...prev, {table: data.table, order: data.order}]);
+      setOrders((prev) => 
+      {
+        console.log(prev)
+        console.log('table: ', data.table)
+        console.log('order: ', data.order)
+        return [...prev, {table: data.table, order: data.order}]
+      });
       console.log('after setOrders: ', orders)
     });
 
@@ -48,9 +53,6 @@ export default function LiveOrderList() {
   }, []);
 
   const renderedOrders = orders.map((order: Order, index) => {
-    console.log('orders: ', order)
-    console.log('table: ', order.table)
-
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
         <CardHeader>Table {order.table}</CardHeader>
@@ -101,7 +103,7 @@ export default function LiveOrderList() {
           <span className="mont header">Live Order Feed</span>
         </Box>
       </Box>
-      {renderedOrders}
+      {/* {renderedOrders} */}
     </Box>
   );
 }
