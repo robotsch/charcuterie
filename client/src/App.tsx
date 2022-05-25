@@ -7,13 +7,11 @@ import "./App.scss";
 import Menu from "./components/Menu";
 import TemporaryDrawer from "./components/Drawer";
 import Landing from "./components/Landing";
-import Bill from "./components/bill-components/Bill"
+import Bill from "./components/bill-components/Bill";
 
 import Employee from "./employee-components/Employee";
 import EmployeeTesting from "./employee-components/EmployeeTesting";
-import EmployeeMenu from "./employee-components/EmployeeMenu";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
-import EmployeeOrderHistory from "./employee-components/EmployeeOrderHistory";
 
 import { CssBaseline } from "@mui/material";
 
@@ -50,48 +48,9 @@ export default function App() {
               </main>
             }
           />
-          <Route
-            path="/employee"
-            element={
-              <>
-                <Employee />
-              </>
-            }
-          />
-          <Route
-            path="/employee/login"
-            element={
-              <>
-                <EmployeeLogin />
-              </>
-            }
-          />
-
-          <Route
-            path="/employee/history"
-            element={
-              <>
-                <EmployeeOrderHistory />
-              </>
-            }
-          />
-
-          <Route
-            path="/employee/menu"
-            element={
-              <>
-                <EmployeeMenu />
-              </>
-            }
-          />
-          <Route
-            path="/employee/testing"
-            element={
-              <>
-                <EmployeeTesting />
-              </>
-            }
-          />
+          <Route path="/employee" element={<Employee />} />
+          <Route path="/employee/login" element={<EmployeeLogin />} />
+          <Route path="/employee/testing" element={<EmployeeTesting />} />
         </Routes>
       </BrowserRouter>
     </div>

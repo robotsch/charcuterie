@@ -8,7 +8,9 @@ import styled from "styled-components";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
 import Modal from "react-overlays/Modal";
+import CircleIcon from "@mui/icons-material/Circle";
 import axios from "axios";
+import Divider from "@mui/material/Divider";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -25,7 +27,7 @@ const PositionedModal = styled(Modal)`
   position: fixed;
   width: 400px;
   z-index: 1040;
-  top: 35%;
+  top: 20%;
   left: 35%;
   border: 1px solid #e5e5e5;
   background-color: white;
@@ -75,7 +77,7 @@ const AddMenuItem = (props: any) => {
         description: description,
         image_url: image,
         category: category,
-        restaurant_id: localStorage.getItem('restaurant'),
+        restaurant_id: localStorage.getItem("restaurant"),
       })
       .then((res) => {
         console.log("add item res: ", res.data);
@@ -83,7 +85,7 @@ const AddMenuItem = (props: any) => {
         // setTables((prev) => [...prev, ])
 
         axios
-          .get(`/api/menu?id=${localStorage.getItem('restaurant')}`)
+          .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
           .then((res) => {
             setMenu(res.data);
           })
@@ -95,11 +97,10 @@ const AddMenuItem = (props: any) => {
   return (
     <div className="modal-example">
       <Button
-        type="button"
-        className="btn btn-primary mb-4"
-        onClick={() => setShow(true)}
+        sx={{ width: 200, height: 35 }}
         color="success"
-        variant="outlined"
+        variant="contained"
+        onClick={() => setShow(true)}
       >
         Add Item
       </Button>
@@ -109,76 +110,91 @@ const AddMenuItem = (props: any) => {
         renderBackdrop={renderBackdrop}
         aria-labelledby="modal-label"
       >
-        <div>
-          <List>
-            <ListItem key="name" disablePadding>
+        <Box>
+          <Box
+            sx={{
+              mb: 2,
+            }}
+          >
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont subheader">Add New Item</span>
+          </Box>
+          <Divider sx={{ width: "95%", mx: "auto" }} />
+          <List sx={{ my: 1 }}>
+            <ListItem key="name">
               <TextField
                 id="standard-basic-required"
                 label="Name"
-                variant="standard"
+                variant="outlined"
                 value={name}
                 onChange={handleName}
               />
             </ListItem>
-            <ListItem key="category" disablePadding>
+            <ListItem key="category">
               <TextField
                 id="standard-basic-required"
                 label="Category"
-                variant="standard"
+                variant="outlined"
                 value={category}
                 onChange={handleCategory}
               />
             </ListItem>
-            <ListItem key="price" disablePadding>
+            <ListItem key="price">
               <TextField
                 id="standard-basic"
-                label="Price"
-                variant="standard"
+                label="Price in cents"
+                variant="outlined"
                 value={price}
                 onChange={handlePrice}
               />
             </ListItem>
-            <ListItem key="image" disablePadding>
+            <ListItem key="image">
               <TextField
                 id="standard-basic"
                 label="ImageURL"
-                variant="standard"
+                variant="outlined"
                 value={image}
                 onChange={handleImage}
               />
             </ListItem>
-            <ListItem key="image" disablePadding>
+            <ListItem key="description">
               <TextField
                 id="standard-basic"
                 label="Description"
-                variant="standard"
+                variant="outlined"
                 value={description}
                 onChange={handleDescription}
               />
             </ListItem>
           </List>
-          <Button
-            type="button"
-            className="btn btn-primary mb-4"
-            color="success"
-            variant="outlined"
-            onClick={() => {
-              addItem(price, name, description, image, category);
-              setShow(false);
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-evenly",
             }}
           >
-            Accept
-          </Button>
-          <Button
-            type="button"
-            className="btn btn-primary mb-4"
-            color="error"
-            onClick={() => setShow(false)}
-            variant="outlined"
-          >
-            Cancel
-          </Button>
-        </div>
+            <Button
+              type="button"
+              color="error"
+              onClick={() => setShow(false)}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              color="success"
+              variant="outlined"
+              onClick={() => {
+                addItem(price, name, description, image, category);
+                setShow(false);
+              }}
+            >
+              Accept
+            </Button>
+          </Box>
+        </Box>
       </PositionedModal>
     </div>
   );

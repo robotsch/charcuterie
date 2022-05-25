@@ -17,23 +17,23 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 export default function SideBar(props: any) {
-  const { setPage } = props;
+  const { setPage, setLoggedIn } = props;
+  const theme = useTheme();
 
   const [restaurantName, setRestaurantName] = useState<string>("");
 
   useEffect(() => {
     axios
       .get(
-        // `/api/names/restaurant?restaurant=${localStorage.getItem(
+        `/api/names/restaurant?restaurant=${localStorage.getItem("restaurant")}`
+        // `http://localhost:3001/api/names/restaurant?restaurant=${localStorage.getItem(
         //   "restaurant"
         // )}`
-        `http://localhost:3001/api/names/restaurant?restaurant=${localStorage.getItem(
-          "restaurant"
-        )}`
       )
       .then((data: any) => {
         setRestaurantName(data.data.restaurant);
@@ -45,10 +45,11 @@ export default function SideBar(props: any) {
       <Drawer
         sx={{
           width: drawerWidth,
-          // flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            // bgcolor: "primary.main",
+            bgcolor: "#121420",
           },
           display: "flex",
           alignItems: "center",
@@ -58,37 +59,40 @@ export default function SideBar(props: any) {
       >
         <Toolbar sx={{ width: "100%", mt: 4 }}>
           <img
-            src="https://cdn.discordapp.com/attachments/856696248111595541/978644697213980722/logo.png"
+            src="https://media.discordapp.net/attachments/856696248111595541/979028644318048326/logo-white.png"
             alt="Logo"
             id="employee-logo"
           />
         </Toolbar>
         <Divider
-          sx={{ width: "80%", marginLeft: "auto", marginRight: "auto", mb: 3 }}
+          sx={{ width: "90%", marginLeft: "auto", marginRight: "auto", mb: 3 }}
         />
         <List sx={{ mt: 3 }}>
           <ListItem key="Home" disablePadding>
-            <ListItemButton onClick={() => setPage("HOME")}>
+            <ListItemButton onClick={() => setPage("HOME")} sx={{ ml: 2 }}>
               <ListItemIcon>
-                <HomeIcon />
+                <HomeIcon sx={{ color: "#fff" }} />
               </ListItemIcon>
-              <ListItemText primary="Home" />
+              <ListItemText primary="Home" sx={{ color: "#fff" }} />
             </ListItemButton>
           </ListItem>
           <ListItem key="Order History" disablePadding>
-            <ListItemButton onClick={() => setPage("ORDER_HISTORY")}>
+            <ListItemButton
+              onClick={() => setPage("ORDER_HISTORY")}
+              sx={{ ml: 2 }}
+            >
               <ListItemIcon>
-                <AccessAlarmIcon />
+                <AccessAlarmIcon sx={{ color: "#fff" }} />
               </ListItemIcon>
-              <ListItemText primary="Order History" />
+              <ListItemText primary="Order History" sx={{ color: "#fff" }} />
             </ListItemButton>
           </ListItem>
           <ListItem key="Menu" disablePadding>
-            <ListItemButton onClick={() => setPage("MENU")}>
+            <ListItemButton onClick={() => setPage("MENU")} sx={{ ml: 2 }}>
               <ListItemIcon>
-                <MenuBookIcon />
+                <MenuBookIcon sx={{ color: "#fff" }} />
               </ListItemIcon>
-              <ListItemText primary="Menu" />
+              <ListItemText primary="Menu" sx={{ color: "#fff" }} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -105,12 +109,32 @@ export default function SideBar(props: any) {
           }}
         >
           <Box>
-            <Typography variant="h6">{restaurantName}</Typography>
+            <Typography variant="h6" sx={{ color: "#fff" }}>
+              {restaurantName}
+            </Typography>
           </Box>
           <Box>
             <Button
               variant="contained"
-              sx={{ height: 50, width: 170, display: "flex", gap: 2 }}
+              sx={{
+                height: 50,
+                width: 170,
+                display: "flex",
+                gap: 2,
+                bgcolor: "primary.main",
+              }}
+              onClick={() => {
+                // setLoggedIn(false);
+                axios
+                  .post(`/api/employee-logout`)
+                  .then((res) => {
+                    window.location.reload();
+                  })
+                  .catch((err) => {
+                    console.log("Couldn't reach logout route: ", err);
+                  });
+                  window.location.reload();
+              }}
             >
               <LogoutIcon />
               Log out
@@ -120,7 +144,14 @@ export default function SideBar(props: any) {
       </Drawer>
       <Box
         component="main"
-        sx={{ display: "flex", bgcolor: "background.default", p: 3 }}
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          alignItems: "space-between",
+          bgcolor: "background.default",
+          p: 3,
+        }}
       >
         {props.children}
       </Box>

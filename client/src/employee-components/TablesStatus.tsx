@@ -38,37 +38,37 @@ export default function TablesStatus() {
       .then((res) => {
         setTables(res.data);
         setCounter(res.data.length + 1);
-
-        // console.log("Result: ", res);
-        // console.log("tables: ", tables);
       })
       .catch((err) => console.log("ERROR", err));
   }, []);
 
   return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
+    <Box>
+      <TableContainer
+        sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
+        component={Paper}
       >
-        <Box>
-          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont header">Tables</span>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
+          }}
+        >
+          <Box>
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont header">Tables</span>
+          </Box>
+          <AddNewTable
+            setTables={setTables}
+            counter={counter}
+            setCounter={setCounter}
+            setShowAlert={setShowAlert}
+          />
         </Box>
-        <AddNewTable
-          setTables={setTables}
-          counter={counter}
-          setCounter={setCounter}
-          setShowAlert={setShowAlert}
-        />
-      </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Table</TableCell>
@@ -90,17 +90,24 @@ export default function TablesStatus() {
                   </TableCell>
                 </TableRow>
               ))}
+            {tables.length === 0 && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  No tables
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
       {showAlert && (
         <Alert
-          sx={{ position: "fixed", width: 300, bottom: "5vh", right: "7vw" }}
+          sx={{ position: "fixed", width: 300, bottom: "5vh", left: 300 }}
           severity="success"
         >
           New Table Added!
         </Alert>
       )}
-    </>
+    </Box>
   );
 }

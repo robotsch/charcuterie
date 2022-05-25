@@ -6,8 +6,6 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
 
-import { restaurantContext } from "../providers/RestaurantProvider";
-import { tableContext } from "../providers/TableProvider";
 import { ConnectedTvTwoTone } from "@mui/icons-material";
 
 import UserList from "./UserList";
@@ -56,6 +54,7 @@ export default function Landing() {
     setTable(searchParms.get("id2") || "");
     localStorage.setItem("restaurant", searchParms.get("id1") || "0");
     localStorage.setItem("table", searchParms.get("id2") || "0");
+
     console.log(restaurant, table);
 
     ws.emit("CONNECT_TO_ROOM", {
@@ -86,6 +85,7 @@ export default function Landing() {
       .then((res) => {
         setRestaurantName(res.data.restaurant);
         localStorage.setItem("restaurantName", res.data.restaurant);
+        localStorage.setItem("tableName", res.data.table)
         setTableName(res.data.table);
         setHeaderMode("LOADED");
       })

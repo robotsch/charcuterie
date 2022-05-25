@@ -116,11 +116,9 @@ io.on('connection', (socket) => {
     io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
-  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
+  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder, tableName }) => {
     io.to(room).emit('SUBMIT_ORDER');
-    // insert order into database
-    console.log('SUBMIT_ORDER', restaurant, currentOrder);
-    io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
+    io.to(restaurant).emit('SUBMIT_ORDER', {order: currentOrder, table: tableName});
   });
 
   socket.on('disconnect', () => {
@@ -139,6 +137,7 @@ const getOrderRoute = require('./routes/get-order-router');
 const getOrdersRestaurantRoute = require('./routes/get-orders-restaurant');
 const updateOrderStatusRoute = require('./routes/update-order-status-router');
 const employeeLoginRoute = require('./routes/login-router');
+const employeeLogoutRoute = require('./routes/logout-router')
 const addMenuItemRoute = require('./routes/add-menu-item-router');
 const removeMenuItemRoute = require('./routes/remove-menu-item-router');
 const addTableRoute = require('./routes/add-table-router');
@@ -156,6 +155,7 @@ app.use('/api/get-order', getOrderRoute);
 app.use('/api/get-orders-restaurant', getOrdersRestaurantRoute);
 app.use('/api/update-order-status', updateOrderStatusRoute);
 app.use('/api/employee-login', employeeLoginRoute);
+app.use('/api/employee-logout', employeeLogoutRoute)
 app.use('/api/add-menu-item', addMenuItemRoute);
 app.use('/api/remove-menu-item', removeMenuItemRoute);
 app.use('/api/add-table', addTableRoute);

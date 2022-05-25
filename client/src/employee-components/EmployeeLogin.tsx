@@ -33,11 +33,11 @@ export default function SignIn() {
     const pw = data.get("password");
     axios.post("/api/employee-login", { username: uname, password: pw })
     // axios
-      // .post("http://localhost:3001/api/employee-login", {
-      //   username: uname,
-      //   password: pw,
-      //   withCredentials: true,
-      // })
+    //   .post("http://localhost:3001/api/employee-login", {
+    //     username: uname,
+    //     password: pw,
+    //     withCredentials: true,
+    //   })
       .then((res) => {
         localStorage.setItem("restaurant", res.data)
         window.location.reload();

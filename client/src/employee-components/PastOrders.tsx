@@ -1,4 +1,4 @@
- import * as React from "react";
+import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -20,7 +20,7 @@ export default function PastOrders() {
     let total = 0;
     for (const customer of customerArr) {
       customer.sub_orders.map((item: any) => {
-        total += item.quantity * item.price;
+        total += item.quantity * item.totalPrice;
       });
     }
 
@@ -32,12 +32,12 @@ export default function PastOrders() {
     counter++;
   };
 
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     axios
       .get(
-        `/api/get-orders-restaurant?id=${localStorage.getItem('restaurant')}`
+        `/api/get-orders-restaurant?id=${localStorage.getItem("restaurant")}`
       )
       .then((res) => {
         setOrders(res.data);
@@ -50,22 +50,25 @@ export default function PastOrders() {
 
   return (
     <Box>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
+      <TableContainer
+        sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
+        component={Paper}
       >
-        <Box>
-          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont header">Past Orders</span>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
+          }}
+        >
+          <Box>
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont header">Past Orders</span>
+          </Box>
         </Box>
-      </Box>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Order #</TableCell>
@@ -75,7 +78,7 @@ export default function PastOrders() {
           </TableHead>
           <TableBody>
             {Array.isArray(orders) &&
-              orders.map((row) => (
+              orders.map((row: any) => (
                 <TableRow
                   key={row._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -89,6 +92,13 @@ export default function PastOrders() {
                   <TableCell align="right">{row.status}</TableCell>
                 </TableRow>
               ))}
+            {orders.length === 0 && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  No past orders
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
