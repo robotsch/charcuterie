@@ -28,12 +28,12 @@ export default function SideBar(props: any) {
   useEffect(() => {
     axios
       .get(
-        // `/api/names/restaurant?restaurant=${localStorage.getItem(
-        //   "restaurant"
-        // )}`
-        `http://localhost:3001/api/names/restaurant?restaurant=${localStorage.getItem(
+        `/api/names/restaurant?restaurant=${localStorage.getItem(
           "restaurant"
         )}`
+        // `http://localhost:3001/api/names/restaurant?restaurant=${localStorage.getItem(
+        //   "restaurant"
+        // )}`
       )
       .then((data: any) => {
         setRestaurantName(data.data.restaurant);

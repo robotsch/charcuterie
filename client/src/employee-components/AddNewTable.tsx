@@ -24,7 +24,6 @@ export default function AddNewTable(props: any) {
             `/api/names?restaurant=${localStorage.getItem('restaurant')}&table=${res.data.insertedId}`
           )
           .then((result) => {
-            console.log("readable names res: ", result.data);
             setShowAlert(true);
 
             setTimeout(() => {

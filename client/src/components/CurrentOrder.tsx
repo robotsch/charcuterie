@@ -70,7 +70,6 @@ export default function CurrentOrder() {
     ws.on("SUBMIT_ORDER", () => {
       setOrderState("SUBMITTED");
       setCurrentOrder({});
-      console.log("SUBMIT_ORDER listener");
     });
 
     ws.on("UPDATE_ORDER", ({ name, order }) => {
@@ -173,9 +172,8 @@ export default function CurrentOrder() {
                     ws.emit("SUBMIT_ORDER", {
                       restaurant: localStorage.getItem("restaurant"),
                       currentOrder,
+                      tableName: localStorage.getItem("tableName")
                     });
-                    console.log(res);
-                    console.log(res.data);
                   })
                   .catch((error) => console.log(error));
               }}
