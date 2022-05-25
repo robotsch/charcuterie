@@ -20,7 +20,7 @@ export default function PastOrders() {
     let total = 0;
     for (const customer of customerArr) {
       customer.sub_orders.map((item: any) => {
-        total += item.quantity * item.price;
+        total += item.quantity * item.totalPrice;
       });
     }
 
