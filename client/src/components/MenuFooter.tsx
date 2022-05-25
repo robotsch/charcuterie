@@ -13,7 +13,7 @@ export default function MenuFooter() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        position: "absolute",
+        position: "fixed",
         bottom: 0,
         p: 2,
       }}

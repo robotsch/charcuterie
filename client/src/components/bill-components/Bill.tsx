@@ -249,7 +249,7 @@ export default function Bill() {
             setErrorText("Cannot checkout with no items ordered");
             return;
           }
-          alert("PAID");
+          // alert("PAID");
           console.log("order id list", orderIDList);
           axios
             .all(
