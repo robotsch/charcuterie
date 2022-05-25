@@ -14,8 +14,7 @@ router.post('/', (req: Request, res: Response) => {
       if (userData && userData.employeeId) {
         req.session.restaurant_id = userData.restaurantId;
         req.session.employee_id = userData.employeeId;
-        // res.send('http://localhost:3000/employee')
-        res.redirect('http://localhost:3000/employee');
+        res.send(userData.restaurantId)
       } else {
         res.send('Incorrect id or password');
       }

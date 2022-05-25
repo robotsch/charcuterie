@@ -31,16 +31,16 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     const uname = data.get("username");
     const pw = data.get("password");
-    // axios.post("/api/employee-login", { username: uname, password: pw })
-    axios
-      .post("http://localhost:3001/api/employee-login", {
-        username: uname,
-        password: pw,
-        withCredentials: true,
-      })
+    axios.post("/api/employee-login", { username: uname, password: pw })
+    // axios
+      // .post("http://localhost:3001/api/employee-login", {
+      //   username: uname,
+      //   password: pw,
+      //   withCredentials: true,
+      // })
       .then((res) => {
-        console.log(res.data);
-        // window.location.reload();
+        localStorage.setItem("restaurant", res.data)
+        window.location.reload();
       });
   };
 

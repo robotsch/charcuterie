@@ -31,10 +31,10 @@ export default function TablesStatus() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
-      // .get(
-      //   `/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
-      // )
+      // .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      .get(
+        `/api/get-orders-restaurant?id=${localStorage.getItem('restaurant')}`
+      )
       .then((res) => {
         setTables(res.data);
         setCounter(res.data.length + 1);
