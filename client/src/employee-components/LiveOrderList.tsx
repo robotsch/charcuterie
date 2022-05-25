@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import ws from "../sockets/socket";
-import axios from 'axios'
+import axios from "axios";
 
 import Card from "@mui/material/Card";
 import { List, Typography } from "@mui/material";
@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
+import CircleIcon from "@mui/icons-material/Circle";
 
 interface Item {
   _id: string;
@@ -32,14 +33,7 @@ export default function LiveOrderList() {
   const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
-
-    axios.get('/api/session', {withCredentials: true})
-      .then((data) => {
-        ws.emit("EMPLOYEE", {restaurant: data.data.restaurant});
-      })
-      .catch((err) => {
-        console.log('Failed to grab employee room')
-      })
+    ws.emit("EMPLOYEE", { restaurant: localStorage.getItem("restaurant") });
 
     ws.on("SUBMIT_ORDER", (order) => {
       console.log("SUBMIT_ORDER", order);
@@ -90,7 +84,20 @@ export default function LiveOrderList() {
         p: 3,
       }}
     >
-      <Typography variant="h4">Live Order Feed</Typography>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 1,
+        }}
+      >
+        <Box>
+          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+          <span className="mont header">Live Order Feed</span>
+        </Box>
+      </Box>
       {renderedOrders}
     </Box>
   );
