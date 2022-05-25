@@ -8,9 +8,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { List, Typography } from "@mui/material";
+import { List, Typography, Alert, Divider } from "@mui/material";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import CircleIcon from "@mui/icons-material/Circle";
 
 import AddNewTable from "./AddNewTable";
 import CreateQrCode from "./CreateQrCode";
@@ -18,20 +19,15 @@ import CreateQrCode from "./CreateQrCode";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
-function createData(id: string, status: string) {
-  return { id, status };
+interface Table {
+  _id: string;
+  readable_name: string;
 }
 
-const rows = [
-  createData("1", "Active"),
-  createData("2", "Pending"),
-  createData("3", "Closed"),
-];
-
 export default function TablesStatus() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [tables, setTables] = useState({});
+  const [tables, setTables] = useState<Array<Table>>([]);
   const [counter, setCounter] = useState(0);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   useEffect(() => {
     axios
@@ -51,8 +47,26 @@ export default function TablesStatus() {
 
   return (
     <>
-      <Typography variant="body1">Tables</Typography>
-
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 1,
+        }}
+      >
+        <Box>
+          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+          <span className="mont header">Tables</span>
+        </Box>
+        <AddNewTable
+          setTables={setTables}
+          counter={counter}
+          setCounter={setCounter}
+          setShowAlert={setShowAlert}
+        />
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -72,29 +86,21 @@ export default function TablesStatus() {
                     {row.readable_name}
                   </TableCell>
                   <TableCell align="right">
-                    <CreateQrCode
-                      modalVisible={modalVisible}
-                      setModalVisible={setModalVisible}
-                      table={row._id}
-                    />
+                    <CreateQrCode table={row._id} />
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Box
-        sx={{ width: "100%", display: "flex", justifyContent: "center", mt: 3 }}
-      >
-        <AddNewTable
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          setTables={setTables}
-          tables={tables}
-          counter={counter}
-          setCounter={setCounter}
-        />
-      </Box>
+      {showAlert && (
+        <Alert
+          sx={{ position: "fixed", width: 300, bottom: "5vh", right: "7vw" }}
+          severity="success"
+        >
+          New Table Added!
+        </Alert>
+      )}
     </>
   );
 }
