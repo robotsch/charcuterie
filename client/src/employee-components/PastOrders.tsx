@@ -33,16 +33,16 @@ export default function PastOrders() {
   const [orders, setOrders] = useState({});
 
   useEffect(() => {
-    // axios
-    // .get(
-    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
-    //     "restaurant"
-    //   )}`
-    // )
     axios
-      .get(
-        "api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c"
-      )
+    .get(
+      `http://localhost:3001/api/menu?id=${localStorage.getItem(
+        "restaurant"
+      )}`
+    )
+    // axios
+    //   .get(
+    //     "api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c"
+    //   )
       .then((res) => {
         setOrders(res.data);
 

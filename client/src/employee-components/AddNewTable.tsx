@@ -29,7 +29,7 @@ const PositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
-const AddNewTable = (props: any) => {
+export default function AddNewTable(props: any) {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
   const setTables = props.setTables;
@@ -87,6 +87,4 @@ const AddNewTable = (props: any) => {
       </PositionedModal>
     </div>
   );
-};
-
-export default AddNewTable;
+}

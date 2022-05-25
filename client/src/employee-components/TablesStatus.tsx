@@ -8,9 +8,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { List, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
 import AddNewTable from "./AddNewTable";
 import CreateQrCode from "./CreateQrCode";
-import { List, Typography } from "@mui/material";
+
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
@@ -29,14 +33,14 @@ export default function TablesStatus() {
   const [tables, setTables] = useState({});
 
   useEffect(() => {
-    // axios
-    // .get(
-    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
-    //     "restaurant"
-    //   )}`
-    // )
     axios
-      .get(`/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      .get(
+        `http://localhost:3001/api/menu?id=${localStorage.getItem(
+          "restaurant"
+        )}`
+      )
+      // axios
+      //   .get(`/api/get-tables?id=6283f1d9804b848eb5e4560c`)
       // .get(
       //   `/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
       // )
@@ -83,14 +87,16 @@ export default function TablesStatus() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography variant="body1" align="right">
+      <Box
+        sx={{ width: "100%", display: "flex", justifyContent: "center", mt: 3 }}
+      >
         <AddNewTable
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
           setTables={setTables}
           tables={tables}
         />
-      </Typography>
+      </Box>
     </>
   );
 }

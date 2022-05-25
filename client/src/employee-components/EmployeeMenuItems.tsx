@@ -18,14 +18,14 @@ export default function EmployeeMenuItems() {
   const [menu, setMenu] = useState({});
 
   useEffect(() => {
-    // axios
-    // .get(
-    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
-    //     "restaurant"
-    //   )}`
-    // )
     axios
-      .get(`/api/menu?id=6283f1d9804b848eb5e4560c`)
+    .get(
+      `http://localhost:3001/api/menu?id=${localStorage.getItem(
+        "restaurant"
+      )}`
+    )
+    // axios
+    //   .get(`/api/menu?id=6283f1d9804b848eb5e4560c`)
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);
