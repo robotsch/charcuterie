@@ -33,7 +33,7 @@ router.post('/', (req: Request, res: Response) => {
   }
 
   oQueries
-    .createOrderByTableId(ObjectId(table), custArr, restaurant)
+    .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant))
     .then((dbRes) => {
       console.log(dbRes);
       res.send('Success');
