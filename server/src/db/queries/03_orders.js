@@ -41,7 +41,12 @@ const getOrderById = function (id) {
   });
 };
 
-const createOrderByTableId = function (table_id, customersArr, restaurant) {
+const createOrderByTableId = function (
+  table_id,
+  customersArr,
+  restaurant,
+  time
+) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -51,6 +56,7 @@ const createOrderByTableId = function (table_id, customersArr, restaurant) {
         customers: customersArr,
         status: 'pending',
         restaurant_id: restaurant,
+        time: time,
       };
       dbo.collection('orders').insertOne(myobj, function (err, res) {
         if (err) throw err;
