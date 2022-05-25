@@ -119,14 +119,22 @@ io.on('connection', (socket) => {
   socket.on(
     'SUBMIT_ORDER',
     ({ restaurant, currentOrder, tableName, order_id }) => {
-      console.log(restaurant, currentOrder, tableName, order_id);
+      console.log(order_id);
 
-      io.to(room).emit('SUBMIT_ORDER');
-      io.to(restaurant).emit('SUBMIT_ORDER', {
+      const send = {
         order: currentOrder,
         table: tableName,
         order_id: order_id,
-      });
+      };
+      console.log(send);
+      
+      io.to(room).emit('SUBMIT_ORDER');
+      io.to(restaurant).emit('SUBMIT_ORDER', send);
+      // io.to(restaurant).emit('SUBMIT_ORDER', {
+      //   order: currentOrder,
+      //   table: tableName,
+      //   order_id: order_id,
+      // });
     }
   );
 
