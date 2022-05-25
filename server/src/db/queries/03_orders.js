@@ -41,7 +41,7 @@ const getOrderById = function (id) {
   });
 };
 
-const createOrderByTableId = function (table_id, customersArr) {
+const createOrderByTableId = function (table_id, customersArr, restaurant) {
   return new Promise((resolve, reject) => {
     MongoClient.connect(url, function (err, db) {
       if (err) throw err;
@@ -50,6 +50,7 @@ const createOrderByTableId = function (table_id, customersArr) {
         table_id: table_id,
         customers: customersArr,
         status: 'pending',
+        restaurant_id: restaurant,
       };
       dbo.collection('orders').insertOne(myobj, function (err, res) {
         if (err) throw err;
@@ -60,7 +61,6 @@ const createOrderByTableId = function (table_id, customersArr) {
     });
   });
 };
-
 //exports.createOrderByTableId = createOrderByTableId;
 
 const setOrderStatusCompleteById = function (orderId) {
