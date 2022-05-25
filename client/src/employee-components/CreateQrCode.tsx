@@ -46,7 +46,7 @@ const CreateQrCode = (props: any) => {
         `/api/names?restaurant=${localStorage.getItem("restaurant")}&table=${table}`
       )
       .then((res) => {
-        setTableName(res.data)
+        setTableName(res.data.table)
         axios
           .post(`/api/qr-generate`, {
             // restaurant: restaurant,
