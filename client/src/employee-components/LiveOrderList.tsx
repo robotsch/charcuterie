@@ -86,15 +86,14 @@ export default function LiveOrderList(props: any) {
       })
       .then((res) => {
         console.log("complete order res: ", res.data);
-
-        // axios
-        //   .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
-        //   .then((res) => {
-        //     setMenu(res.data);
-        //   })
-        //   .catch((err) => console.log("ERROR", err));
       })
       .catch((err) => console.log("ERROR", err));
+
+    let array = orders.filter(function (obj) {
+      return obj.order_id !== orderId;
+    });
+
+    setOrders(array);
   };
 
   const renderedOrders = orders.map((order: Big, index) => {
