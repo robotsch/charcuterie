@@ -38,9 +38,6 @@ export default function TablesStatus() {
       .then((res) => {
         setTables(res.data);
         setCounter(res.data.length + 1);
-
-        // console.log("Result: ", res);
-        // console.log("tables: ", tables);
       })
       .catch((err) => console.log("ERROR", err));
   }, []);

@@ -9,6 +9,7 @@ import styled from "styled-components";
 import axios from "axios";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -33,12 +34,10 @@ const PositionedModal = styled(Modal)`
   padding: 20px;
 `;
 
-const DeleteMenuItem = (props: any) => {
+export default function DeleteMenuItem(props: any) {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
-  const setMenu = props.setMenu;
-  const menu = props.menu;
-  const id = props.id;
+  const { id, name, image_url, setMenu } = props;
 
   const deleteItem = function (menuItemId: string) {
     console.log("menuitemid: ", menuItemId);
@@ -46,15 +45,13 @@ const DeleteMenuItem = (props: any) => {
     axios
       .post(`/api/remove-menu-item`, {
         id: menuItemId,
-        restaurant_id: localStorage.getItem('restaurant'),
+        restaurant_id: localStorage.getItem("restaurant"),
       })
       .then((res) => {
         console.log("delete item res: ", res.data);
 
-        // setTables((prev) => [...prev, ])
-
         axios
-          .get(`/api/menu?id=${localStorage.getItem('restaurant')}`)
+          .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
           .then((res) => {
             setMenu(res.data);
           })
@@ -65,13 +62,7 @@ const DeleteMenuItem = (props: any) => {
 
   return (
     <div className="modal-example">
-      <Button
-        type="button"
-        className="btn btn-primary mb-4"
-        onClick={() => setShow(true)}
-        color="error"
-        variant="outlined"
-      >
+      <Button onClick={() => setShow(true)} color="error" variant="contained">
         Delete
       </Button>
       <PositionedModal
@@ -80,30 +71,47 @@ const DeleteMenuItem = (props: any) => {
         renderBackdrop={renderBackdrop}
         aria-labelledby="modal-label"
       >
-        <div>
-          Are you sure you want to delete this item?
-          <Button
-            type="button"
-            className="btn btn-primary mb-4"
-            color="success"
-            variant="outlined"
-            onClick={() => deleteItem(id)}
+        <Box sx={{ textAlign: "center" }}>
+          <Typography>Are you sure you want to delete this item?</Typography>{" "}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              mt: 2,
+              py: 2,
+              border: "1px solid #A7A9BE",
+              borderRadius: "10px",
+            }}
           >
-            Accept
-          </Button>
-          <Button
-            type="button"
-            className="btn btn-primary mb-4"
-            color="error"
-            onClick={() => setShow(false)}
-            variant="outlined"
+            <img src={image_url} width={100} height={100} alt="food" />
+            <Box>{name}</Box>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-evenly",
+              mt: 4,
+              mb: 2,
+            }}
           >
-            Decline
-          </Button>
-        </div>
+            <Button
+              color="error"
+              onClick={() => setShow(false)}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button
+              color="success"
+              variant="outlined"
+              onClick={() => deleteItem(id)}
+            >
+              Yes Delete This Item
+            </Button>
+          </Box>
+        </Box>
       </PositionedModal>
     </div>
   );
-};
-
-export default DeleteMenuItem;
+}

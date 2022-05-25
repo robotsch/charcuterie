@@ -26,6 +26,11 @@ export default function EmployeeMenuItems() {
   useEffect(() => {
     axios
       .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
+      // .get(
+      //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
+      //     "restaurant"
+      //   )}`
+      // )
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);
@@ -67,7 +72,7 @@ export default function EmployeeMenuItems() {
           </TableHead>
           <TableBody>
             {Array.isArray(menu) &&
-              menu.map((row) => (
+              menu.map((row: any) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -87,9 +92,10 @@ export default function EmployeeMenuItems() {
                   </TableCell>
                   <TableCell align="center">
                     <DeleteMenuItem
-                      menu={menu}
                       setMenu={setMenu}
                       id={row._id}
+                      name={row.name}
+                      image_url={row.image_url}
                     />
                   </TableCell>
                 </TableRow>

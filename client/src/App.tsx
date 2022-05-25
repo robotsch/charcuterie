@@ -11,9 +11,7 @@ import Bill from "./components/bill-components/Bill";
 
 import Employee from "./employee-components/Employee";
 import EmployeeTesting from "./employee-components/EmployeeTesting";
-import EmployeeMenu from "./employee-components/EmployeeMenu";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
-import EmployeeOrderHistory from "./employee-components/EmployeeOrderHistory";
 
 import { CssBaseline } from "@mui/material";
 

@@ -5,7 +5,6 @@ import TablesStatus from "./TablesStatus";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import EmployeeLogin from "./EmployeeLogin";
-import EmployeeOrderHistory from "./EmployeeOrderHistory";
 import EmployeeMenuItems from "./EmployeeMenuItems";
 import PastOrders from "./PastOrders";
 
@@ -13,7 +12,6 @@ type Page = "HOME" | "ORDER_HISTORY" | "MENU";
 
 export default function Employee() {
   const [page, setPage] = useState<Page>("HOME");
-  // const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
   //   const origin = "/api/session";
@@ -29,12 +27,10 @@ export default function Employee() {
   //     .catch((err) => console.log(err));
   // }, []);
 
-  // let loggedIn = true;
   const [loggedIn, setLoggedIn] = useState<boolean>(true);
 
   return (
     <div>
-      {/* <LiveOrderList /> */}
       {!loggedIn && <EmployeeLogin />}
       {loggedIn && (
         <SideBar setPage={setPage} setLoggedIn={setLoggedIn}>
@@ -42,7 +38,6 @@ export default function Employee() {
             component="main"
             sx={{
               bgcolor: "background.default",
-              // bgcolor: "blue",
               p: 3,
               width: "100%",
               display: "flex",
