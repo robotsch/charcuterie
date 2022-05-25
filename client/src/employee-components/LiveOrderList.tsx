@@ -16,7 +16,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import Drawer from "@mui/material/Drawer";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
-import CheckIcon from '@mui/icons-material/Check';
+import CheckIcon from "@mui/icons-material/Check";
 
 import { useTheme } from "@mui/material/styles";
 
@@ -103,6 +103,7 @@ export default function LiveOrderList(props: any) {
       <Card key={index} sx={{ my: 2, p: 1 }}>
         <Box>
           <span className="mont">Table #{order.table}</span>
+          <span className="mont">Orderd At: {order.time.split(", ")[1]}</span>
         </Box>
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {

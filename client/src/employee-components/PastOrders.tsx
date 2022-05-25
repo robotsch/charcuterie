@@ -96,12 +96,12 @@ function Row(props: any) {
         </TableCell>
         <TableCell align="right">${orderTotalCalc(order.customers)}</TableCell>
         <TableCell align="center">
-          {order.status === "pending" && (
+          {order.status === "Pending" && (
             <Button variant="contained" color="warning">
               Pending
             </Button>
           )}
-          {order.status === "completed" && (
+          {order.status === "Completed" && (
             <Button variant="contained" color="success">
               Completed
             </Button>
