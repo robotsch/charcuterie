@@ -56,7 +56,8 @@ export default function LiveOrderList(props: any) {
         console.log(data);
         console.log("table: ", data.table);
         console.log("order: ", data.order);
-        console.log("time", data.time);
+        // console.log("time", data.time);
+        console.log("order_id", data.order_id);
         // return [...prev, { ...data }];
         return [
           ...prev,

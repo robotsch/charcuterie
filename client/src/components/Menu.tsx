@@ -14,6 +14,10 @@ import { ColorModeContext } from "../providers/ColorModeProvider";
 import ToggleDrawerProvider from "../providers/ToggleDrawerProvider";
 import CurrentOrderDrawerProvider from "../providers/CurrentOrderDrawerProvider";
 
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+
 interface MenuItem {
   id: string;
   category: string;
@@ -33,6 +37,9 @@ export default function Menu() {
   const [menuItem, setMenuItem] = useState({});
 
   const [menu, setMenu] = useState({});
+  const [alertStatus, setAlertStatus] = useState<string>("fdsfsd");
+
+  console.log(alertStatus);
 
   useEffect(() => {
     axios
@@ -59,6 +66,7 @@ export default function Menu() {
         });
 
         setMenu(parsedMenu);
+        // setAlertStatus("");
       })
       .catch((err) => console.log("ERROR", err));
   }, []);
@@ -66,7 +74,7 @@ export default function Menu() {
   return (
     <ToggleDrawerProvider>
       <CurrentOrderDrawerProvider>
-        <MenuItemPage menuItem={menuItem} />
+        <MenuItemPage menuItem={menuItem} setAlertStatus={setAlertStatus} />
         {Object.entries(menu).map(([category, menuItems]) => {
           return (
             <MenuItemList
@@ -77,6 +85,23 @@ export default function Menu() {
             />
           );
         })}
+        {alertStatus !== "" && (
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              position: "fixed",
+              bottom: 60,
+              p: 2,
+            }}
+          >
+            {/* <Fade in={checked}>
+              <Alert severity="success">{alertStatus}</Alert>
+            </Fade> */}
+          </Box>
+        )}
         <MenuFooter />
         <CurrentOrder />
       </CurrentOrderDrawerProvider>
