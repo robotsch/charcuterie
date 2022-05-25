@@ -17,7 +17,7 @@ import Box from "@mui/material/Box";
 import CircleIcon from "@mui/icons-material/Circle";
 
 export default function EmployeeMenuItems() {
-  const [menu, setMenu] = useState({});
+  const [menu, setMenu] = useState([]);
 
   const price = function (price: number) {
     return (price / 100).toFixed(2);
@@ -35,23 +35,26 @@ export default function EmployeeMenuItems() {
   }, []);
 
   return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
+    <Box>
+      <TableContainer
+        sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
+        component={Paper}
       >
-        <Box>
-          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
-          <span className="mont header">Menu</span>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 1,
+          }}
+        >
+          <Box>
+            <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+            <span className="mont header">Menu</span>
+          </Box>
+          <AddMenuItem />
         </Box>
-        <AddMenuItem />
-      </Box>
-      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -91,9 +94,16 @@ export default function EmployeeMenuItems() {
                   </TableCell>
                 </TableRow>
               ))}
+            {menu.length === 0 && (
+              <TableRow>
+                <TableCell component="th" scope="row">
+                  No menu items
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 }

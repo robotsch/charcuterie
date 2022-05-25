@@ -48,8 +48,7 @@ export default function TablesStatus() {
   return (
     <Box>
       <TableContainer
-        sx={{ width: "40vw", maxWidth: 800, minWidth: 500, px: 2, py: 1 }}
-        // sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
+        sx={{ width: "50vw", maxWidth: 700, minWidth: 500, px: 2, py: 1 }}
         component={Paper}
       >
         <Box
