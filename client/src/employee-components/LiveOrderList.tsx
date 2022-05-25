@@ -53,7 +53,7 @@ export default function LiveOrderList(props: any) {
     ws.on("SUBMIT_ORDER", (data) => {
       setOrders((prev) => {
         console.log(prev);
-        console.log(data);
+        console.log("data: ", data);
         console.log("table: ", data.table);
         console.log("order: ", data.order);
         console.log("time", data.time);
@@ -88,7 +88,9 @@ export default function LiveOrderList(props: any) {
           }}
         >
           <span className="mont">Table #{order.table}</span>
-          <span className="mont ordered-time">Orderd at: {order.time.split(", ")[1]}</span>
+          <span className="mont ordered-time">
+            Ordered at: {order.time.split(", ")[1]}
+          </span>
         </Box>
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {
@@ -106,6 +108,13 @@ export default function LiveOrderList(props: any) {
                   );
                 })}
               </List>
+              <Button
+                color="success"
+                variant="outlined"
+                // onClick={() => deleteItem(order._id)}
+              >
+                Order Complete
+              </Button>
             </Box>
           );
         })}
