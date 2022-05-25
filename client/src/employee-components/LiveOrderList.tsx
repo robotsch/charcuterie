@@ -36,9 +36,9 @@ export default function LiveOrderList() {
   useEffect(() => {
     ws.emit("EMPLOYEE", { restaurant: localStorage.getItem("restaurant") });
 
-    ws.on("SUBMIT_ORDER", (order) => {
-      console.log('on order: ', order)
-      setOrders((prev) => [...prev, {table: order.table, order: order.currentOrder}]);
+    ws.on("SUBMIT_ORDER", (data) => {
+      console.log('on order: ', data)
+      setOrders((prev) => [...prev, {table: data.table, order: data.order}]);
       console.log('after setOrders: ', orders)
     });
 
