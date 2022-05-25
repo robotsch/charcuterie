@@ -15,15 +15,16 @@ router.get('/', (req: Request, res: Response) => {
     Promise.all([
       rQueries.getRestaurantWithId(ObjectId(restaurant)),
       tQueries.getTableReadableIdById(ObjectId(table)),
-    ]).then((data) => {
-      const names = { restaurant: data[0].name, table: data[1] };
-      res.send(names);
-    })
-    .catch((err) => {
-      console.log('Failed to get readable names: ', err)
-    });
+    ])
+      .then((data) => {
+        const names = { restaurant: data[0].name, table: data[1] };
+        res.send(names);
+      })
+      .catch((err) => {
+        console.log('Failed to get readable names: ', err);
+      });
   } else {
-    res.status(500).send('Invalid query')
+    res.status(500).send('Invalid query');
   }
 });
 

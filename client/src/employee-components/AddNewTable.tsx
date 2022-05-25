@@ -33,17 +33,35 @@ export default function AddNewTable(props: any) {
   const [show, setShow] = useState(false);
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
   const setTables = props.setTables;
+  // const readable_id = props.counter + 1;
+  const counter = props.counter;
+  const setCounter = props.setCounter;
 
   const createTable = function () {
+    setCounter(counter + 1);
+
     axios
       .post(`http://localhost:3001/api/add-table`, {
-        // restaurant: restaurant,
-        // table: table,
+        readable_id: counter,
       })
       .then((res) => {
         console.log("add table res: ", res.data);
 
         // setTables((prev) => [...prev, ])
+
+        axios
+          .get(
+            `http://localhost:3001/api/names?restaurant=6283f1d9804b848eb5e4560c&table=${res.data.insertedId}`
+          )
+          .then((result) => {
+            console.log("readable names res: ", result.data);
+            let tableObj = {
+              _id: res.data.insertedId,
+              readable_name: result.data.table,
+            };
+            setTables((prev) => [...prev, tableObj]);
+          })
+          .catch((err) => console.log("ERROR", err));
       })
       .catch((err) => console.log("ERROR", err));
   };
@@ -70,16 +88,17 @@ export default function AddNewTable(props: any) {
         className="btn btn-primary mb-4"
         onClick={() => {
           setShow(true);
-          {
-            createTable();
-          }
+          createTable();
         }}
       >
         Add Table
       </Button>
       <PositionedModal
         show={show}
-        onHide={() => setShow(false)}
+        onHide={() => {
+          setShow(false);
+          // window.location.reload();
+        }}
         renderBackdrop={renderBackdrop}
         aria-labelledby="modal-label"
       >
