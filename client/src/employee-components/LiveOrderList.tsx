@@ -66,7 +66,7 @@ export default function LiveOrderList(props: any) {
           {Object.entries(order.order).map(([name, items]) => {
             return (
               <div key={name}>
-                <Typography variant="body1">{order.table}{name}</Typography>
+                <Typography variant="body1">{order.table + name}</Typography>
                 <List>
                   {Object.values(items).map((item: Item) => {
                     return (
