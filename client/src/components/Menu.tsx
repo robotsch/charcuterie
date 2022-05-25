@@ -37,9 +37,9 @@ export default function Menu() {
   const [menuItem, setMenuItem] = useState({});
 
   const [menu, setMenu] = useState({});
-  const [alertStatus, setAlertStatus] = useState<string>("fdsfsd");
+  const [alertStatus, setAlertStatus] = useState<string>("");
 
-  console.log(alertStatus);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   useEffect(() => {
     axios
@@ -71,10 +71,33 @@ export default function Menu() {
       .catch((err) => console.log("ERROR", err));
   }, []);
 
+  useEffect(() => {
+    console.log("[alertStatus]", alertStatus, showAlert);
+
+    if (alertStatus !== "") {
+      setTimeout(() => {
+        console.log("fade in");
+        setShowAlert(true);
+      }, 400);
+
+      setTimeout(() => {
+        console.log("fade out");
+        setShowAlert(false);
+        setTimeout(() => {
+          setAlertStatus("");
+        }, 100)
+      }, 3000);
+    }
+  }, [alertStatus]);
+
   return (
     <ToggleDrawerProvider>
       <CurrentOrderDrawerProvider>
-        <MenuItemPage menuItem={menuItem} setAlertStatus={setAlertStatus} />
+        <MenuItemPage
+          menuItem={menuItem}
+          setAlertStatus={setAlertStatus}
+          alertStatus={alertStatus}
+        />
         {Object.entries(menu).map(([category, menuItems]) => {
           return (
             <MenuItemList
@@ -97,9 +120,9 @@ export default function Menu() {
               p: 2,
             }}
           >
-            {/* <Fade in={checked}>
+            <Fade in={showAlert}>
               <Alert severity="success">{alertStatus}</Alert>
-            </Fade> */}
+            </Fade>
           </Box>
         )}
         <MenuFooter />
