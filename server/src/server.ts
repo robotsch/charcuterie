@@ -106,8 +106,10 @@ io.on('connection', (socket) => {
     io.in(socket.id).socketsJoin(room);
   });
 
-  socket.on('DB_TEST', () => {
-    getAllRestaurants().then((res: any) => io.emit('DB_TEST', res));
+  socket.on('REMOVE_ITEM', ({ name, menuItemID, restaurant, table }) => {
+    room = `rst${restaurant}.tbl${table}`;
+    io.in(socket.id).socketsJoin(room);
+    io.to(room).emit('REMOVE_ITEM', { name, menuItemID });
   });
 
   socket.on('UPDATE_ORDER', ({ name, order, restaurant, table }) => {
@@ -127,7 +129,7 @@ io.on('connection', (socket) => {
         order_id: order_id,
       };
       console.log(send);
-      
+
       io.to(room).emit('SUBMIT_ORDER');
       io.to(restaurant).emit('SUBMIT_ORDER', send);
       // io.to(restaurant).emit('SUBMIT_ORDER', {

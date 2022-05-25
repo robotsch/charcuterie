@@ -39,14 +39,8 @@ interface Order {
 }
 
 function Row(props: any) {
-  const { order } = props;
+  const { order, index } = props;
   const [open, setOpen] = useState<boolean>(false);
-
-  let counter = 1;
-
-  const counterAdd = function () {
-    counter++;
-  };
 
   const orderTotalCalc = function (customerArr: any) {
     let total = 0;
@@ -56,7 +50,6 @@ function Row(props: any) {
       });
     }
 
-    counterAdd();
     return (total / 100).toFixed(2);
   };
 
@@ -98,7 +91,7 @@ function Row(props: any) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {counter}
+          {index + 1}
         </TableCell>
         <TableCell align="right">${orderTotalCalc(order.customers)}</TableCell>
         <TableCell align="right">{order.status}</TableCell>
@@ -230,8 +223,8 @@ export default function PastOrders() {
           <TableBody>
             <>
               {Array.isArray(orders) &&
-                orders.map((order: Order) => {
-                  return <Row key={order._id} order={order} />;
+                orders.map((order: Order, index: number) => {
+                  return <Row key={order._id} index={index} order={order} />;
                 })}
               {orders.length === 0 && (
                 <TableRow>
