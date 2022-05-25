@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import LiveOrderList from "./LiveOrderList";
 import PastOrders from "./PastOrders";
 
-export default function OrderHistory() {
+export default function EmployeeOrderHistory() {
   return (
     <Box sx={{ display: "flex" }}>
       <SideBar />

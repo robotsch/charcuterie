@@ -21,7 +21,7 @@ import axios from "axios";
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#242F36', // charcoal grey complement
+      main: "#242F36", // charcoal grey complement
     },
   },
 });
@@ -32,8 +32,15 @@ export default function SignIn() {
     const uname = data.get("username");
     const pw = data.get("password");
     axios.post("/api/employee-login", { username: uname, password: pw })
-      .then(() => {
-        window.location.reload()
+    // axios
+      // .post("http://localhost:3001/api/employee-login", {
+      //   username: uname,
+      //   password: pw,
+      //   withCredentials: true,
+      // })
+      .then((res) => {
+        localStorage.setItem("restaurant", res.data)
+        window.location.reload();
       });
   };
 

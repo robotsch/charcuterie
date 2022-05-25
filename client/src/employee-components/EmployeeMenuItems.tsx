@@ -13,6 +13,8 @@ import DeleteMenuItem from "./DeleteMenuItem";
 import AddMenuItem from "./AddMenuItem";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import Box from "@mui/material/Box";
+import CircleIcon from "@mui/icons-material/Circle";
 
 export default function EmployeeMenuItems() {
   const [menu, setMenu] = useState({});
@@ -22,14 +24,8 @@ export default function EmployeeMenuItems() {
   };
 
   useEffect(() => {
-    // axios
-    // .get(
-    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
-    //     "restaurant"
-    //   )}`
-    // )
     axios
-      .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+      .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);
@@ -40,15 +36,26 @@ export default function EmployeeMenuItems() {
 
   return (
     <>
-      <Typography variant="body1">Menu</Typography>
-      <Typography variant="body1" align="right">
-        <AddMenuItem menu={menu} setMenu={setMenu} />
-      </Typography>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 1,
+        }}
+      >
+        <Box>
+          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+          <span className="mont header">Menu</span>
+        </Box>
+        <AddMenuItem />
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="Left">Image</TableCell>
+              <TableCell align="left">Image</TableCell>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Category</TableCell>
               <TableCell align="center">Price</TableCell>
@@ -72,7 +79,9 @@ export default function EmployeeMenuItems() {
                   </TableCell>
                   <TableCell align="center">{row.name}</TableCell>
                   <TableCell align="center">{row.category}</TableCell>
-                  <TableCell align="center">${price(row.price)}</TableCell>
+                  <TableCell align="center">
+                    ${(row.price / 100).toFixed(2)}
+                  </TableCell>
                   <TableCell align="center">
                     <DeleteMenuItem
                       menu={menu}

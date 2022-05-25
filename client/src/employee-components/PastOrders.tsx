@@ -8,6 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
+import Box from "@mui/material/Box";
+import CircleIcon from "@mui/icons-material/Circle";
 
 import { List, Typography } from "@mui/material";
 
@@ -33,15 +35,9 @@ export default function PastOrders() {
   const [orders, setOrders] = useState({});
 
   useEffect(() => {
-    // axios
-    // .get(
-    //   `http://localhost:3001/api/menu?id=${localStorage.getItem(
-    //     "restaurant"
-    //   )}`
-    // )
     axios
       .get(
-        "http://localhost:3001/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c"
+        "/api/get-orders-restaurant?id=${localStorage.getItem('restaurant')}"
       )
       .then((res) => {
         setOrders(res.data);
@@ -53,8 +49,21 @@ export default function PastOrders() {
   }, []);
 
   return (
-    <>
-      <Typography variant="body1">Past Orders</Typography>
+    <Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 1,
+        }}
+      >
+        <Box>
+          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+          <span className="mont header">Past Orders</span>
+        </Box>
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -83,6 +92,6 @@ export default function PastOrders() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 }

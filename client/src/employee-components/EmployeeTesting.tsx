@@ -5,8 +5,14 @@ import TablesStatus from "./TablesStatus";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import EmployeeLogin from "./EmployeeLogin";
+import EmployeeOrderHistory from "./EmployeeOrderHistory";
+import EmployeeMenuItems from "./EmployeeMenuItems";
+import PastOrders from "./PastOrders";
+
+type Page = "HOME" | "ORDER_HISTORY" | "MENU";
 
 export default function Employee() {
+  const [page, setPage] = useState<Page>("HOME");
   // const [loggedIn, setLoggedIn] = useState(false);
 
   // useEffect(() => {
@@ -27,15 +33,21 @@ export default function Employee() {
 
   return (
     <div>
-      {loggedIn ? (
-        <SideBar>
+      {/* <LiveOrderList /> */}
+      {!loggedIn && <EmployeeLogin />}
+      {loggedIn && (
+        <SideBar setPage={setPage}>
           <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
-            <TablesStatus />
+            {page === "HOME" && <TablesStatus />}
+            {page === "ORDER_HISTORY" && (
+              <Box sx={{ display: "flex" }}>
+                <PastOrders />
+                <LiveOrderList />
+              </Box>
+            )}
+            {page === "MENU" && <EmployeeMenuItems />}
           </Box>
-          {/* <LiveOrderList /> */}
         </SideBar>
-      ) : (
-        <EmployeeLogin />
       )}
     </div>
   );

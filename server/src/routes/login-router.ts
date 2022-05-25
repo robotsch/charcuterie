@@ -10,18 +10,18 @@ router.post('/', (req: Request, res: Response) => {
 
   authenticateUser(username, password)
     .then((userData) => {
-      console.log(userData)
+      console.log(userData);
       if (userData && userData.employeeId) {
         req.session.restaurant_id = userData.restaurantId;
         req.session.employee_id = userData.employeeId;
-        res.redirect('/employee')
+        res.send(userData.restaurantId)
       } else {
         res.send('Incorrect id or password');
       }
     })
     .catch((err) => {
       console.log('Authentication action failed: ', err);
-      res.status(500).send(`Authentication action failed: ${err}`)
+      res.status(500).send(`Authentication action failed: ${err}`);
     });
 });
 

@@ -13,7 +13,7 @@ import Employee from "./employee-components/Employee";
 import EmployeeTesting from "./employee-components/EmployeeTesting";
 import EmployeeMenu from "./employee-components/EmployeeMenu";
 import EmployeeLogin from "./employee-components/EmployeeLogin";
-import OrderHistory from "./employee-components/OrderHistory";
+import EmployeeOrderHistory from "./employee-components/EmployeeOrderHistory";
 
 import { CssBaseline } from "@mui/material";
 
@@ -71,7 +71,7 @@ export default function App() {
             path="/employee/history"
             element={
               <>
-                <OrderHistory />
+                <EmployeeOrderHistory />
               </>
             }
           />

@@ -91,30 +91,6 @@ export default function LiveOrderList() {
       }}
     >
       <Typography variant="h4">Live Order Feed</Typography>
-      <Button
-        variant="contained"
-        onClick={() => {
-          ws.emit("SUBMIT_ORDER", {
-            restaurant: localStorage.getItem("restaurant"),
-            currentOrder: {
-              alex: {
-                "6283f1d9804b848eb5e45602": {
-                  _id: "6283f1d9804b848eb5e45602",
-                  name: "kani sushi",
-                  price: 25.99,
-                  image_url:
-                    "https://izzycooking.com/wp-content/uploads/2022/05/Salmon-Nigiri.jpg",
-                  description: "6 pcs kani sushi",
-                  quantity: 1,
-                },
-              },
-            },
-          });
-          ws.emit("DB_TEST");
-        }}
-      >
-        DB_TEST
-      </Button>
       {renderedOrders}
     </Box>
   );
