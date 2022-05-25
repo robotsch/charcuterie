@@ -1,10 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import CircleIcon from "@mui/icons-material/Circle";
 import Modal from "react-overlays/Modal";
 import styled from "styled-components";
 //import QrLoader from "./QrLoader";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import Divider from "@mui/material/Divider";
 
 const Backdrop = styled("div")`
   position: fixed;
@@ -32,6 +35,7 @@ const PositionedModal = styled(Modal)`
 const CreateQrCode = (props: any) => {
   const [qrCode, setQrCode] = useState('');
   const [show, setShow] = useState(false);
+  const [tableName, setTableName] = useState('')
   const renderBackdrop = (props: any) => <Backdrop {...props} />;
   const table = props.table;
 
@@ -45,7 +49,14 @@ const CreateQrCode = (props: any) => {
         console.log("qr: ", res.data);
         setQrCode(res.data);
       })
-      .catch((err) => console.log("ERROR", err));
+      .catch((err) => console.log("Failed to generate qr code: ", err));
+    axios.get(`/api/namesrestaurant=${localStorage.get('restaurant')}&table=${table}`)
+      .then((res) => {
+        setTableName(res.data.table)
+      })
+      .catch((err) => {
+        console.log("Failed to get names: ", err)
+      })
   };
 
   return (
@@ -70,6 +81,15 @@ const CreateQrCode = (props: any) => {
         renderBackdrop={renderBackdrop}
         aria-labelledby="modal-label"
       >
+        <Box
+          sx={{
+            mb: 2,
+          }}
+        >
+          <CircleIcon fontSize="small" sx={{ mr: 2 }} />
+          <span className="mont subheader">{`Table ${tableName}`}</span>
+        </Box>
+        <Divider sx={{ width: "95%", mx: "auto" }} />
         <img src={qrCode}></img>
       </PositionedModal>
     </div>
