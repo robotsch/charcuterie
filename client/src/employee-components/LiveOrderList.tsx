@@ -51,10 +51,6 @@ export default function LiveOrderList(props: any) {
 
     ws.on("SUBMIT_ORDER", (data) => {
       setOrders((prev) => {
-        console.log(prev);
-        console.log(data);
-        console.log("table: ", data.table);
-        console.log("order: ", data.order);
         return [...prev, { table: data.table, order: data.order }];
       });
       console.log("after setOrders: ", orders);
