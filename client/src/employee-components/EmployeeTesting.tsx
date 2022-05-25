@@ -29,14 +29,15 @@ export default function Employee() {
   //     .catch((err) => console.log(err));
   // }, []);
 
-  let loggedIn = true;
+  // let loggedIn = true;
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
 
   return (
     <div>
       {/* <LiveOrderList /> */}
       {!loggedIn && <EmployeeLogin />}
       {loggedIn && (
-        <SideBar setPage={setPage}>
+        <SideBar setPage={setPage} setLoggedIn={setLoggedIn}>
           <Box
             component="main"
             sx={{

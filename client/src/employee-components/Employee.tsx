@@ -56,7 +56,7 @@ export default function Employee() {
       ) : status === "authcheck" ? (
         <EmployeeLogin />
       ) : (
-        <SideBar setPage={setPage}>
+        <SideBar setPage={setPage} setLoggedIn={setStatus}>
           <Box component="main" sx={{ bgcolor: "background.default", p: 3 }}>
             {page === "HOME" && <TablesStatus />}
             {page === "ORDER_HISTORY" && (

@@ -22,7 +22,7 @@ import { useTheme } from "@mui/material/styles";
 const drawerWidth = 260;
 
 export default function SideBar(props: any) {
-  const { setPage } = props;
+  const { setPage, setLoggedIn } = props;
   const theme = useTheme();
 
   const [restaurantName, setRestaurantName] = useState<string>("");
@@ -124,6 +124,10 @@ export default function SideBar(props: any) {
                 display: "flex",
                 gap: 2,
                 bgcolor: "primary.main",
+              }}
+              onClick={() => {
+                setLoggedIn(false);
+                // setLoggedIn("authcheck");
               }}
             >
               <LogoutIcon />
