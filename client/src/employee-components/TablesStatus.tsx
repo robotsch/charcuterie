@@ -27,6 +27,7 @@ const rows = [
 export default function TablesStatus() {
   const [modalVisible, setModalVisible] = useState(false);
   const [tables, setTables] = useState({});
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     // axios
@@ -36,12 +37,13 @@ export default function TablesStatus() {
     //   )}`
     // )
     axios
-      .get(`/api/get-tables?id=6283f1d9804b848eb5e4560c`)
+      .get(`http://localhost:3001/api/get-tables?id=6283f1d9804b848eb5e4560c`)
       // .get(
       //   `/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c`
       // )
       .then((res) => {
         setTables(res.data);
+        setCounter(res.data.length + 1);
 
         console.log("Result: ", res);
         console.log("tables: ", tables);
@@ -89,6 +91,8 @@ export default function TablesStatus() {
           setModalVisible={setModalVisible}
           setTables={setTables}
           tables={tables}
+          counter={counter}
+          setCounter={setCounter}
         />
       </Typography>
     </>

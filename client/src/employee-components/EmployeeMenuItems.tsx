@@ -25,7 +25,7 @@ export default function EmployeeMenuItems() {
     //   )}`
     // )
     axios
-      .get(`/api/menu?id=6283f1d9804b848eb5e4560c`)
+      .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);
@@ -44,7 +44,7 @@ export default function EmployeeMenuItems() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell></TableCell>
+              <TableCell align="Left">Image</TableCell>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Category</TableCell>
               <TableCell align="center">Price</TableCell>
@@ -70,7 +70,6 @@ export default function EmployeeMenuItems() {
                   <TableCell align="center">{row.category}</TableCell>
                   <TableCell align="center">${row.price}</TableCell>
                   <TableCell align="center">
-                    <EditMenuItem />
                     <DeleteMenuItem />
                   </TableCell>
                 </TableRow>

@@ -12,8 +12,8 @@ const router: Router = express.Router();
 router.post('/', (req: Request, res: Response) => {
   //const restaurant = sanitize(req.session.restaurant_id)
   const restaurant = '6283f1d9804b848eb5e4560c';
-  //const readable_id = req.body;
-  const readable_id = 5;
+  const readable_id = req.body.readable_id;
+  //const readable_id = 5;
 
   console.log('HERE');
 

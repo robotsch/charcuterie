@@ -41,7 +41,7 @@ export default function PastOrders() {
     // )
     axios
       .get(
-        "api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c"
+        "http://localhost:3001/api/get-orders-restaurant?id=6283f1d9804b848eb5e4560c"
       )
       .then((res) => {
         setOrders(res.data);
