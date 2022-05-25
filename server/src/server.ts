@@ -116,11 +116,9 @@ io.on('connection', (socket) => {
     io.to(room).emit('UPDATE_ORDER', { name, order });
   });
 
-  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder }) => {
+  socket.on('SUBMIT_ORDER', ({ restaurant, currentOrder, tableName }) => {
     io.to(room).emit('SUBMIT_ORDER');
-    // insert order into database
-    console.log('SUBMIT_ORDER', restaurant, currentOrder);
-    io.to(restaurant).emit('SUBMIT_ORDER', currentOrder);
+    io.to(restaurant).emit('SUBMIT_ORDER', {order: currentOrder, table: tableName});
   });
 
   socket.on('disconnect', () => {
