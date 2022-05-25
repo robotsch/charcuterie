@@ -50,7 +50,7 @@ const CreateQrCode = (props: any) => {
         setQrCode(res.data);
       })
       .catch((err) => console.log("Failed to generate qr code: ", err));
-    axios.get(`/api/namesrestaurant=${localStorage.get('restaurant')}&table=${table}`)
+    axios.get(`/api/namesrestaurant=${localStorage.getItem('restaurant')}&table=${table}`)
       .then((res) => {
         setTableName(res.data.table)
       })
