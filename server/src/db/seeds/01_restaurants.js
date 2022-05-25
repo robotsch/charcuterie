@@ -33,7 +33,7 @@ MongoClient.connect(url, function (err, db) {
           price: 1500,
           description: 'Salt cured salmon, ikura, snow crab, greens',
           image_url:
-            'http://www.quirkyaesthetics.com/uploads/2/2/5/3/22530782/2c7a3280-20210707_orig.jpg',
+            'https://pbs.twimg.com/media/DZJVlD-U8AEn7Ga?format=jpg&name=small',
           category: 'Appetizer',
         },
         {
@@ -51,7 +51,7 @@ MongoClient.connect(url, function (err, db) {
           price: 1800,
           description: 'Scallop sashimi, ponzu dressing',
           image_url:
-            'http://www.quirkyaesthetics.com/uploads/2/2/5/3/22530782/2c7a3269-20210707_orig.jpg',
+            'https://cdn.shopify.com/s/files/1/0396/7313/5266/products/ZensaiArtboard1copy5-1_480x.jpg?v=1621472184',
           category: 'Appetizer',
         },
         {
@@ -66,10 +66,10 @@ MongoClient.connect(url, function (err, db) {
         {
           _id: ObjectId(),
           name: 'Sashimi Appetizer',
-          price: 3900,
+          price: 2100,
           description: "Chef's selection of assorted sashimi",
           image_url:
-            'http://wherejessate.com/wp-content/uploads/2016/08/DSC08369-1-500x333.jpg',
+            'https://sushi-ato.com/wp-content/uploads/2021/05/Photo-Oct-02-3-04-29-PM.jpg',
           category: 'Appetizer',
         },
         {
