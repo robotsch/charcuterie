@@ -19,9 +19,13 @@ import CircleIcon from "@mui/icons-material/Circle";
 export default function EmployeeMenuItems() {
   const [menu, setMenu] = useState({});
 
+  const price = function (price: number) {
+    return (price / 100).toFixed(2);
+  };
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/menu?id=6283f1d9804b848eb5e4560c`)
+      .get(`/api/menu?id=${localStorage.getItem("restaurant")}`)
       .then((res) => {
         setMenu(res.data);
         console.log("menu: ", menu);
@@ -79,7 +83,11 @@ export default function EmployeeMenuItems() {
                     ${(row.price / 100).toFixed(2)}
                   </TableCell>
                   <TableCell align="center">
-                    <DeleteMenuItem />
+                    <DeleteMenuItem
+                      menu={menu}
+                      setMenu={setMenu}
+                      id={row._id}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

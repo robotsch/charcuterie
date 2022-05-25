@@ -21,7 +21,6 @@ router.post('/', (req: Request, res: Response) => {
         name: item.name,
         quantity: item.quantity,
         totalPrice: item.totalPrice,
-        restaurant: item.restaurant_id
       });
     });
 
@@ -34,7 +33,7 @@ router.post('/', (req: Request, res: Response) => {
   }
 
   oQueries
-    .createOrderByTableId(ObjectId(table), custArr)
+    .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant))
     .then((dbRes) => {
       console.log(dbRes);
       res.send('Success');

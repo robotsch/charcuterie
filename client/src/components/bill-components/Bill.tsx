@@ -63,12 +63,12 @@ export default function Bill() {
 
   useEffect(() => {
     axios
-      // .get(`/api/get-order?id=${localStorage.getItem("table")}&status=pending`)
-      .get(
-        `http://localhost:3001/api/get-order?id=${localStorage.getItem(
-          "table"
-        )}&status=pending`
-      )
+      .get(`/api/get-order?id=${localStorage.getItem("table")}&status=pending`)
+      // .get(
+      //   `http://localhost:3001/api/get-order?id=${localStorage.getItem(
+      //     "table"
+      //   )}&status=pending`
+      // )
       .then((res) => {
         const parsedBill: BillInterface = {};
         let newSubTotal = 0;

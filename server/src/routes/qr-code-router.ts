@@ -23,11 +23,11 @@ import qrcode from 'qrcode';
 
 const router: Router = express.Router();
 
-router.post('/', (req: Request, res: Response) => {
+router.post('/', apiAuthCheck, (req: Request, res: Response) => {
   const { table } = req.body;
 
   qrcode.toDataURL(
-    `http://localhost:3000/landing?id1=6283f1d9804b848eb5e4560c&id2=${table}`,
+    `https://charcuterie-lhl.herokuapp.com/landing?id1=${req.session.restaurant_id}&id2=${table}`,
     (err, url) => {
       res.send(`${url}`);
     }

@@ -14,14 +14,14 @@ export default function AddNewTable(props: any) {
     setCounter(counter + 1);
 
     axios
-      .post(`http://localhost:3001/api/add-table`, {
+      .post(`/api/add-table`, {
         readable_id: counter,
       })
       .then((res) => {
 
         axios
           .get(
-            `http://localhost:3001/api/names?restaurant=6283f1d9804b848eb5e4560c&table=${res.data.insertedId}`
+            `/api/names?restaurant=${localStorage.getItem('restaurant')}&table=${res.data.insertedId}`
           )
           .then((result) => {
             console.log("readable names res: ", result.data);
