@@ -169,9 +169,10 @@ export default function CurrentOrder() {
                   // .post(`/api/order`, send)
                   .then((res) => {
                     ws.emit("SUBMIT_ORDER", {
+                      order_id: res.data,
                       restaurant: localStorage.getItem("restaurant"),
                       currentOrder,
-                      tableName: localStorage.getItem("tableName")
+                      tableName: localStorage.getItem("tableName"),
                     });
                   })
                   .catch((error) => console.log(error));
