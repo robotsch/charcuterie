@@ -133,7 +133,7 @@ export default function SideBar(props: any) {
                   .catch((err) => {
                     console.log("Couldn't reach logout route: ", err);
                   });
-                  window.location.reload();
+                window.location.reload();
               }}
             >
               <LogoutIcon />
