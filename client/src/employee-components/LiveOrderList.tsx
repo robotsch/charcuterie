@@ -56,7 +56,7 @@ export default function LiveOrderList() {
     return (
       <Card key={index} sx={{ my: 2, p: 1 }}>
         <CardHeader>Table {order.table}</CardHeader>
-          {Object.entries(order.currentOrder).map(([name, items]) => {
+          {Object.entries(order.order).map(([name, items]) => {
             return (
               <div key={name}>
                 <Typography variant="body1">{name}</Typography>
@@ -103,7 +103,7 @@ export default function LiveOrderList() {
           <span className="mont header">Live Order Feed</span>
         </Box>
       </Box>
-      {/* {renderedOrders} */}
+      {renderedOrders}
     </Box>
   );
 }
