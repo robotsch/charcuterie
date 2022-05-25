@@ -1,4 +1,3 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -31,9 +30,17 @@ interface Customer {
   sub_orders: SubOrder[];
 }
 
+interface Order {
+  _id: string;
+  table_id: string;
+  customers: Customer[];
+  status: string;
+  restaurant_id: string;
+}
+
 function Row(props: any) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
+  const { order } = props;
+  const [open, setOpen] = useState<boolean>(false);
 
   let counter = 1;
 
@@ -76,10 +83,10 @@ function Row(props: any) {
     return { parsedBill, total };
   };
 
-  const { parsedBill, total } = combineOrders(row.customers);
+  const { parsedBill, total } = combineOrders(order.customers);
 
   return (
-    <Fragment key={row._id}>
+    <Fragment key={order._id}>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
         <TableCell>
           <IconButton
@@ -93,31 +100,28 @@ function Row(props: any) {
         <TableCell component="th" scope="row">
           {counter}
         </TableCell>
-        <TableCell align="right">${orderTotalCalc(row.customers)}</TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">${orderTotalCalc(order.customers)}</TableCell>
+        <TableCell align="right">{order.status}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell sx={{ py: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box sx={{ m: 1, pb: 2 }}>
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   alignItems: "center",
+                  gap: 5,
+                  mt: 2,
                 }}
               >
-                <Typography variant="h6">
-                  Order Details
-                </Typography>
+                <Typography variant="h6">Order Details</Typography>
                 <Typography variant="body2">
-                  Table #
-                </Typography>
-                <Typography variant="body2">
-                  Ordered at:
+                  Ordered on: {new Date().toLocaleString()}
                 </Typography>
               </Box>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>Item Name</TableCell>
@@ -190,9 +194,6 @@ export default function PastOrders() {
       )
       .then((res) => {
         setOrders(res.data);
-
-        console.log("Result: ", res);
-        console.log("orders: ", orders);
       })
       .catch((err) => console.log("ERROR", err));
   }, []);
@@ -229,8 +230,8 @@ export default function PastOrders() {
           <TableBody>
             <>
               {Array.isArray(orders) &&
-                orders.map((row: any) => {
-                  return <Row key={row._id} row={row} />;
+                orders.map((order: Order) => {
+                  return <Row key={order._id} order={order} />;
                 })}
               {orders.length === 0 && (
                 <TableRow>
