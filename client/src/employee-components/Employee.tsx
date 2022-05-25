@@ -26,8 +26,8 @@ export default function Employee() {
   const [page, setPage] = useState<Page>("HOME");
 
   useEffect(() => {
-    const origin = "/api/session";
-    // const origin = "http://localhost:3001/api/session";
+    // const origin = "/api/session";
+    const origin = "http://localhost:3001/api/session";
     setStatus("loading");
 
     axios
@@ -43,7 +43,6 @@ export default function Employee() {
   }, []);
 
   return (
-    // <ThemeProvider theme={theme}>
     <div>
       {status === "loading" ? (
         <Box
@@ -76,6 +75,5 @@ export default function Employee() {
         </SideBar>
       )}
     </div>
-    // </ThemeProvider>
   );
 }

@@ -40,6 +40,7 @@ interface Order {
 interface Big {
   order: Order;
   table: string;
+  time: string;
 }
 
 export default function LiveOrderList(props: any) {
@@ -55,7 +56,16 @@ export default function LiveOrderList(props: any) {
         console.log(data);
         console.log("table: ", data.table);
         console.log("order: ", data.order);
-        return [...prev, { table: data.table, order: data.order }];
+        console.log("time", data.time);
+        // return [...prev, { ...data }];
+        return [
+          ...prev,
+          {
+            table: data.table,
+            order: data.order,
+            time: new Date().toLocaleString(),
+          },
+        ];
       });
       console.log("after setOrders: ", orders);
     });
@@ -67,14 +77,23 @@ export default function LiveOrderList(props: any) {
 
   const renderedOrders = orders.map((order: Big, index) => {
     return (
-      <Card key={index} sx={{ my: 2, p: 1 }}>
-        <Box>
-          <span class="mont">Table #{order.table}</span>
+      <Card key={index} sx={{ m: 2, p: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            px: 1,
+            py: 1,
+          }}
+        >
+          <span className="mont">Table #{order.table}</span>
+          <span className="mont ordered-time">Orderd at: {order.time.split(", ")[1]}</span>
         </Box>
         <Divider />
         {Object.entries(order.order).map(([name, items]) => {
           return (
-            <>
+            <Box sx={{ pt: 1.5, px: 1.5 }}>
               <Typography variant="body1">{name}</Typography>
               <List>
                 {Object.values(items).map((item: Item) => {
@@ -87,7 +106,7 @@ export default function LiveOrderList(props: any) {
                   );
                 })}
               </List>
-            </>
+            </Box>
           );
         })}
       </Card>
@@ -103,7 +122,7 @@ export default function LiveOrderList(props: any) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            bgcolor: "primary.main",
+            bgcolor: "info.main",
           },
           height: "100%",
         }}

@@ -165,8 +165,8 @@ export default function CurrentOrder() {
                 console.log("send", send);
 
                 axios
-                  // .post("http://localhost:3001/api/order", send)
-                  .post(`/api/order`, send)
+                  .post("http://localhost:3001/api/order", send)
+                  // .post(`/api/order`, send)
                   .then((res) => {
                     ws.emit("SUBMIT_ORDER", {
                       restaurant: localStorage.getItem("restaurant"),
