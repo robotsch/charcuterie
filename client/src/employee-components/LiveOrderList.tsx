@@ -59,11 +59,12 @@ export default function LiveOrderList(props: any) {
     console.log(orders.length);
     console.log("HERE");
     return (
-      <Card key={index} sx={{ my: 2, p: 1 }}>
+      <Card key={index} sx={{ m: 3, p: 1.5 }}>
         {Object.entries(order).map(([name, items]) => {
           return (
             <div key={name}>
               <Typography variant="body1">{name}</Typography>
+              <Divider />
               <List>
                 {Object.values(items).map((item: Item) => {
                   return (

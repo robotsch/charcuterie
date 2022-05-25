@@ -13,20 +13,6 @@ type Page = "HOME" | "ORDER_HISTORY" | "MENU";
 export default function Employee() {
   const [page, setPage] = useState<Page>("HOME");
 
-  // useEffect(() => {
-  //   const origin = "/api/session";
-  //   // const origin = "http://localhost:3001/api/session";
-
-  //   axios
-  //     .get(origin, { withCredentials: true })
-  //     .then((data) => {
-  //       if (data.data.isLoggedIn) {
-  //         setLoggedIn(true);
-  //       }
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   const [loggedIn, setLoggedIn] = useState<boolean>(true);
 
   return (
