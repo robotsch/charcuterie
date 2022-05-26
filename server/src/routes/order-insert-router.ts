@@ -33,7 +33,7 @@ router.post('/', (req: Request, res: Response) => {
   }
 
   let d = new Date()
-  d.setHours((d.getHours() - 4))
+  d.setHours((d.getHours() - 4)).toLocaleString()
 
   oQueries
     .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant), d)
