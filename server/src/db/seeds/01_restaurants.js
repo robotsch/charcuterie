@@ -219,7 +219,7 @@ MongoClient.connect(url, function (err, db) {
     },
     {
       _id: ObjectId('6283f1d9804b848eb5e4560d'),
-      name: "Johnny n Amber's Bed n Breakfast",
+      name: 'Breakfast Restaurant',
       menu_items: [
         {
           _id: ObjectId('6283f1d9804b848eb5e45606'),
@@ -241,20 +241,19 @@ MongoClient.connect(url, function (err, db) {
         },
         {
           _id: ObjectId('6283f1d9804b848eb5e45608'),
-          name: "Johnny's Breakfast of Champions",
+          name: 'Breakfast of Champions',
           price: 1099,
-          description:
-            'Fresh cup of black coffee and a single Marlboro Red with the filter lopped off',
+          description: 'Fresh cup of black coffee and a single Marlboro Red',
           image_url:
-            'https://izzycooking.com/wp-content/uploads/2022/05/Salmon-Nigiri.jpg',
+            'https://media.baamboozle.com/uploads/images/343025/1619117637_141638.jpeg',
           category: 'Seasonal Special',
         },
         {
           _id: ObjectId('6283f1d9804b848eb5e45609'),
-          name: "Amber's Triple-Thick Chocolate Sundae Surprise",
+          name: 'Triple-Thick Chocolate Sundae',
           price: 99999,
           description:
-            "For the discerning connoisseur, the world-renowned ice cream that's exclusively served hot",
+            'Chocolate sundae with chocolate filling topped with chocolate',
           image_url:
             'https://www.thereciperebel.com/wp-content/uploads/2014/06/Grandmas-Hot-Fudge-Sundae-Cake-www.thereciperebel.com-4-of-11.jpg',
           category: 'Seasonal Special',
@@ -264,16 +263,16 @@ MongoClient.connect(url, function (err, db) {
         {
           _id: ObjectId('6283f1d9804b848eb5e4560a'),
           fname: 'Johnny',
-          lname: 'Depp',
-          username: 'captainjack',
+          lname: 'Johnnyman',
+          username: 'otheruser',
           password:
             '$2b$10$vjSqa3U51P9woTvgyEEeUOWykQm/Pk3sUMTx/XJ1c/mIsWKUcJQaW',
         },
         {
           _id: ObjectId('6283f1d9804b848eb5e4560b'),
-          fname: 'Amber',
-          lname: 'Heard',
-          username: 'mera',
+          fname: 'Johnny',
+          lname: 'Johnson',
+          username: 'anotheruser',
           password:
             '$2b$10$z5b4v6g4spVYyrY7vdtn1uTfnvW6oh95FhsA1xyZD4ZBO53GKB9/m',
         },
