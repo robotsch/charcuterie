@@ -63,7 +63,7 @@ export default function Bill() {
 
   useEffect(() => {
     axios
-      .get(`/api/get-order?id=${localStorage.getItem("table")}&status=pending`)
+      .get(`/api/get-order?id=${localStorage.getItem("table")}&status=Pending`)
       // .get(
       //   `http://localhost:3001/api/get-order?id=${localStorage.getItem(
       //     "table"
