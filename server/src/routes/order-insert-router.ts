@@ -32,7 +32,8 @@ router.post('/', (req: Request, res: Response) => {
     custArr.push(orderObj);
   }
 
-  const d = new Date().toLocaleString()
+  let d = new Date()
+  d.setHours((d.getHours() - 4))
 
   oQueries
     .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant), d)
