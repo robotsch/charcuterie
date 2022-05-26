@@ -123,7 +123,7 @@ function Row(props: any) {
               >
                 <Typography variant="h6">Order Details</Typography>
                 <Typography variant="body2">
-                  Ordered on: {new Date().toLocaleString()}
+                  Ordered on: {order.time}
                 </Typography>
               </Box>
               <Table size="small">
