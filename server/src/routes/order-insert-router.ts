@@ -32,16 +32,19 @@ router.post('/', (req: Request, res: Response) => {
     custArr.push(orderObj);
   }
 
-  const d = new Date().toLocaleString()
+  let d = new Date()
+  d.setHours((d.getHours() - 4))
+  const dateString = d.toLocaleString()
 
   oQueries
-    .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant))
+    .createOrderByTableId(ObjectId(table), custArr, ObjectId(restaurant), dateString)
     .then((dbRes) => {
-      console.log(dbRes);
-      res.send('Success');
+      console.log("dbRes", dbRes);
+      console.log("dbRes.insertedId", dbRes.insertedId);
+      res.send(dbRes.insertedId);
     })
     .catch((err) => {
-      console.log('Failed to submit order: ', err)
+      console.log('Failed to submit order: ', err);
       res.status(500).send(`Failed to submit order: ${err}`);
     });
 });

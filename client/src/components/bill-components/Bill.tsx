@@ -63,7 +63,7 @@ export default function Bill() {
 
   useEffect(() => {
     axios
-      .get(`/api/get-order?id=${localStorage.getItem("table")}&status=pending`)
+      .get(`/api/get-order?id=${localStorage.getItem("table")}&status=Pending`)
       // .get(
       //   `http://localhost:3001/api/get-order?id=${localStorage.getItem(
       //     "table"
@@ -256,6 +256,7 @@ export default function Bill() {
               orderIDList.map((orderID) => {
                 return axios.post(
                   "/api/update-order-status",
+                  // "http://localhost:3001/api/update-order-status",
                   {
                     id: orderID,
                   }

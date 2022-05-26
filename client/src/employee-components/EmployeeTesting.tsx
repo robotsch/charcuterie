@@ -27,7 +27,8 @@ export default function Employee() {
               p: 3,
               width: "100%",
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             {page === "HOME" && <TablesStatus />}

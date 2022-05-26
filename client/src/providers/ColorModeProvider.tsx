@@ -27,6 +27,9 @@ export default function ToggleColorMode(props: any) {
           secondary: {
             main: "#2589BD",
           },
+          info: {
+            main: "#EDEFFF"
+          },
           warning: {
             main: "#FF8906",
           },

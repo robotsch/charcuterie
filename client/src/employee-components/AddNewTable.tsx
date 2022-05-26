@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { Alert } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export default function AddNewTable(props: any) {
   const { setShowAlert, setTables, counter, setCounter } = props;
@@ -18,10 +19,11 @@ export default function AddNewTable(props: any) {
         readable_id: counter,
       })
       .then((res) => {
-
         axios
           .get(
-            `/api/names?restaurant=${localStorage.getItem('restaurant')}&table=${res.data.insertedId}`
+            `/api/names?restaurant=${localStorage.getItem(
+              "restaurant"
+            )}&table=${res.data.insertedId}`
           )
           .then((result) => {
             setShowAlert(true);
@@ -61,6 +63,7 @@ export default function AddNewTable(props: any) {
       variant="contained"
       type="button"
       onClick={createTable}
+      startIcon={<AddCircleIcon />}
     >
       Add Table
     </Button>

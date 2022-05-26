@@ -12,6 +12,10 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 import ws from "../sockets/socket";
 
@@ -87,21 +91,55 @@ export default function CurrentOrder() {
       });
     });
 
+    ws.on("REMOVE_ITEM", ({ name, menuItemID }) => {
+      console.log(name, menuItemID);
+      setCurrentOrder((prev: any) => {
+        const newState = { ...prev };
+        delete newState[name][menuItemID];
+        if (Object.values(newState[name]).length === 0) {
+          delete newState[name];
+        }
+        return newState;
+      });
+    });
+
     return () => {
       ws.off("UPDATE_ORDER");
       ws.off("SUBMIT_ORDER");
+      ws.off("REMOVE_ITEM");
     };
   }, []);
 
   const getItemsForName = (name: string) => {
+    const user = localStorage.getItem("user");
     return (
       <List key={name}>
         <Typography>{name}</Typography>
         {Object.values(currentOrder[name]).map((item) => {
           return (
-            <ListItem key={item._id}>
-              {item.quantity} x {item.name}
-            </ListItem>
+            <Box sx={{ display: "flex" }}>
+              <ListItem key={item._id}>
+                {item.quantity} x {item.name}
+              </ListItem>
+              {user === name && (
+                <IconButton
+                  color="error"
+                  aria-label="upload picture"
+                  component="span"
+                  onClick={() => {
+                    console.log(currentOrder);
+                    ws.emit("REMOVE_ITEM", {
+                      name: localStorage.getItem("user"),
+                      menuItemID: item._id,
+                      restaurant: localStorage.getItem("restaurant"),
+                      table: localStorage.getItem("table"),
+                    });
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </Box>
           );
         })}
       </List>
@@ -168,10 +206,13 @@ export default function CurrentOrder() {
                   // .post("http://localhost:3001/api/order", send)
                   .post(`/api/order`, send)
                   .then((res) => {
+                    console.log("data: ", res.data);
+                    console.log("RES: ", res);
                     ws.emit("SUBMIT_ORDER", {
+                      order_id: res.data,
                       restaurant: localStorage.getItem("restaurant"),
                       currentOrder,
-                      tableName: localStorage.getItem("tableName")
+                      tableName: localStorage.getItem("tableName"),
                     });
                   })
                   .catch((error) => console.log(error));
