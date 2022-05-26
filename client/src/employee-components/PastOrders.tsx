@@ -115,9 +115,8 @@ function Row(props: any) {
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "flex-start",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  gap: 5,
                   mt: 2,
                 }}
               >
