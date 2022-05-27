@@ -10,26 +10,38 @@ Created by Christian Humble, Francesca Ho, and Elroy Hui.
 
 After you are seated at a table at a restaurant enrolled with Charcuterie, simply scan the provided QR code and open the link to be directed to a table lobby.
 
+<p align="center">
+    <img src="https://github.com/robotsch/charcuterie/blob/main/docs/menu_landing.png?raw=true">
+</p>
 
 Enter your name in the prompt, and click the button to be sent to the restaurant's interactive menu.
 
-
+<p align="center">
+    <img src="https://github.com/robotsch/charcuterie/blob/main/docs/menu_page.png?raw=true">
+</p>
 
 After your table has added everything they want to order, anyone at the table can click Submit Order to send it to the restaurant.
 
-
+<p align="center">
+    <img src="https://github.com/robotsch/charcuterie/blob/main/docs/current_order.png?raw=true">
+</p>
 
 After placing your table's order, you can view your bill in-app by clicking the Bill button in the top menu. Payments can either be made through the application, or directly to the restaurant after your meal.
 
-
+<p align="center">
+    <img src="https://raw.githubusercontent.com/robotsch/charcuterie/main/docs/bill_page.png">
+</p>
 
 ## Usage - Restaurant Employee
 
 After your restaurant is enrolled with Charcuterie, log in to your account here: https://charcuterie-lhl.herokuapp.com/employee
 
+![Login Page](https://github.com/robotsch/charcuterie/blob/main/docs/signin.png?raw=true)
 
 
 After logging in, any incoming orders will be automatically be populated into the Live Order Feed on the right-hand side of the page.
+
+![Employee Landing](https://github.com/robotsch/charcuterie/blob/main/docs/orders.png?raw=true)
 
 If a user pays in-app, orders will automatically be marked as 'Completed'. If they pay outside of the app, the restaurant can click a button on the order itself to complete it.
 
